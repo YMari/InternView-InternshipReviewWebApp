@@ -1,9 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-// import sqlite from 'sqlite';
 
-export default async function getReviewByID(req: NextApiRequest, res: NextApiResponse) {
-    // const db = await sqlite.open('./mydb.sqlite');
-    // const vehicle = await db.all('select * from vehicle');
-
+export default async function getAccountByID(req: NextApiRequest, res: NextApiResponse) {
+    
     res.json({hello: 'world', id: req.query.id, method: req.method});
 } 
