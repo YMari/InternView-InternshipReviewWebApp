@@ -7,3 +7,5 @@ export default async function getReviewByID(req: NextApiRequest, res: NextApiRes
 
     res.json({hello: 'world', id: req.query.id, method: req.method});
 } 
+
+// TODO: add functions for adding, editing, and removing reviews.
