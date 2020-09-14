@@ -2,6 +2,11 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+Install dependancies:
+```
+npm install
+```
+
 First, run the development server:
 
 ```bash
@@ -12,7 +17,17 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+
+To setup prisma for dev:
+Choose yes when prompted to create a db
+```
+npx prisma migrate save --name <any-name> --experimental
+npx prisma migrate up --experimental
+npx prisma generate
+```
+
+Each time you make a change to prisma.schema run above commands again
 
 ## Learn More
 
