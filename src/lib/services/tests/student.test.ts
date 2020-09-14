@@ -1,60 +1,31 @@
 
-
 import studentService from '../student'
 import { CreateStudent } from '../student'
-import { PrismaClient } from '@prisma/client';
+import * as help from './studentHelper';
 
 // SETUP
-const TESTPROGRAM = "TestProgram"
-const TESTUNIVERSITY = "TestUniversity"
-
 beforeAll(async ()=> {
     
-    const client  = new PrismaClient()
-    
-    await client.student.deleteMany({})
-
-    await client.university.deleteMany({})
-
-    await client.studyProgram.deleteMany({})
-
-    await client.university.create({
-        data:{
-            name:TESTUNIVERSITY,
-            location: "TestVille"
-        }
-    }) 
-
-    await client.studyProgram.create({
-        data:{
-            name:TESTPROGRAM
-        }
-    })
+    await help.initDB()
 
 })
 
 afterAll(async ()=> {
 
-    const client  = new PrismaClient()
-
-    await client.student.deleteMany({})
-
-    await client.university.deleteMany({})
-
-    await client.studyProgram.deleteMany({})
+    await help.tearDown()
 
 })
-// End od setup
 
-test("When creating student", async () => {
-    
-    const client  = new PrismaClient()
+// End of setup
 
-    const sp = await client.studyProgram.findOne({where:{ name:TESTPROGRAM}})
-    const u = await client.university.findOne({where:{ name:TESTUNIVERSITY }}) 
+// TODO: Make async functions exit
+
+test("Creating Student Unit Test", async () => {
+
+    const sp = await help.getTestProgram()
+    const u = await help.getTestUniversity()
     
     const student:CreateStudent = {
-        id: null,
         name:"test",
         email:"test@test.com",
         passwordHash:"test",
@@ -64,21 +35,28 @@ test("When creating student", async () => {
 
     const res = await studentService.createStudent(student) 
     
-    console.log(res.data)
+    console.log(res)
+
     expect(res.status).toBeTruthy() 
+    
+    // Fail when trying to create a user with non existant study program or university
 
     const studentFalse:CreateStudent = {
-        id: null,
-        name:"test",
-        email:"test@test.com",
-        passwordHash:"test",
+        name:"test2",
+        email:"test2@test2.com",
+        passwordHash:"test2",
         univeristyId:-1,
         studyProgramId:-1
     }
 
     const res2 = await studentService.createStudent(studentFalse)
     
+    expect(res2.status).toBeFalsy()
     
-    expect(res2.status).toBeFalsy() 
+    // Fail if student already exists
+
+    const res3 = await studentService.createStudent(student);
+
+    expect(res3.status).toBeFalsy()
 
 })

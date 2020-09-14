@@ -1,22 +1,39 @@
-import { PrismaClient, Student, PrismaClientKnownRequestError } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 
-export interface CreateStudent extends Student {
+export interface CreateStudent {
+    email: string,
+    passwordHash: string,
+    name: string,
     univeristyId: number,
     studyProgramId: number
 }
 
-interface CreateStudentResult {
+interface StudentOutputResult {
     status: boolean,
     message: string | undefined,
-    data: Student
+    data: Object
 }
 
-export async function createStudent(student:CreateStudent): Promise<CreateStudentResult> {
+export async function createStudent(student:CreateStudent): Promise<StudentOutputResult> {
 
-    const client = new PrismaClient()
+    const client = new PrismaClient({errorFormat:"minimal"})
 
     try {
 
+        // Check If student exists
+        const check_if_exists = await client.student.findOne({
+            where:{ email: student.email }
+        })
+
+        if (check_if_exists !== null) {
+            return {
+                status: false,
+                message: "Student already exists",
+                data: check_if_exists
+            }
+        }
+
+        // Create the student and return its info
         const res = await client.student.create({
             data: {
                 email: student.email,
@@ -28,9 +45,14 @@ export async function createStudent(student:CreateStudent): Promise<CreateStuden
                 studyprogram: {
                     connect: { id:student.studyProgramId }
                 }
+            },
+            
+            select : {
+                name:true, email:true, studyprogram:true, university:true, id:true
             }
         })
 
+        // return results
         return {
             status: true,
             message: "Created Successfully",
@@ -39,8 +61,6 @@ export async function createStudent(student:CreateStudent): Promise<CreateStuden
 
     } catch ( e ) {
         
-        // TODO: check which error you are getting
-
         return {
             status: false,
             message: "Failed creating user",
