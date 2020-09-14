@@ -29,7 +29,7 @@ export async function initDB() {
         }
     })
 
-    client.$disconnect()
+    await client.$disconnect()
 
 }
 
@@ -43,18 +43,22 @@ export async function tearDown() {
 
     await client.studyProgram.deleteMany({})
 
-    client.$disconnect()
+    await client.$disconnect()
 
 }
 
 
 export async function getTestProgram() {
     const client  = new PrismaClient()
-    return await client.studyProgram.findOne({where:{ name: TESTPROGRAM}})
+    const sp = await client.studyProgram.findOne({where:{ name: TESTPROGRAM}})
+    await client.$disconnect()
+    return sp;
 }
 
 
 export async function getTestUniversity() {
     const client  = new PrismaClient()
-    return await client.university.findOne({where:{ name: TESTUNIVERSITY}})
+    const u = await client.university.findOne({where:{ name: TESTUNIVERSITY}})
+    await client.$disconnect()
+    return u;
 }

@@ -26,6 +26,7 @@ export async function createStudent(student:CreateStudent): Promise<StudentOutpu
         })
 
         if (check_if_exists !== null) {
+            await client.$disconnect()
             return {
                 status: false,
                 message: "Student already exists",
@@ -52,6 +53,7 @@ export async function createStudent(student:CreateStudent): Promise<StudentOutpu
             }
         })
 
+        await client.$disconnect()
         // return results
         return {
             status: true,
@@ -61,17 +63,14 @@ export async function createStudent(student:CreateStudent): Promise<StudentOutpu
 
     } catch ( e ) {
         
+        await client.$disconnect()
         return {
             status: false,
             message: "Failed creating user",
             data:e
         }
 
-    } finally {
-
-        await client.$disconnect()
-
-    }
+    } 
 
 }
 
