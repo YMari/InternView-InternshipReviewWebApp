@@ -27,6 +27,11 @@ npx prisma migrate up --experimental
 npx prisma generate
 ```
 
+To run tests on application:
+```
+npm test
+```
+
 Each time you make a change to prisma.schema run above commands again
 
 ## Learn More
