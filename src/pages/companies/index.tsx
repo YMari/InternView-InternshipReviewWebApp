@@ -7,13 +7,15 @@ const companyList = [
 ]
 
 export default function Companies() {
-    return <div>
-        {companyList.map(e => (
-            <div>
-                <Link href="">
-                    <a>{e.name}</a>
-                </Link>
-            </div>
-        ))}
-    </div>
+    return (
+        <>
+            {companyList.map(e => (
+                <div>
+                    <Link href="">
+                        <a>{e.name}</a>
+                    </Link>
+                </div>
+            ))}
+        </>
+    )  
 }

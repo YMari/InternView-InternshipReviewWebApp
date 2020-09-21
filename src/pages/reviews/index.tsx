@@ -7,13 +7,15 @@ const reviewList = [
 ]
 
 export default function Reviews() {
-    return <div>
-        {reviewList.map(e => (
-            <div>
-                <Link href="">
-                    <a>{e.name}</a>
-                </Link>
-            </div>
-        ))}
-    </div>
+    return (
+        <>
+            {reviewList.map(e => (
+                <div>
+                    <Link href="">
+                        <a>{e.name}</a>
+                    </Link>
+                </div>
+            ))}
+        </>
+    )  
 }

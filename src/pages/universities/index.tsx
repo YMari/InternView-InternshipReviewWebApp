@@ -1,5 +1,6 @@
 import Link from 'next/link';
 
+
 const universityList = [
     {name: 'University 1'},
     {name: 'University 2'},
@@ -7,13 +8,15 @@ const universityList = [
 ]
 
 export default function Universities() {
-    return <div>
-        {universityList.map(e => (
-            <div>
-                <Link href="">
-                    <a>{e.name}</a>
-                </Link>
-            </div>
-        ))}
-    </div>
+    return (
+        <>
+            {universityList.map(e => (
+                <div>
+                    <Link href="">
+                        <a>{e.name}</a>
+                    </Link>
+                </div>
+            ))}
+        </>
+    )   
 }
