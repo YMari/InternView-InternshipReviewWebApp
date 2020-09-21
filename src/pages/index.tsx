@@ -1,22 +1,13 @@
-import Link from 'next/link';
+import React from 'react';
+import { ThemeProvider } from '@material-ui/core/styles';
+import theme from './theme'
+import Home from './home/index'
+
 
 export default function Index() {
-    return <div>
-        <h1>Welcome to InternView!</h1>
-        <div>
-            <Link as="/companies" href="/companies/">
-                <a>Navigate to Companies</a>
-            </Link>
-        </div>
-        <div>
-            <Link as="/universities" href="/universities/">
-                <a>Navigate to Universities</a>
-            </Link>
-        </div>
-        <div>
-            <Link as="/reviews" href="/reviews/">
-                <a>Navigate to Reviews</a>
-            </Link>
-        </div>
-</div>
+    return (
+        <ThemeProvider theme={theme}>
+            <Home />
+        </ThemeProvider>
+    )
 }

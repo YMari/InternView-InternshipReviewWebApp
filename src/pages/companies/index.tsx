@@ -1,4 +1,7 @@
+import { Container } from '@material-ui/core';
 import Link from 'next/link';
+import React from 'react';
+import MainAppbar from '../components/appbar';
 
 const companyList = [
     {name: 'Company 1'},
@@ -7,13 +10,16 @@ const companyList = [
 ]
 
 export default function Companies() {
-    return <div>
-        {companyList.map(e => (
-            <div>
-                <Link href="">
-                    <a>{e.name}</a>
-                </Link>
-            </div>
-        ))}
-    </div>
+    return (
+        <Container maxWidth={false}>
+            <MainAppbar/>
+            {companyList.map(e => (
+                <div>
+                    <Link href="">
+                        <a>{e.name}</a>
+                    </Link>
+                </div>
+            ))}
+        </Container>
+    )  
 }
