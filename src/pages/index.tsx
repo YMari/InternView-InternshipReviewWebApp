@@ -6,8 +6,6 @@ import Home from './home/index'
 
 export default function Index() {
     return (
-        <ThemeProvider theme={theme}>
-            <Home />
-        </ThemeProvider>
+        <Home />
     )
 }

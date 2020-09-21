@@ -5,8 +5,7 @@ import MainAppbar from '../components/appbar'
 
 export default function Home() {
     return(
-        <Container maxWidth={false}>
-            <MainAppbar/>
+        <>
             <div>
                 <Link as="/companies" href="/companies/">
                     <a>Navigate to Companies</a>
@@ -22,6 +21,6 @@ export default function Home() {
                     <a>Navigate to Reviews</a>
                 </Link>
             </div>
-        </Container>
+        </>
     )
 }

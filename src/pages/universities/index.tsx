@@ -1,7 +1,5 @@
-import { Container } from '@material-ui/core';
 import Link from 'next/link';
-import React from 'react';
-import MainAppbar from '../components/appbar';
+
 
 const universityList = [
     {name: 'University 1'},
@@ -11,8 +9,7 @@ const universityList = [
 
 export default function Universities() {
     return (
-        <Container maxWidth={false}>
-            <MainAppbar/>
+        <>
             {universityList.map(e => (
                 <div>
                     <Link href="">
@@ -20,6 +17,6 @@ export default function Universities() {
                     </Link>
                 </div>
             ))}
-        </Container>
+        </>
     )   
 }

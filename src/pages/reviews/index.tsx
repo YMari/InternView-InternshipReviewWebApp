@@ -1,7 +1,4 @@
-import { Container } from '@material-ui/core';
 import Link from 'next/link';
-import React from 'react';
-import MainAppbar from '../components/appbar';
 
 const reviewList = [
     {name: 'Review 1'},
@@ -11,8 +8,7 @@ const reviewList = [
 
 export default function Reviews() {
     return (
-        <Container maxWidth={false}>
-            <MainAppbar/>
+        <>
             {reviewList.map(e => (
                 <div>
                     <Link href="">
@@ -20,6 +16,6 @@ export default function Reviews() {
                     </Link>
                 </div>
             ))}
-        </Container>
+        </>
     )  
 }
