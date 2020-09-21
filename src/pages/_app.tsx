@@ -19,7 +19,7 @@ export default function MyApp(props) {
   }, []);
 
   return (
-    <React.Fragment>
+    <>
       <Head>
         <title>InternView</title>
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
@@ -28,11 +28,11 @@ export default function MyApp(props) {
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
         <MainAppbar/>
-        <Container maxWidth='xl'>
+        <Container maxWidth={false}>
             <Component {...pageProps} />
         </Container>
       </ThemeProvider>
-    </React.Fragment>
+    </>
   );
 }
 
