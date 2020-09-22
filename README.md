@@ -1,3 +1,6 @@
+# INSO4116 - Team B (InternView)
+### Team Members: [Isabel A. Muñiz](https://github.com/isaandrea12), [Kathiana Díaz](https://github.com/kathianadiaz), [Kenneth Rosario](https://github.com/kenneth-rosario), [Jose Maldonado](https://github.com/jose-maldonado), [Jose Rivera](https://github.com/jvserivera), [Jose Vera](https://github.com/josevera7), [Yavier Mari](https://github.com/YMari)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
@@ -48,5 +51,3 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-# INSO4116 - Team B (InternView)
-### Team Members: [Isabel A. Muñiz](https://github.com/isaandrea12), [Kathiana Díaz](https://github.com/kathianadiaz), [Kenneth Rosario](https://github.com/kenneth-rosario), [Jose Maldonado](https://github.com/jose-maldonado), [Jose Rivera](https://github.com/jvserivera), [Jose Vera](https://github.com/josevera7), [Yavier Mari](https://github.com/YMari)
