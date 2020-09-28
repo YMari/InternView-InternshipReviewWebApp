@@ -8,6 +8,8 @@ const universityList = [
     {name: 'University 3'}
 ]
 
+Universities.withoutAppBar = true
+
 export default function Universities() {
     return (
         <>

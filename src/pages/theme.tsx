@@ -14,12 +14,16 @@ const theme = createMuiTheme({
         dark: '#ba000d',
         contrastText: '#000',
     },
-    info: {  // Appbar color maybe
+    info: {
         light: '#64b5f6',
         main: '#2196f3',
         dark: '#1976d2',
         contrastText: '#fff',
-    }
+    },
+    text: {
+      primary: '#000',
+      secondary: '#fff',
+    },
   },
 });
 

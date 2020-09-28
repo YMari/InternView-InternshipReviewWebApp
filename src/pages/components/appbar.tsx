@@ -1,6 +1,6 @@
 import React from 'react';
 import { fade, makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { Button, AppBar, Toolbar, IconButton, Typography, InputBase, Badge, MenuItem, Menu } from '@material-ui/core';
+import { Button, AppBar, Toolbar, IconButton, Typography, InputBase, Badge, MenuItem, Menu, Grid } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -130,7 +130,7 @@ export default function MainAppbar() {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-        <MenuItem>
+        {/* <MenuItem>
             <IconButton aria-label="show 4 new mails" color="inherit">
             <Badge badgeContent={4} color="secondary">
                 <MailIcon />
@@ -145,7 +145,7 @@ export default function MainAppbar() {
             </Badge>
             </IconButton>
             <p>Notifications</p>
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem onClick={handleProfileMenuOpen}>
             <IconButton
             aria-label="account of current user"
@@ -161,7 +161,11 @@ export default function MainAppbar() {
     );
 
   return (
-    <div className={classes.grow}>
+    <Grid 
+    className={classes.grow}
+    direction="row"
+    justify="space-between"
+    alignItems="center">
       <AppBar position="static">
         <Toolbar>
             <IconButton
@@ -172,9 +176,10 @@ export default function MainAppbar() {
             >
                 <MenuIcon />
             </IconButton>
-            <Button
-                classes={{label: classes.label}}>
-                <Typography className={classes.title} variant="h6" noWrap>
+            <Button //the href is loading the whole thing again
+                classes={{label: classes.label}}
+                href="/">  
+                <Typography className={classes.title} variant="h6" noWrap color="textSecondary">
                     InternView
                 </Typography>
             </Button>
@@ -193,7 +198,7 @@ export default function MainAppbar() {
             </div>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
-                <IconButton aria-label="show 4 new mails" color="inherit">
+                {/* <IconButton aria-label="show 4 new mails" color="inherit">
                 <Badge badgeContent={4} color="secondary">
                     <MailIcon />
                 </Badge>
@@ -202,7 +207,7 @@ export default function MainAppbar() {
                 <Badge badgeContent={17} color="secondary">
                     <NotificationsIcon />
                 </Badge>
-                </IconButton>
+                </IconButton> */}
                 <IconButton
                 edge="end"
                 aria-label="account of current user"
@@ -230,6 +235,6 @@ export default function MainAppbar() {
         {renderMobileMenu}
         {renderMenu}
         <br/>
-    </div>
+    </Grid>
   );
 }

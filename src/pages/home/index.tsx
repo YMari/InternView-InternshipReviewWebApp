@@ -21,6 +21,16 @@ export default function Home() {
                     <a>Navigate to Reviews</a>
                 </Link>
             </Box>
+            <Box>
+                <Link as="/login" href="./Login">
+                    <a>Login Page</a>
+                </Link>
+            </Box>
+            <Box>
+                <Link as="/register" href="./Register">
+                    <a>Register Page</a>
+                </Link>
+            </Box>
         </>
     )
 }
