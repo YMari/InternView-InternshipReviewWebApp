@@ -23,7 +23,7 @@ class StudentService implements i.IStudentService {
         this._universityRepository = universityRepository
     }
     
-    async registerStudent(st: e.IStudentDetailedIds): Promise<i.IStudentServiceOutput<e.IStudentDetailed>>{
+    async registerStudent(st: e.IStudentWithPassword): Promise<i.IStudentServiceOutput<e.IStudentDetailed>>{
 
         return null;
     };

@@ -31,7 +31,7 @@ export interface IStudentServiceOutput<T> {
 
 export interface IStudentService {
 
-    registerStudent: (st: i.IStudentDetailedIds) => Promise<IStudentServiceOutput<i.IStudentDetailed>>;
+    registerStudent: (st: i.IStudentWithPassword) => Promise<IStudentServiceOutput<i.IStudentDetailed>>;
 
 }
 
