@@ -3,15 +3,15 @@ import { createMuiTheme } from '@material-ui/core/styles';
 const theme = createMuiTheme({
   palette: {
     primary: {
-        light: '#757ce8',
-        main: '#3f50b5',
-        dark: '#002884',
+        light: '#70a8bc',
+        main: '#40798c',
+        dark: '#054d5f',
         contrastText: '#fff',
     },
     secondary: {
-        light: '#ff7961',
-        main: '#f44336',
-        dark: '#ba000d',
+        light: '#a0dbd2',
+        main: '#70a9a1',
+        dark: '#427a73',
         contrastText: '#000',
     },
     info: {
@@ -20,10 +20,15 @@ const theme = createMuiTheme({
         dark: '#1976d2',
         contrastText: '#fff',
     },
+    background: {
+      default: '#F0F0F0'
+    },
+    text: {
+      hint: '#40798c'  // primary main
+    },
   },
   typography: {
-    fontFamily: 'Montserrat 500',
-    fontWeightMedium: 400,
+    fontFamily: 'Montserrat',
   },
 });
 
