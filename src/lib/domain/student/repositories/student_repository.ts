@@ -1,4 +1,5 @@
 import * as i from '../interfaces';
+import * as e from '../entities';
 import db from '../../../infrastructure/prisma-cli'
 import { injectable } from 'inversify'
 import 'reflect-metadata'
@@ -6,22 +7,22 @@ import 'reflect-metadata'
 @injectable()
 class StudentRepository implements i.IStudentRepository {
 
-    async getStudentById(st_id: number): Promise<i.IStudentDetailed> {
+    async getStudentById(st_id: number): Promise<e.IStudentDetailed> {
         
         return null;
     }
     
-    async getStudentByEmail(st_email: string): Promise<i.IStudentDetailed> {
+    async getStudentByEmail(st_email: string): Promise<e.IStudentDetailed> {
 
         return null;
     }
 
-    async updateStudent(st_id:number, st_target: i.IStudentWithPassword): Promise<i.IStudentDetailed> {
+    async updateStudent(st_id:number, st_target: e.IStudentWithPassword): Promise<e.IStudentDetailed> {
 
         return null;
     }
     
-    async createStudent(st: i.IStudentWithPassword): Promise<i.IStudentDetailed> {
+    async createStudent(st: e.IStudentWithPassword): Promise<e.IStudentDetailed> {
         
         try {
 

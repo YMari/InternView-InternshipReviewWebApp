@@ -1,8 +1,9 @@
 import * as i from '../interfaces'
-import 'reflect-metadata'
+import * as e from '../entities'
 import {inject, injectable} from 'inversify'
 import { S_TYPES } from '../types'
 
+import 'reflect-metadata'
 
 @injectable()
 class StudentService implements i.IStudentService {
@@ -22,7 +23,7 @@ class StudentService implements i.IStudentService {
         this._universityRepository = universityRepository
     }
     
-    registerStudent(st: i.IStudentDetailedIds): i.IStudentServiceOutput<i.IStudentDetailed>{
+    async registerStudent(st: e.IStudentDetailedIds): Promise<i.IStudentServiceOutput<e.IStudentDetailed>>{
 
         return null;
     };

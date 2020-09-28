@@ -1,52 +1,23 @@
-export interface IStudent {
-    name:string | undefined;
-    email:string | undefined;
-}
-
-export interface IStudentDetailedIds extends IStudent {
-    universityId:number | undefined;
-    studyProgramId:number | undefined;
-}
-
-export interface IStudentWithPassword extends IStudentDetailedIds {
-    passwordHash: string;
-}
-
-export interface IUniversity {
-    id: number,
-    name: string,
-    location: string
-} 
-
-export interface IStudyProgram {
-    id: number,
-    name: string
-}
-
-export interface IStudentDetailed extends IStudent {
-    university: IUniversity,
-    studyprogram: IStudyProgram
-}
+import * as i from './entities'
 
 export interface IStudentRepository {
 
-    createStudent: (st: IStudentWithPassword) => Promise<IStudentDetailed>;
-    getStudentById: (st_id: number) => Promise<IStudentDetailed>;
-    getStudentByEmail: (st_email: string) => Promise<IStudentDetailed>;
-    updateStudent: (st_id: number, st_target: IStudentWithPassword) => Promise<IStudentDetailed>;
+    createStudent: (st: i.IStudentWithPassword) => Promise<i.IStudentDetailed>;
+    getStudentById: (st_id: number) => Promise<i.IStudentDetailed>;
+    getStudentByEmail: (st_email: string) => Promise<i.IStudentDetailed>;
+    updateStudent: (st_id: number, st_target: i.IStudentWithPassword) => Promise<i.IStudentDetailed>;
 
 }
 
-
 export interface IUniversityRepository {
 
-    getUniversityById: (u_id: number) => Promise<IUniversity>
+    getUniversityById: (u_id: number) => Promise<i.IUniversity>
 
 }
 
 export interface IStudyProgramRepository {
 
-    getStudyProgramById: (sp_id: number) => Promise<IStudyProgram>
+    getStudyProgramById: (sp_id: number) => Promise<i.IStudyProgram>
 
 }
 
@@ -60,7 +31,7 @@ export interface IStudentServiceOutput<T> {
 
 export interface IStudentService {
 
-    registerStudent: (st: IStudentDetailedIds) => IStudentServiceOutput<IStudentDetailed>;
+    registerStudent: (st: i.IStudentDetailedIds) => Promise<IStudentServiceOutput<i.IStudentDetailed>>;
 
 }
 

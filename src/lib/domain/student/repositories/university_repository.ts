@@ -1,4 +1,5 @@
 import * as i from '../interfaces'
+import * as e from '../entities'
 import db from '../../../infrastructure/prisma-cli'
 import { injectable } from 'inversify'
 import 'reflect-metadata'
@@ -6,7 +7,7 @@ import 'reflect-metadata'
 @injectable()
 class UniversityRepository implements i.IUniversityRepository {
 
-    async getUniversityById(u_id:number):Promise<i.IUniversity> {
+    async getUniversityById(u_id:number):Promise<e.IUniversity> {
 
         const uni = db.university.findOne({
             where: {
