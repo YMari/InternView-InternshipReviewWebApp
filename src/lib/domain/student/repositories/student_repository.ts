@@ -14,6 +14,7 @@ class StudentRepository implements i.IStudentRepository {
     
     async getStudentByEmail(st_email: string): Promise<e.IStudentDetailed> {
 
+        
         return null;
     }
 
