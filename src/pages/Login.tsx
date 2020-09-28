@@ -1,6 +1,7 @@
 import { Box, Button, Card, CardHeader, createStyles, FormControl, Grid, IconButton, 
     InputAdornment, InputLabel, makeStyles, OutlinedInput, Theme, Typography } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
+import Link from "next/link";
 import React from "react";
 
 interface State {
@@ -32,17 +33,16 @@ export default function LoginPage() {
         <Grid
         container
         direction="column"
-        alignItems="center"
+        alignContent="center"
+        justify="center"
         wrap='wrap'
-        align-items-xs-center
-        justify-xs-space-between
-        spacing-xs-10
+        style={{ minHeight: '70vh' }}
         >
-            <Card>
+            <Card className={classes.card}>
                 <CardHeader title="Sign In"/>
                 <Grid item>
                     <Box id="email-box">
-                        <FormControl className={(classes.margin)} variant="outlined">
+                        <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
                             <InputLabel htmlFor="outlined-email">Email</InputLabel>
                             <OutlinedInput id="email-input" label="Email"  />
                         </FormControl>
@@ -50,7 +50,7 @@ export default function LoginPage() {
                 </Grid>
                 <Grid item>
                     <Box id="password-box">
-                        <FormControl className={(classes.margin)} variant="outlined">
+                        <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
                             <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                                 <OutlinedInput
                                     id="outlined-adornment-password"
@@ -88,9 +88,11 @@ export default function LoginPage() {
                 <Grid item>
                     <Box id="new-account-box">
                         <Typography>Don't have an account?</Typography>
-                        <Button variant="contained" color="primary" href="/Register">
-                            Create New Account
-                        </Button>
+                        <Link as="/register" href="/Register">
+                            <Button variant="contained" color="primary">
+                                Create New Account
+                            </Button>
+                        </Link>
                     </Box>
                 </Grid>
             </Card>
@@ -98,10 +100,16 @@ export default function LoginPage() {
     )
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
+const useStyles = makeStyles((theme: Theme) =>    
+    createStyles({
     margin: {
       margin: theme.spacing(1),
+    },
+    card: {
+     padding: theme.spacing(2),
+     paddingRight: theme.spacing(4),
+     textAlign: "center",
+     color: theme.palette.text.primary
     },
   }),
 );

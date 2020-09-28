@@ -20,10 +20,10 @@ const theme = createMuiTheme({
         dark: '#1976d2',
         contrastText: '#fff',
     },
-    text: {
-      primary: '#000',
-      secondary: '#fff',
-    },
+  },
+  typography: {
+    fontFamily: 'Montserrat 500',
+    fontWeightMedium: 400,
   },
 });
 

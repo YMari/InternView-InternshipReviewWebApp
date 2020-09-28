@@ -7,6 +7,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import Link from 'next/link'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -21,6 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
         [theme.breakpoints.up('sm')]: {
             display: 'block',
         },
+        color: theme.palette.primary.contrastText
     },
     search: {
         position: 'relative',
@@ -161,28 +163,24 @@ export default function MainAppbar() {
     );
 
   return (
-    <Grid 
-    className={classes.grow}
-    direction="row"
-    justify="space-between"
-    alignItems="center">
+    <div>
       <AppBar position="static">
         <Toolbar>
-            <IconButton
+            {/* <IconButton
                 edge="start"
                 className={classes.menuButton}
                 color="inherit"
                 aria-label="open drawer"
             >
                 <MenuIcon />
-            </IconButton>
-            <Button //the href is loading the whole thing again
-                classes={{label: classes.label}}
-                href="/">  
-                <Typography className={classes.title} variant="h6" noWrap color="textSecondary">
-                    InternView
-                </Typography>
-            </Button>
+            </IconButton> */}
+            <Link as='/' href="/">
+                <Button classes={{label: classes.label}}>
+                    <Typography className={classes.title} variant="h6" noWrap>
+                        InternView
+                    </Typography>
+                </Button>
+            </Link>
             <div className={classes.search}>
                 <div className={classes.searchIcon}>
                 <SearchIcon />
@@ -209,6 +207,7 @@ export default function MainAppbar() {
                 </Badge>
                 </IconButton> */}
                 <IconButton
+                // className={classes.profile}
                 edge="end"
                 aria-label="account of current user"
                 aria-controls={menuId}
@@ -235,6 +234,6 @@ export default function MainAppbar() {
         {renderMobileMenu}
         {renderMenu}
         <br/>
-    </Grid>
+    </div>
   );
 }

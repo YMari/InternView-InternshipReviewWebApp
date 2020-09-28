@@ -1,6 +1,7 @@
 import { Box, Button, Card, CardHeader, createStyles, FormControl, Grid, IconButton, 
-    InputAdornment, InputLabel, makeStyles, OutlinedInput, TextField, Theme, Typography } from "@material-ui/core";
+    InputAdornment, InputLabel, makeStyles, NativeSelect, OutlinedInput, Select, TextField, Theme, Typography } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
+import Link from "next/link";
 import React from "react";
 
 interface State {
@@ -28,21 +29,19 @@ export default function RegisterPage() {
     };
 
     return(
-        
         <Grid
         container
         direction="column"
-        alignItems="center"
+        alignContent="center"
+        justify="center"
         wrap='wrap'
-        align-items-xs-center
-        justify-xs-space-between
-        spacing-xs-10
+        style={{ minHeight: '70vh' }}
         >
-            <Card>
+            <Card className={classes.card}>
                 <CardHeader title="Create Account"/>
                 <Grid item>
                     <Box id="name-box">
-                        <FormControl className={(classes.margin)} variant="outlined">
+                        <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
                             <InputLabel htmlFor="outlined-email">Name</InputLabel>
                             <OutlinedInput id="name-input" label="Name"  />
                         </FormControl>
@@ -50,7 +49,7 @@ export default function RegisterPage() {
                 </Grid>
                 <Grid item>
                     <Box id="email-box">
-                        <FormControl className={(classes.margin)} variant="outlined">
+                        <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
                             <InputLabel htmlFor="outlined-email">Email</InputLabel>
                             <OutlinedInput id="email-input" label="Email"  />
                         </FormControl>
@@ -58,10 +57,11 @@ export default function RegisterPage() {
                 </Grid>
                 <Grid item>
                     <Box id="password-box">
-                        <FormControl className={(classes.margin)} variant="outlined">
+                        <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
                             <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                                 <OutlinedInput
                                     id="outlined-adornment-password"
+                                    label="Password"
                                     type={values.showPassword ? 'text' : 'password'}
                                     value={values.password}
                                     onChange={handleChange('password')}
@@ -83,51 +83,26 @@ export default function RegisterPage() {
                 </Grid>
                 <Grid item>
                     <Box id="study-program-box">
-                        <TextField
-                            className={(classes.margin)} 
-                            variant="outlined"
-                            id="study-program-input"
-                            select
-                            label="Study Program"
-                            // value={currency}
-                            // onChange={handleChange}
-                            SelectProps={{
-                                native: true,
-                            }}
-                            helperText="Please select your Study Program"
-                            >
-                            {/* {currencies.map((option) => (
-                                <option key={option.value} value={option.value}>
-                                {option.label}
-                                </option>
-                            ))} */}
-                        </TextField>     
+                        <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
+                            <InputLabel htmlFor="outlined-study-program">Study Program</InputLabel>
+                            <Select native label="Study Program"/>
+                        </FormControl>     
                     </Box>
                 </Grid>
                 <Grid item>
                     <Box id="university-box">
-                        <TextField
-                            className={(classes.margin)} 
-                            variant="outlined"
-                            id="university-input"
-                            select
-                            label="University"
-                            // value={currency}
-                            // onChange={handleChange}
-                            SelectProps={{
-                                native: true,
-                            }}
-                            helperText="Please select your University"
-                            >
-                            {/* {currencies.map((option) => (
-                                <option key={option.value} value={option.value}>
-                                {option.label}
-                                </option>
-                            ))} */}
-                        </TextField> 
+                        <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
+                            <InputLabel htmlFor="outlined-university">University</InputLabel>
+                            <Select native label="Study Program"/>
+                        </FormControl>   
                     </Box>
                 </Grid>
                 <Grid item>
+                    <Box id="login-ref-box">
+                        <Link as="/login" href="/Login">
+                            <Button color="primary">Already have an account? Login here!</Button>
+                        </Link>
+                    </Box>
                     <Box id="new-account-box">
                         <Button variant="contained" color="primary">
                             Register
@@ -139,10 +114,16 @@ export default function RegisterPage() {
     )
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
+const useStyles = makeStyles((theme: Theme) =>    
+    createStyles({
     margin: {
       margin: theme.spacing(1),
+    },
+    card: {
+     padding: theme.spacing(2),
+     paddingRight: theme.spacing(4),
+     textAlign: "center",
+     color: theme.palette.text.primary
     },
   }),
 );
