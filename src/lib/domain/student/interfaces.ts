@@ -12,12 +12,14 @@ export interface IStudentRepository {
 export interface IUniversityRepository {
 
     getUniversityById: (u_id: number) => Promise<i.IUniversity>
+    getAllUniversity: () => Promise<i.IUniversity[]> 
 
 }
 
 export interface IStudyProgramRepository {
 
     getStudyProgramById: (sp_id: number) => Promise<i.IStudyProgram>
+    getAllStudyProgram: (sp_id: number) => Promise<i.IStudyProgram[]>
 
 }
 

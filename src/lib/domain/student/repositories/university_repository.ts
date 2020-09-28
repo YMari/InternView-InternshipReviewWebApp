@@ -18,6 +18,13 @@ class UniversityRepository implements i.IUniversityRepository {
         return uni
     }
 
+    async getAllUniversity() : Promise<e.IUniversity[]> {
+
+        const uni = db.university.findMany({})
+
+        return uni
+    }
+ 
 }
 
 

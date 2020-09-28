@@ -19,6 +19,13 @@ class StudyProgramRepository implements i.IStudyProgramRepository {
         
     }
     
+    async getAllStudyProgram(sp_id: number) : Promise<e.IStudyProgram[]>{
+
+        const pr = await db.studyProgram.findMany({})
+
+        return pr
+        
+    }
 }
 
 
