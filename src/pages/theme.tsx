@@ -30,6 +30,13 @@ const theme = createMuiTheme({
   typography: {
     fontFamily: 'Montserrat',
   },
+  overrides: {
+    MuiButton: {
+      root: {
+        textTransform: 'none'
+      }
+    }
+  }
 });
 
 export default theme

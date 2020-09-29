@@ -29,77 +29,68 @@ export default function RegisterPage() {
     };
 
     return(
-        <Box>
-            <Typography className={(classes.margin, classes.titlePage)}>InternView</Typography>
+        <Box className={(classes.margin)}>
+            <Typography className={(classes.titlePage)}>InternView</Typography>
             <Grid
             container
             direction="column"
             alignContent="center"
             justify="center"
             wrap='wrap'
-            style={{ minHeight: '70vh' }}
+            style={{ minHeight: '50vh' }}
+            spacing={4}
             >
                 <Card className={classes.card}>
                     <CardHeader className={(classes.titleCard)} title="Create Account"/>
-                    <Grid item>
-                        <Box id="name-box">
-                            <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
-                                <InputLabel htmlFor="outlined-email">Name</InputLabel>
-                                <OutlinedInput id="name-input" label="Name"  />
-                            </FormControl>
-                        </Box>
+                    <Grid item className={classes.gridItem}>
+                        <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
+                            <InputLabel htmlFor="outlined-email">Name</InputLabel>
+                            <OutlinedInput id="name-input" label="Name"  />
+                        </FormControl>
                     </Grid>
-                    <Grid item>
-                        <Box id="email-box">
-                            <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
-                                <InputLabel htmlFor="outlined-email">Email</InputLabel>
-                                <OutlinedInput id="email-input" label="Email"  />
-                            </FormControl>
-                        </Box>
+                    <Grid item className={classes.gridItem}>
+                        <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
+                            <InputLabel htmlFor="outlined-email">Email</InputLabel>
+                            <OutlinedInput id="email-input" label="Email"  />
+                        </FormControl>
                     </Grid>
-                    <Grid item>
-                        <Box id="password-box">
-                            <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
-                                <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-                                    <OutlinedInput
-                                        id="outlined-adornment-password"
-                                        label="Password"
-                                        type={values.showPassword ? 'text' : 'password'}
-                                        value={values.password}
-                                        onChange={handleChange('password')}
-                                        endAdornment={
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                            aria-label="toggle password visibility"
-                                            onClick={handleClickShowPassword}
-                                            onMouseDown={handleMouseDownPassword}
-                                            edge="end"
-                                            >
-                                            {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                                            </IconButton>
-                                        </InputAdornment>
-                                        }
-                                    />
-                            </FormControl>
-                        </Box>
+                    <Grid item className={classes.gridItem}>
+                        <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
+                            <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                                <OutlinedInput
+                                    id="outlined-adornment-password"
+                                    label="Password"
+                                    type={values.showPassword ? 'text' : 'password'}
+                                    value={values.password}
+                                    onChange={handleChange('password')}
+                                    endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={handleClickShowPassword}
+                                        onMouseDown={handleMouseDownPassword}
+                                        edge="end"
+                                        >
+                                        {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                    }
+                                />
+                        </FormControl>
                     </Grid>
-                    <Grid item>
-                        <Box id="study-program-box">
-                            <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
-                                <InputLabel htmlFor="outlined-study-program">Study Program</InputLabel>
-                                <Select native label="Study Program"/>
-                            </FormControl>     
-                        </Box>
+                    <Grid item className={classes.gridItem}>
+                        <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
+                            <InputLabel htmlFor="outlined-study-program">Study Program</InputLabel>
+                            <Select native label="Study Program"/>
+                        </FormControl>     
                     </Grid>
-                    <Grid item>
-                        <Box id="university-box">
-                            <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
-                                <InputLabel htmlFor="outlined-university">University</InputLabel>
-                                <Select native label="Study Program"/>
-                            </FormControl>   
-                        </Box>
+                    <Grid item className={classes.gridItem}>
+                        <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
+                            <InputLabel htmlFor="outlined-university">University</InputLabel>
+                            <Select native label="Study Program"/>
+                        </FormControl>   
                     </Grid>
-                    <Grid item>
+                    <Grid item className={classes.gridItem}>
                         <Box id="login-ref-box">
                             <Link as="/login" href="/Login">
                                 <Button color="primary">
@@ -125,13 +116,14 @@ const useStyles = makeStyles((theme: Theme) =>
         margin: theme.spacing(1),
     },
     card: {
-        padding: theme.spacing(5),
+        padding: theme.spacing(4, 12),
         textAlign: "center",
         color: theme.palette.text.primary,
-        position: "inherit",
-        display: 'block',
-        width: '30vw',
-        height: '32vw'
+        // width: '30vw',
+        // height: '32vw'
+    },
+    container: {
+        gridGap: theme.spacing(3),
     },
     titlePage: {
         textAlign: "center",
@@ -142,6 +134,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     titleCard: {
         color: theme.palette.text.hint,
+    },
+    gridItem: {
+        paddingBottom: theme.spacing(1)
     },
   }),
 );
