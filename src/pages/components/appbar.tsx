@@ -1,12 +1,13 @@
 import React from 'react';
 import { fade, makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { Button, AppBar, Toolbar, IconButton, Typography, InputBase, Badge, MenuItem, Menu } from '@material-ui/core';
+import { Button, AppBar, Toolbar, IconButton, Typography, InputBase, Badge, MenuItem, Menu, Grid } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import Link from 'next/link'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -21,6 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
         [theme.breakpoints.up('sm')]: {
             display: 'block',
         },
+        color: theme.palette.primary.contrastText
     },
     search: {
         position: 'relative',
@@ -130,7 +132,7 @@ export default function MainAppbar() {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-        <MenuItem>
+        {/* <MenuItem>
             <IconButton aria-label="show 4 new mails" color="inherit">
             <Badge badgeContent={4} color="secondary">
                 <MailIcon />
@@ -145,7 +147,7 @@ export default function MainAppbar() {
             </Badge>
             </IconButton>
             <p>Notifications</p>
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem onClick={handleProfileMenuOpen}>
             <IconButton
             aria-label="account of current user"
@@ -161,23 +163,24 @@ export default function MainAppbar() {
     );
 
   return (
-    <div className={classes.grow}>
+    <div>
       <AppBar position="static">
         <Toolbar>
-            <IconButton
+            {/* <IconButton
                 edge="start"
                 className={classes.menuButton}
                 color="inherit"
                 aria-label="open drawer"
             >
                 <MenuIcon />
-            </IconButton>
-            <Button
-                classes={{label: classes.label}}>
-                <Typography className={classes.title} variant="h6" noWrap>
-                    InternView
-                </Typography>
-            </Button>
+            </IconButton> */}
+            <Link as='/' href="/">
+                <Button classes={{label: classes.label}}>
+                    <Typography className={classes.title} variant="h6" noWrap>
+                        InternView
+                    </Typography>
+                </Button>
+            </Link>
             <div className={classes.search}>
                 <div className={classes.searchIcon}>
                 <SearchIcon />
@@ -193,7 +196,7 @@ export default function MainAppbar() {
             </div>
             <div className={classes.grow} />
             <div className={classes.sectionDesktop}>
-                <IconButton aria-label="show 4 new mails" color="inherit">
+                {/* <IconButton aria-label="show 4 new mails" color="inherit">
                 <Badge badgeContent={4} color="secondary">
                     <MailIcon />
                 </Badge>
@@ -202,8 +205,9 @@ export default function MainAppbar() {
                 <Badge badgeContent={17} color="secondary">
                     <NotificationsIcon />
                 </Badge>
-                </IconButton>
+                </IconButton> */}
                 <IconButton
+                // className={classes.profile}
                 edge="end"
                 aria-label="account of current user"
                 aria-controls={menuId}
