@@ -14,8 +14,30 @@ class StudentRepository implements i.IStudentRepository {
     
     async getStudentByEmail(st_email: string): Promise<e.IStudentDetailed> {
 
-        
-        return null;
+      try{
+            const result = await db.student.findOne({
+
+                where:{ email: st_email },
+                select: {
+                    name:true, email:true, studyprogram:true, university:true, id:true
+                }            
+            })
+    
+            if (result == null) {
+                await db.$disconnect()
+                return null
+            }
+
+            await db.$disconnect()
+            return result
+
+        } catch ( e ){
+
+            await db.$disconnect()
+
+            return null
+
+        }
     }
 
     async updateStudent(st_id:number, st_target: e.IStudentWithPassword): Promise<e.IStudentDetailed> {

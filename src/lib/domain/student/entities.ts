@@ -13,14 +13,14 @@ export interface IStudentWithPassword extends IStudentDetailedIds {
 }
 
 export interface IUniversity {
-    id: number,
+    id: number | undefined,
     name: string,
     location: string
 } 
 
 export interface IStudyProgram {
-    id: number,
-    name: string
+    id: number | undefined,
+    name: string 
 }
 
 export interface IStudentDetailed extends IStudent {
