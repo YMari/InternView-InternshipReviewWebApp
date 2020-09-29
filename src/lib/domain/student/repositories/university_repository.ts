@@ -20,7 +20,7 @@ class UniversityRepository implements i.IUniversityRepository {
 
     async getAllUniversity() : Promise<e.IUniversity[]> {
 
-        const uni = db.university.findMany({})
+        const uni = await db.university.findMany({})
 
         return uni
     }
