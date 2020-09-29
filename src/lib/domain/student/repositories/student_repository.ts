@@ -14,7 +14,7 @@ class StudentRepository implements i.IStudentRepository {
     
     async getStudentByEmail(st_email: string): Promise<e.IStudentDetailed> {
 
-        try{
+      try{
             const result = await db.student.findOne({
 
                 where:{ email: st_email },
