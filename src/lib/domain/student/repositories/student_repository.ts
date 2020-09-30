@@ -9,12 +9,7 @@ class StudentRepository implements i.IStudentRepository {
 
     async getStudentById(st_id: number): Promise<e.IStudentDetailed> {
         
-        const st = db.e.IStudentDetailed({
-            where: {
-                id: st_id
-            }
-        })
-        return st;
+        return null;
     }
     
     async getStudentByEmail(st_email: string): Promise<e.IStudentDetailed> {

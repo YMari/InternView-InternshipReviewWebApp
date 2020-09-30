@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import { ThemeProvider } from '@material-ui/core/styles';
@@ -6,6 +6,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from './theme';
 import { Container } from '@material-ui/core';
 import MainAppbar from './components/appbar';
+import BackToTop from './components/scrollTop'
+import Universities from './universities/index'
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
@@ -28,6 +30,8 @@ export default function MyApp(props) {
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
         <MainAppbar/>
+        {/* {showAppbar} */}
+        {/* <BackToTop {...pageProps}/> */}
         <Container maxWidth={false}>
             <Component {...pageProps} />
         </Container>
@@ -40,3 +44,6 @@ MyApp.propTypes = {
   Component: PropTypes.elementType.isRequired,
   pageProps: PropTypes.object.isRequired,
 };
+
+const showAppbar = (Universities.withoutAppBar ? <MainAppbar/> : null)
+// const withoutAppBar = Universities.withoutAppBar

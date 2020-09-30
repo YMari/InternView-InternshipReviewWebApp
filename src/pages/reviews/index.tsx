@@ -1,4 +1,6 @@
+import { Box } from '@material-ui/core';
 import Link from 'next/link';
+import React from 'react';
 
 const reviewList = [
     {name: 'Review 1'},
@@ -10,11 +12,11 @@ export default function Reviews() {
     return (
         <>
             {reviewList.map(e => (
-                <div>
+                <Box>
                     <Link href="">
                         <a>{e.name}</a>
                     </Link>
-                </div>
+                </Box>
             ))}
         </>
     )  

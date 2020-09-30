@@ -10,7 +10,7 @@ export default async function register(
 ) {
 //   const db = await sqlite.open('./mydb.sqlite');
 
-  const ser = container.resolve(st.StudentService)
+  const ser = container.get<st.student_interfaces.IStudentService>(st.S_TYPES.IStudentService)
 
   if (req.method === 'POST') {
     hash(req.body.password, 12, async function(err, hash) {
