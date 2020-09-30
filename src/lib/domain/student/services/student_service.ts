@@ -25,7 +25,47 @@ class StudentService implements i.IStudentService {
     
     async registerStudent(st: e.IStudentWithPassword): Promise<i.IStudentServiceOutput<e.IStudentDetailed>>{
 
-        return null;
+        const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        
+        if (!emailRegex.test(st.email)){
+            return {
+                status: "Error",
+                message:"Invalid email",
+                data:null
+            }
+        }
+
+        const checkIfExists = await this._studentRepository.getStudentByEmail(st.email)
+
+        if (checkIfExists != null) {
+            return {
+                status: "Error",
+                message: "Student already exists",
+                data:null
+            }
+        }
+
+        const result = await this._studentRepository.createStudent(st)
+
+        if (result == null) {
+            return {
+                status:"Error",
+                message: "Unable to create student",
+                data:null
+            }
+        } 
+
+        return {
+            status:"Ok",
+            message:"Student created successfully",
+            data:{
+                email:result.email,
+                name:result.name,
+                university:result.university,
+                studyprogram:result.studyprogram
+            }
+        };
+
     };
 
 }
