@@ -1,6 +1,7 @@
 export interface IStudent {
     name:string | undefined;
     email:string | undefined;
+    studentId: string | undefined;
 }
 
 export interface IStudentDetailedIds extends IStudent {
