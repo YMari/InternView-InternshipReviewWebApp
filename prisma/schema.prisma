@@ -1,91 +1,92 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
-}
-
 generator client {
   provider = "prisma-client-js"
 }
 
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
 model University {
-  id Int @default(autoincrement()) @id
-  name String @unique
-  location String 
+  id       Int       @default(autoincrement()) @id
+  name     String    @unique
+  location String
+  imageUrl String?
+  Review   Review[]
+  Student  Student[]
 }
 
 model StudyProgram {
-  id Int @default(autoincrement()) @id
-  name String @unique
+  id      Int       @default(autoincrement()) @id
+  name    String    @unique
+  Review  Review[]
+  Student Student[]
 }
 
 model Student {
-  id Int @default(autoincrement()) @id  
-  name String 
-  email String @unique
-  passwordHash String
-
-  studyprogram StudyProgram @relation(fields: [studyProgramId], references: [id])
+  id             Int          @default(autoincrement()) @id
+  name           String
+  email          String       @unique
+  passwordHash   String
   studyProgramId Int
-  university University @relation(fields: [univeristyId], references: [id])
-  univeristyId Int 
+  univeristyId   Int
+  studyprogram   StudyProgram @relation(fields: [studyProgramId], references: [id])
+  university     University   @relation(fields: [univeristyId], references: [id])
+  Rating         Rating[]
+  Report         Report[]
+  Review         Review[]
 }
 
 model Report {
-  id Int @default(autoincrement()) @id
-  reasons String
-
-  review Review @relation(fields: [reviewId], references: [id])
-  reviewId Int
-  student Student @relation(fields: [studentId], references: [id])
-  studentId Int 
-
+  id        Int     @default(autoincrement()) @id
+  reasons   String
+  reviewId  Int
+  studentId Int
+  review    Review  @relation(fields: [reviewId], references: [id])
+  student   Student @relation(fields: [studentId], references: [id])
 }
 
 model Company {
-  id Int @default(autoincrement()) @id
-  name String @unique
-  imageUrl String 
+  id       Int      @default(autoincrement()) @id
+  name     String   @unique
+  imageUrl String
+  Review   Review[]
 }
 
 model Review {
-  id Int @default(autoincrement()) @id
-  recommendation String
-  interviewQuestions String
-  dateCreated DateTime @default(now())
-  anonymous Boolean @default(false)
-  experienceType String 
-  seekingDegree String 
-  helpfulScore Int
-  location String 
-  salary Int
-  duration Int
+  id                        Int          @default(autoincrement()) @id
+  recommendation            String
+  interviewQuestions        String
+  dateCreated               DateTime     @default(now())
+  anonymous                 Boolean      @default(false)
+  experienceType            String
+  seekingDegree             String
+  helpfulScore              Int
+  location                  String
+  salary                    Int
+  duration                  Int
   interviewDifficultyRating Int
-  acceptedStatus Boolean @default(false)
-  experienceRating Int
-  reviewTitle String
-
-  studyProgram StudyProgram @relation(fields: [studyProgramId], references: [id])
-  studyProgramId Int
-  university University @relation(fields: [universityId], references: [id])
-  universityId Int 
-  company Company @relation(fields: [companyId], references: [id])
-  companyId Int
-  author Student @relation(fields: [authorId], references: [id])
-  authorId Int 
-  
+  acceptedStatus            Boolean      @default(false)
+  experienceRating          Int
+  reviewTitle               String
+  studyProgramId            Int
+  universityId              Int
+  companyId                 Int
+  authorId                  Int
+  author                    Student      @relation(fields: [authorId], references: [id])
+  company                   Company      @relation(fields: [companyId], references: [id])
+  studyProgram              StudyProgram @relation(fields: [studyProgramId], references: [id])
+  university                University   @relation(fields: [universityId], references: [id])
+  Rating                    Rating[]
+  Report                    Report[]
 }
 
 model Rating {
-  id Int @default(autoincrement()) @id
-  helpfulRate Int 
-
-  review Review @relation(fields: [reviewId], references: [id])
-  reviewId Int
-  student Student @relation(fields: [studentId], references: [id])
-  studentId Int 
+  id          Int     @default(autoincrement()) @id
+  helpfulRate Int
+  reviewId    Int
+  studentId   Int
+  review      Review  @relation(fields: [reviewId], references: [id])
+  student     Student @relation(fields: [studentId], references: [id])
 }
-
 
