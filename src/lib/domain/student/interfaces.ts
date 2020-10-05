@@ -5,6 +5,7 @@ export interface IStudentRepository {
     createStudent: (st: i.IStudentWithPassword) => Promise<i.IStudentDetailed>;
     getStudentById: (st_id: number) => Promise<i.IStudentDetailed>;
     getStudentByEmail: (st_email: string) => Promise<i.IStudentDetailed>;
+    getStudentByEmailWithPassword: (st_email: string) => Promise<i.IStudentWithPasswordSimple>;
     updateStudent: (st_id: number, st_target: i.IStudentWithPassword) => Promise<i.IStudentDetailed>;
 
 }

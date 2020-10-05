@@ -12,6 +12,10 @@ export interface IStudentWithPassword extends IStudentDetailedIds {
     passwordHash: string;
 }
 
+export interface IStudentWithPasswordSimple extends IStudent {
+    passwordHash:string
+}
+
 export interface IUniversity {
     id: number | undefined,
     name: string,
