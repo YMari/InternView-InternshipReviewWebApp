@@ -1,18 +1,19 @@
-import * as i from '../interfaces';
-import * as e from '../entities';
-import db from '../../../infrastructure/prisma-cli'
+import {student_interfaces, entities} from '../../domain/student'
+
+import db from '../prisma-cli'
 import { injectable } from 'inversify'
 import 'reflect-metadata'
 
-@injectable()
-class StudentRepository implements i.IStudentRepository {
 
-    async getStudentById(st_id: number): Promise<e.IStudentDetailed> {
+@injectable()
+class StudentRepository implements student_interfaces.IStudentRepository {
+
+    async getStudentById(st_id: number): Promise<entities.IStudentDetailed> {
         
         return null;
     }
     
-    async getStudentByEmail(st_email: string): Promise<e.IStudentDetailed> {
+    async getStudentByEmail(st_email: string): Promise<entities.IStudentDetailed> {
 
       try{
             const result = await db.student.findOne({
@@ -40,12 +41,12 @@ class StudentRepository implements i.IStudentRepository {
         }
     }
 
-    async updateStudent(st_id:number, st_target: e.IStudentWithPassword): Promise<e.IStudentDetailed> {
+    async updateStudent(st_id:number, st_target: entities.IStudentWithPassword): Promise<entities.IStudentDetailed> {
 
         return null;
     }
     
-    async createStudent(st: e.IStudentWithPassword): Promise<e.IStudentDetailed> {
+    async createStudent(st: entities.IStudentWithPassword): Promise<entities.IStudentDetailed> {
         
         try {
 
