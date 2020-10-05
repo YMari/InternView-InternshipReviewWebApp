@@ -13,22 +13,24 @@ export default async function register(
   const ser = container.get<app.application_interfaces.IAuthenticationService>(app.A_TYPES.IAuthenticationService)
 
   if (req.method === 'POST') {
-    hash(req.body.password, 12, async function(err, hash) {
-      // Store hash in your password DB.
+    
 
-      const output = await ser.register(
-        {
-            name: req.body.name,
-            email: req.body.email,
-            universityId: req.body.universityId,
-            studyProgramId: req.body.studyProgramId,
-            passwordHash: hash
-        }
-      )
+    const output = await ser.register(
+      {
+          name: req.body.name,
+          email: req.body.email,
+          universityId: req.body.universityId,
+          studyProgramId: req.body.studyProgramId,
+          passwordHash: req.body.password
+      }
+    )
 
+    if ( output.status === "Error" ) {
+      res.status(400)
+    }
       
-      res.json(output);
-    });
+    res.json(output);
+    
   } else {
     res.status(405).json({ message: 'We only support POST' });
   }
