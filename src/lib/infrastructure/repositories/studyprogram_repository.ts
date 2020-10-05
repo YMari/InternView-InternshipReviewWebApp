@@ -1,13 +1,12 @@
-import * as i from '../interfaces'
-import * as e from '../entities'
-import db from '../../../infrastructure/prisma-cli'
+import {student_interfaces, entities} from '../../domain/student'
+import db from '../prisma-cli'
 import { injectable } from 'inversify'
 import 'reflect-metadata'
 
 @injectable()
-class StudyProgramRepository implements i.IStudyProgramRepository {
+class StudyProgramRepository implements student_interfaces.IStudyProgramRepository {
     
-    async getStudyProgramById(sp_id: number) : Promise<e.IStudyProgram>{
+    async getStudyProgramById(sp_id: number) : Promise<entities.IStudyProgram>{
 
         const pr = await db.studyProgram.findOne({
             where:{
@@ -19,7 +18,7 @@ class StudyProgramRepository implements i.IStudyProgramRepository {
         
     }
     
-    async getAllStudyProgram() : Promise<e.IStudyProgram[]>{
+    async getAllStudyProgram() : Promise<entities.IStudyProgram[]>{
 
         const pr = await db.studyProgram.findMany({})
 
