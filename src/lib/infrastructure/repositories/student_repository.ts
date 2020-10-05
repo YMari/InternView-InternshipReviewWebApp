@@ -8,11 +8,6 @@ import 'reflect-metadata'
 @injectable()
 class StudentRepository implements student_interfaces.IStudentRepository {
 
-    async getStudentById(st_id: number): Promise<entities.IStudentDetailed> {
-        
-        return null;
-    }
-    
     async getStudentByEmail(st_email: string): Promise<entities.IStudentDetailed> {
 
       try{
@@ -20,7 +15,7 @@ class StudentRepository implements student_interfaces.IStudentRepository {
 
                 where:{ email: st_email },
                 select: {
-                    name:true, email:true, studyprogram:true, university:true, id:true
+                    name:true, email:true, studyprogram:true, university:true
                 }            
             })
     
@@ -41,10 +36,37 @@ class StudentRepository implements student_interfaces.IStudentRepository {
         }
     }
 
-    async updateStudent(st_id:number, st_target: entities.IStudentWithPassword): Promise<entities.IStudentDetailed> {
+    async updateStudent(st_email: string, st_target: entities.IStudentWithPassword): Promise<entities.IStudentDetailed> {
 
-        return null;
+
+    try{
+        const result = await db.student.update({
+
+            where:{ email: st_email },
+            data: {
+                name: st_target.name,
+                university: {
+                    connect: { id:st_target.universityId }
+                },
+                studyprogram: {
+                    connect: { id:st_target.studyProgramId }
+                }
+            },
+            select: {
+                name:true, email:true, studyprogram:true, university:true
+            }            
+        })
+
+        if (result == null) {
+            await db.$disconnect()
+            return null
+        }
     }
+    catch ( e ) {
+        await db.$disconnect()
+        return null
+    } 
+}
     
     async createStudent(st: entities.IStudentWithPassword): Promise<entities.IStudentDetailed> {
         

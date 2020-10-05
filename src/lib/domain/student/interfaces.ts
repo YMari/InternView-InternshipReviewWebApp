@@ -3,9 +3,8 @@ import * as i from './entities'
 export interface IStudentRepository {
 
     createStudent: (st: i.IStudentWithPassword) => Promise<i.IStudentDetailed>;
-    getStudentById: (st_id: number) => Promise<i.IStudentDetailed>;
     getStudentByEmail: (st_email: string) => Promise<i.IStudentDetailed>;
-    updateStudent: (st_id: number, st_target: i.IStudentWithPassword) => Promise<i.IStudentDetailed>;
+    updateStudent: (st_email: string, st_target: i.IStudentWithPassword) => Promise<i.IStudentDetailed>;
 
 }
 
