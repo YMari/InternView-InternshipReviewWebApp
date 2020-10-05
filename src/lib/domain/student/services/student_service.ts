@@ -21,7 +21,7 @@ class StudentService implements i.IStudentService {
 
         const checkIfExists = await this._studentRepository.getStudentByEmail(st.email)
 
-        if (checkIfExists != null) {
+        if (checkIfExists !== null) {
             return {
                 status: "Error",
                 message: "Student already exists",
@@ -31,7 +31,7 @@ class StudentService implements i.IStudentService {
 
         const result = await this._studentRepository.createStudent(st)
 
-        if (result == null) {
+        if (result === null) {
             return {
                 status:"Error",
                 message: "Unable to create student",
