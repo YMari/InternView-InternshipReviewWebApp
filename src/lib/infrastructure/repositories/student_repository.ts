@@ -38,6 +38,7 @@ class StudentRepository implements student_interfaces.IStudentRepository {
 
     async updateStudent(st_email: string, st_target: entities.IStudentWithPassword): Promise<entities.IStudentDetailed> {
 
+        // Need to verify for null entries on the form.
 
     try{
         const result = await db.student.update({
@@ -56,11 +57,8 @@ class StudentRepository implements student_interfaces.IStudentRepository {
                 name:true, email:true, studyprogram:true, university:true
             }            
         })
-
-        if (result == null) {
-            await db.$disconnect()
-            return null
-        }
+        await db.$disconnect()
+            return result
     }
     catch ( e ) {
         await db.$disconnect()
@@ -101,10 +99,7 @@ class StudentRepository implements student_interfaces.IStudentRepository {
             return null
 
         } 
-
     }
-
-
 }
 
 
