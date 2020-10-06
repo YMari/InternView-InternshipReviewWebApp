@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { stringify } from 'querystring';
 import container from '../../../lib/container'
 import * as app from '../../../lib/application'
+import {ERROR_MESSAGE} from '../../../lib/application/constants';
 
 export default async function register(
   req: NextApiRequest,
@@ -22,7 +23,7 @@ export default async function register(
       }
     )
 
-    if ( output.status === "Error" ) {
+    if ( output.status === ERROR_MESSAGE ) {
       res.status(400)
     }
 
