@@ -75,4 +75,11 @@ export default class AuthenticationService implements i.IAuthenticationService {
     }
     
 
+    async validate(ck: i.SerializedCookie): Promise<i.IAuthenticationServiceOutput<IStudentDetailed>> {
+
+        
+
+        return null
+    } 
+
 }
