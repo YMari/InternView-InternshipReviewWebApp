@@ -38,25 +38,34 @@ class StudentRepository implements student_interfaces.IStudentRepository {
 
     async updateStudent(st_email: string, st_target: entities.IStudentWithPassword): Promise<entities.IStudentDetailed> {
 
-        // Need to verify for null entries on the form.
-
-    try{
-        const result = await db.student.update({
-
+    const student = this.getStudentByEmail(st_email);
+    var update = {
             where:{ email: st_email },
             data: {
-                name: st_target.name,
-                university: {
-                    connect: { id:st_target.universityId }
-                },
-                studyprogram: {
-                    connect: { id:st_target.studyProgramId }
-                }
+                name: (await student).name,
+                university: { connect: {id:(await student).university.id} },
+                studyprogram: { connect: {id:(await student).studyprogram.id} },
             },
             select: {
                 name:true, email:true, studyprogram:true, university:true
             }            
-        })
+        }
+    if (st_target.name){
+        update.data.name = st_target.name;
+    }
+    if (st_target.universityId){
+        update.data.university = {
+            connect: { id :st_target.universityId }
+        }
+    }
+    if (st_target.studyProgramId){
+        update.data.studyprogram = {
+            connect: { id:st_target.studyProgramId }
+        }
+    }
+
+    try{
+        const result = await db.student.update(update)
         await db.$disconnect()
             return result
     }
