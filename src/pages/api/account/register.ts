@@ -8,13 +8,10 @@ export default async function register(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-//   const db = await sqlite.open('./mydb.sqlite');
 
   const ser = container.get<app.application_interfaces.IAuthenticationService>(app.A_TYPES.IAuthenticationService)
 
   if (req.method === 'POST') {
-    
-
     const output = await ser.register(
       {
           name: req.body.name,
@@ -28,7 +25,7 @@ export default async function register(
     if ( output.status === "Error" ) {
       res.status(400)
     }
-      
+
     res.json(output);
     
   } else {
