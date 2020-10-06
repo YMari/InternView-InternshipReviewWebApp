@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { stringify } from 'querystring';
 import container from '../../../lib/container';
 import * as app from '../../../lib/application';
+import {ERROR_MESSAGE} from '../../../lib/application/constants';
 import {sign} from 'jsonwebtoken';
 
 export default async function login(
@@ -10,6 +11,7 @@ export default async function login(
   res: NextApiResponse
 ) {
   const ser = container.get<app.application_interfaces.IAuthenticationService>(app.A_TYPES.IAuthenticationService)
+  
 
   if (req.method === 'POST') {
     const output = await ser.authenticate(
@@ -20,7 +22,7 @@ export default async function login(
     )
 
     // Error checking, revise if error message is changed
-    if ( output.status === "Error" ) {
+    if ( output.status === ERROR_MESSAGE ) {
       res.status(400)
     }
 
