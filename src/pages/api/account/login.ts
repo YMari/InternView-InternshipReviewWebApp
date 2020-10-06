@@ -5,7 +5,7 @@ import container from '../../../lib/container';
 import * as app from '../../../lib/application';
 import {sign} from 'jsonwebtoken';
 
-export default async function register(
+export default async function login(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
