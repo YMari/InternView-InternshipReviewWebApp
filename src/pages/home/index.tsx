@@ -1,7 +1,6 @@
 import { Box } from '@material-ui/core'
 import Link from 'next/link'
 import React from 'react'
-import MainAppbar from '../components/appbar'
 
 export default function Home() {
     return(
@@ -22,12 +21,12 @@ export default function Home() {
                 </Link>
             </Box>
             <Box>
-                <Link as="/login" href="./Login">
+                <Link href="/login">
                     <a>Login Page</a>
                 </Link>
             </Box>
             <Box>
-                <Link as="/register" href="./Register">
+                <Link href="/register">
                     <a>Register Page</a>
                 </Link>
             </Box>

@@ -1,5 +1,5 @@
-import { Box, Button, Card, CardHeader, createStyles, Divider, FormControl, Grid, IconButton, 
-    InputAdornment, InputLabel, makeStyles, OutlinedInput, Theme, Typography } from "@material-ui/core";
+import { Box, Button, Card, CardHeader, createStyles, FormControl, Grid, IconButton, 
+    InputAdornment, InputLabel, makeStyles, NativeSelect, OutlinedInput, Select, TextField, Theme, Typography } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import Link from "next/link";
 import React from "react";
@@ -9,7 +9,7 @@ interface State {
     showPassword: boolean;
 }
 
-export default function LoginPage() {
+export default function RegisterPage() {
     const classes = useStyles();
     const [values, setValues] = React.useState<State>({
       password: '',
@@ -41,7 +41,13 @@ export default function LoginPage() {
             spacing={4}
             >
                 <Card className={classes.card}>
-                    <CardHeader className={(classes.titleCard)} title="Sign In"/>
+                    <CardHeader className={(classes.titleCard)} title="Create Account"/>
+                    <Grid item className={classes.gridItem}>
+                        <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
+                            <InputLabel htmlFor="outlined-email">Name</InputLabel>
+                            <OutlinedInput id="name-input" label="Name"  />
+                        </FormControl>
+                    </Grid>
                     <Grid item className={classes.gridItem}>
                         <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
                             <InputLabel htmlFor="outlined-email">Email</InputLabel>
@@ -53,6 +59,7 @@ export default function LoginPage() {
                             <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                                 <OutlinedInput
                                     id="outlined-adornment-password"
+                                    label="Password"
                                     type={values.showPassword ? 'text' : 'password'}
                                     value={values.password}
                                     onChange={handleChange('password')}
@@ -72,28 +79,35 @@ export default function LoginPage() {
                         </FormControl>
                     </Grid>
                     <Grid item className={classes.gridItem}>
-                        <Button variant="contained" color="secondary">
-                            <Typography>Log In</Typography>
-                        </Button>
+                        <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
+                            <InputLabel htmlFor="outlined-study-program">Study Program</InputLabel>
+                            <Select native label="Study Program"/>
+                        </FormControl>     
                     </Grid>
                     <Grid item className={classes.gridItem}>
-                        <Button color="primary">
-                            <Typography>Forgot Password?</Typography>
-                        </Button>
+                        <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
+                            <InputLabel htmlFor="outlined-university">University</InputLabel>
+                            <Select native label="Study Program"/>
+                        </FormControl>   
                     </Grid>
-                    <Divider/>
                     <Grid item className={classes.gridItem}>
-                        <Typography>Don't have an account?</Typography>
-                        <Link as="/register" href="/Register">
-                            <Button variant="contained" color="primary">
-                                <Typography>Create New Account</Typography>
+                        <Box id="login-ref-box">
+                            <Link  href="/login">
+                                <Button color="primary">
+                                    <Typography>Already have an account?</Typography>
+                                </Button>
+                            </Link>
+                        </Box>
+                        <Box id="new-account-box">
+                            <Button variant="contained" color="secondary">
+                                <Typography>Register</Typography>
                             </Button>
-                        </Link>
+                        </Box>
                     </Grid>
                 </Card>
             </Grid>
-        </Box>     
-    )   
+        </Box>         
+    )
 }
 
 const useStyles = makeStyles((theme: Theme) =>    
@@ -124,8 +138,5 @@ const useStyles = makeStyles((theme: Theme) =>
     gridItem: {
         paddingBottom: theme.spacing(1)
     },
-    // background: {
-    //     backgroundImage: `url(/static/backgroundImage.png)`
-    // }
   }),
 );
