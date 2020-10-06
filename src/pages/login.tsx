@@ -85,7 +85,7 @@ export default function LoginPage() {
                     <Divider/>
                     <Grid item className={classes.gridItem}>
                         <Typography>Don't have an account?</Typography>
-                        <Link as="/register" href="/Register">
+                        <Link  href="/register">
                             <Button variant="contained" color="primary">
                                 <Typography>Create New Account</Typography>
                             </Button>

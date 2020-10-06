@@ -92,7 +92,7 @@ export default function RegisterPage() {
                     </Grid>
                     <Grid item className={classes.gridItem}>
                         <Box id="login-ref-box">
-                            <Link as="/login" href="/Login">
+                            <Link  href="/login">
                                 <Button color="primary">
                                     <Typography>Already have an account?</Typography>
                                 </Button>
