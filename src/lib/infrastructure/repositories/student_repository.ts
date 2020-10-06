@@ -38,13 +38,13 @@ class StudentRepository implements student_interfaces.IStudentRepository {
 
     async updateStudent(st_email: string, st_target: entities.IStudentWithPassword): Promise<entities.IStudentDetailed> {
 
-    const student = this.getStudentByEmail(st_email);
-    var update = {
+    const student = await this.getStudentByEmail(st_email);
+    let update = {
             where:{ email: st_email },
             data: {
-                name: (await student).name,
-                university: { connect: {id:(await student).university.id} },
-                studyprogram: { connect: {id:(await student).studyprogram.id} },
+                name: student.name,
+                university: { connect: {id: student.university.id} },
+                studyprogram: { connect: {id: student.studyprogram.id} },
             },
             select: {
                 name:true, email:true, studyprogram:true, university:true
