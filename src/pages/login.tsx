@@ -1,5 +1,5 @@
-import { Box, Button, Card, CardHeader, createStyles, FormControl, Grid, IconButton, 
-    InputAdornment, InputLabel, makeStyles, NativeSelect, OutlinedInput, Select, TextField, Theme, Typography } from "@material-ui/core";
+import { Box, Button, Card, CardHeader, createStyles, Divider, FormControl, Grid, IconButton, 
+    InputAdornment, InputLabel, makeStyles, OutlinedInput, Theme, Typography } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import Link from "next/link";
 import React from "react";
@@ -9,7 +9,7 @@ interface State {
     showPassword: boolean;
 }
 
-export default function RegisterPage() {
+export default function LoginPage() {
     const classes = useStyles();
     const [values, setValues] = React.useState<State>({
       password: '',
@@ -41,13 +41,7 @@ export default function RegisterPage() {
             spacing={4}
             >
                 <Card className={classes.card}>
-                    <CardHeader className={(classes.titleCard)} title="Create Account"/>
-                    <Grid item className={classes.gridItem}>
-                        <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
-                            <InputLabel htmlFor="outlined-email">Name</InputLabel>
-                            <OutlinedInput id="name-input" label="Name"  />
-                        </FormControl>
-                    </Grid>
+                    <CardHeader className={(classes.titleCard)} title="Sign In"/>
                     <Grid item className={classes.gridItem}>
                         <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
                             <InputLabel htmlFor="outlined-email">Email</InputLabel>
@@ -79,35 +73,28 @@ export default function RegisterPage() {
                         </FormControl>
                     </Grid>
                     <Grid item className={classes.gridItem}>
-                        <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
-                            <InputLabel htmlFor="outlined-study-program">Study Program</InputLabel>
-                            <Select native label="Study Program"/>
-                        </FormControl>     
+                        <Button variant="contained" color="secondary">
+                            <Typography>Log In</Typography>
+                        </Button>
                     </Grid>
                     <Grid item className={classes.gridItem}>
-                        <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
-                            <InputLabel htmlFor="outlined-university">University</InputLabel>
-                            <Select native label="Study Program"/>
-                        </FormControl>   
+                        <Button color="primary">
+                            <Typography>Forgot Password?</Typography>
+                        </Button>
                     </Grid>
+                    <Divider/>
                     <Grid item className={classes.gridItem}>
-                        <Box id="login-ref-box">
-                            <Link as="/login" href="/Login">
-                                <Button color="primary">
-                                    <Typography>Already have an account?</Typography>
-                                </Button>
-                            </Link>
-                        </Box>
-                        <Box id="new-account-box">
-                            <Button variant="contained" color="secondary">
-                                <Typography>Register</Typography>
+                        <Typography>Don't have an account?</Typography>
+                        <Link  href="/register">
+                            <Button variant="contained" color="primary">
+                                <Typography>Create New Account</Typography>
                             </Button>
-                        </Box>
+                        </Link>
                     </Grid>
                 </Card>
             </Grid>
-        </Box>         
-    )
+        </Box>     
+    )   
 }
 
 const useStyles = makeStyles((theme: Theme) =>    
@@ -138,5 +125,8 @@ const useStyles = makeStyles((theme: Theme) =>
     gridItem: {
         paddingBottom: theme.spacing(1)
     },
+    // background: {
+    //     backgroundImage: `url(/static/backgroundImage.png)`
+    // }
   }),
 );

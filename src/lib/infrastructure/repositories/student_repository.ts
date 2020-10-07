@@ -7,6 +7,34 @@ import 'reflect-metadata'
 
 @injectable()
 class StudentRepository implements student_interfaces.IStudentRepository {
+    
+    
+    async getStudentByEmailWithPassword(st_email: string): Promise<entities.IStudentWithPasswordSimple>{
+        try{
+            let result = await db.student.findOne({
+
+                where:{ email: st_email },
+                select: {
+                    name:true, email:true, passwordHash:true
+                }            
+            })
+    
+            if (result == null) {
+                await db.$disconnect()
+                return null
+            }
+
+            await db.$disconnect()
+            return result
+
+        } catch ( e ){
+
+            await db.$disconnect()
+
+            return null
+
+        }
+    }
 
     async getStudentByEmail(st_email: string): Promise<entities.IStudentDetailed> {
 
