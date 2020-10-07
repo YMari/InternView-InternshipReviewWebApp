@@ -36,11 +36,6 @@ class StudentRepository implements student_interfaces.IStudentRepository {
         }
     }
 
-    async getStudentById(st_id: number): Promise<entities.IStudentDetailed> {
-        
-        return null;
-    }
-    
     async getStudentByEmail(st_email: string): Promise<entities.IStudentDetailed> {
 
       try{
@@ -48,7 +43,7 @@ class StudentRepository implements student_interfaces.IStudentRepository {
 
                 where:{ email: st_email },
                 select: {
-                    name:true, email:true, studyprogram:true, university:true, id:true
+                    name:true, email:true, studyprogram:true, university:true
                 }            
             })
     
@@ -69,9 +64,44 @@ class StudentRepository implements student_interfaces.IStudentRepository {
         }
     }
 
-    async updateStudent(st_id:number, st_target: entities.IStudentWithPassword): Promise<entities.IStudentDetailed> {
+    async updateStudent(st_email: string, st_target: entities.IStudentWithPassword): Promise<entities.IStudentDetailed> {
 
-        return null;
+        const student = await this.getStudentByEmail(st_email);
+        let update = {
+                where:{ email: st_email },
+                data: {
+                    name: student.name,
+                    university: { connect: {id: student.university.id} },
+                    studyprogram: { connect: {id: student.studyprogram.id} },
+                },
+                select: {
+                    name:true, email:true, studyprogram:true, university:true
+                }            
+            }
+            
+        if (st_target.name){
+            update.data.name = st_target.name;
+        }
+        if (st_target.universityId){
+            update.data.university = {
+                connect: { id :st_target.universityId }
+            }
+        }
+        if (st_target.studyProgramId){
+            update.data.studyprogram = {
+                connect: { id:st_target.studyProgramId }
+            }
+        }
+
+        try{
+            const result = await db.student.update(update)
+            await db.$disconnect()
+            return result
+        }
+        catch ( e ) {
+            await db.$disconnect()
+            return null
+        } 
     }
     
     async createStudent(st: entities.IStudentWithPassword): Promise<entities.IStudentDetailed> {
@@ -97,20 +127,15 @@ class StudentRepository implements student_interfaces.IStudentRepository {
             })
 
             await db.$disconnect()
-            // return results
             return res
 
         } catch ( e ) {
             
             await db.$disconnect()
-
             return null
 
         } 
-
     }
-
-
 }
 
 
