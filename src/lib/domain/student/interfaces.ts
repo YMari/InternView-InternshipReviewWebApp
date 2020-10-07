@@ -4,12 +4,8 @@ export interface IStudentRepository {
 
     createStudent: (st: i.IStudentWithPassword) => Promise<i.IStudentDetailed>;
     getStudentByEmail: (st_email: string) => Promise<i.IStudentDetailed>;
-<<<<<<< HEAD
-    updateStudent: (st_email: string, st_target: i.IStudentWithPassword) => Promise<i.IStudentDetailed>;
-=======
     getStudentByEmailWithPassword: (st_email: string) => Promise<i.IStudentWithPasswordSimple>;
-    updateStudent: (st_id: number, st_target: i.IStudentWithPassword) => Promise<i.IStudentDetailed>;
->>>>>>> master
+    updateStudent: (st_email: string, st_target: i.IStudentWithPassword) => Promise<i.IStudentDetailed>;
 
 }
 
