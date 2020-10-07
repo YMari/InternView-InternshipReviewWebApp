@@ -5,7 +5,8 @@ import {injectable, inject} from 'inversify'
 import 'reflect-metadata'
 import { IStudentWithPassword, IStudentDetailed } from '../../domain/student/entities'
 import * as bcrypt from 'bcrypt'
-import * as jwt from 'jsonwebtoken'
+import {sign, verify} from 'jsonwebtoken'
+import Cookies from 'js-cookie'
 
 @injectable()
 export default class AuthenticationService implements i.IAuthenticationService {
@@ -62,16 +63,14 @@ export default class AuthenticationService implements i.IAuthenticationService {
 
     async authenticate(cr: e.ICredentials): Promise<i.IAuthenticationServiceOutput<i.SerializedCookie>> {
 
-        // Get user and authenticate
-
-        // Create jwt
-        
-        // Store in cookie and serialize
-
-        // Return Cookie
-        
-        return null
-        
+        let student = await this._studentRepository.getStudentByEmailWithPassword(cr.email);
+        let passwordIsCorrect = await bcrypt.compare(cr.password, student.passwordHash)
+        if(passwordIsCorrect){
+            // Secret should be an environment variable for the application, right now it's using the default algorithm HMAC SHA256 with the secret being the string 'secret' 
+            const token = sign({email: student.email}, 'secret')
+            Cookies.set('email', token);
+        }
+        return Cookies
     }
     
 
