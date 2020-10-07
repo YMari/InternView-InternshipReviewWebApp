@@ -68,7 +68,7 @@ class StudentRepository implements student_interfaces.IStudentRepository {
         try{
             const result = await db.student.update(update)
             await db.$disconnect()
-                return result
+            return result
         }
         catch ( e ) {
             await db.$disconnect()
@@ -99,13 +99,11 @@ class StudentRepository implements student_interfaces.IStudentRepository {
             })
 
             await db.$disconnect()
-            // return results
             return res
 
         } catch ( e ) {
             
             await db.$disconnect()
-
             return null
 
         } 
