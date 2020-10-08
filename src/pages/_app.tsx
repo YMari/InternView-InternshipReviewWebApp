@@ -8,6 +8,7 @@ import { Container } from '@material-ui/core';
 import MainAppbar from '../lib/ui/components/appbar';
 import BackToTop from '../lib/ui/components/scrollTop'
 import Universities from './universities/index'
+import NavBar from '../lib/ui/components/appbar2';
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
@@ -29,12 +30,13 @@ export default function MyApp(props) {
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        <MainAppbar/>
+        <NavBar/>
+        {/* <MainAppbar/> */}
         {/* {showAppbar} */}
         {/* <BackToTop {...pageProps}/> */}
-        <Container maxWidth={false}>
+        
             <Component {...pageProps} />
-        </Container>
+        
       </ThemeProvider>
     </>
   );

@@ -1,10 +1,13 @@
-import { Box } from '@material-ui/core'
+import { Box, createStyles, makeStyles, Theme } from '@material-ui/core'
 import Link from 'next/link'
 import React from 'react'
 
 export default function Home() {
     return(
         <>
+        <Box width="100%" maxHeight="500" >
+            <img src="/backgroundImage.png" style={{width:"100%",maxHeight:700, opacity:'0.5', objectFit:'cover'}}/>
+        </Box>
             <Box>
                 <Link as="/companies" href="/companies/">
                     <a>Navigate to Companies</a>
@@ -33,3 +36,10 @@ export default function Home() {
         </>
     )
 }
+
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        main: {
+            backgroundImage: `url(${"public/backgroundImage.png"})`
+        },
+    }))
