@@ -1,9 +1,10 @@
 import * as i from '../interfaces'
 import * as e from '../entities'
-import {student_interfaces, S_TYPES} from '../../domain/student'
+import {StudentRepository, student_interfaces, S_TYPES} from '../../domain/student'
 import {injectable, inject} from 'inversify'
 import 'reflect-metadata'
 import { IStudentWithPassword, IStudentDetailed } from '../../domain/student/entities'
+import {ERROR_MESSAGE} from '../../../lib/application/constants';
 import * as bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
 
@@ -29,7 +30,7 @@ export default class AuthenticationService implements i.IAuthenticationService {
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (!re.test(st.email?.toLowerCase())){
             return {
-                status:"Error",
+                status:ERROR_MESSAGE,
                 message:"invalid email",
                 data:null
             }
@@ -38,7 +39,7 @@ export default class AuthenticationService implements i.IAuthenticationService {
         // Validate Password
         if (st.passwordHash === null) {
             return {
-                status:"Error",
+                status:ERROR_MESSAGE,
                 message: "no password given",
                 data:null
             }
@@ -46,7 +47,7 @@ export default class AuthenticationService implements i.IAuthenticationService {
 
         if (st.passwordHash.length < this.PASSWORD_LENGTH) {
             return {
-                status:"Error",
+                status:ERROR_MESSAGE,
                 message: "password has too few characters",
                 data:null
             } 
@@ -76,10 +77,23 @@ export default class AuthenticationService implements i.IAuthenticationService {
     
 
     async validate(ck: i.SerializedCookie): Promise<i.IAuthenticationServiceOutput<IStudentDetailed>> {
-
-        
-
-        return null
+        try{
+            const result = await jwt.verify(ck, process.env.SECRET_KEY) as e.IJwtPayload;
+            const email = result.sub;
+            const data = await this._studentRepository.getStudentByEmail(email);
+            return {
+                status: OK_MESSAGE,
+                message: "Student found.",
+                data: data
+            }
+        }
+        catch{
+            return {
+                status: ERROR_MESSAGE,
+                message: "Unable to find student or the token was corrupt",
+                data: null
+            } 
+        }
     } 
 
 }
