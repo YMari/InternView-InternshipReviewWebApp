@@ -61,7 +61,7 @@ export default class AuthenticationService implements i.IAuthenticationService {
 
     }
 
-    
+
     async authenticate(cr: e.ICredentials): Promise<i.IAuthenticationServiceOutput<i.SerializedCookie>> {
 
         const student = await this._studentRepository.getStudentByEmailWithPassword(cr.email);
@@ -74,7 +74,6 @@ export default class AuthenticationService implements i.IAuthenticationService {
         }
         const passwordIsCorrect = await bcrypt.compare(cr.password, student.passwordHash)
         if(passwordIsCorrect){
-            // Secret should be an environment variable for the application, right now it's using the default algorithm HMAC SHA256 with the secret being the string 'secret' 
             const token = sign({sub: student.email}, process.env.SECRET_KEY, {expiresIn: '1h'})
             const galleta = cookie.serialize('auth', token, {
                 httpOnly: true,
