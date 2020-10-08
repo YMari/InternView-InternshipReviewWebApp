@@ -1,2 +1,2 @@
-const ERROR_MESSAGE = "Error";
-const OK_MESSAGE = "Ok"
+export const ERROR_MESSAGE = "Error";
+export const OK_MESSAGE = "Ok"
