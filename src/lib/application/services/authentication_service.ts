@@ -7,7 +7,7 @@ import { IStudentWithPassword, IStudentDetailed } from '../../domain/student/ent
 import * as bcrypt from 'bcrypt'
 import {sign, verify} from 'jsonwebtoken'
 import cookie from 'cookie'
-import { ERROR_MESSAGE } from '../constants'
+import { AUTHENTICATION_FAILED, AUTHENTICATION_SUCCESS, ERROR_MESSAGE } from '../constants'
 
 @injectable()
 export default class AuthenticationService implements i.IAuthenticationService {
@@ -68,7 +68,7 @@ export default class AuthenticationService implements i.IAuthenticationService {
         if(!student){
             return {
                 status: ERROR_MESSAGE,
-                message:"Unable to authenticate.",
+                message:AUTHENTICATION_FAILED,
                 data: null
             }
         }
@@ -84,13 +84,13 @@ export default class AuthenticationService implements i.IAuthenticationService {
             })
             return {
                 status:'Ok',
-                message:"Authentication succesfull",
+                message: AUTHENTICATION_SUCCESS,
                 data: galleta
             }
         }
         return {
             status:ERROR_MESSAGE,
-            message:"invalid email",
+            message: AUTHENTICATION_FAILED,
             data:null
         }
     }
