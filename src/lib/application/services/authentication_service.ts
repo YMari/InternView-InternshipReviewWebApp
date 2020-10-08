@@ -6,7 +6,8 @@ import 'reflect-metadata'
 import { IStudentWithPassword, IStudentDetailed } from '../../domain/student/entities'
 import * as bcrypt from 'bcrypt'
 import {sign, verify} from 'jsonwebtoken'
-import Cookies from 'js-cookie'
+import cookie from 'cookie'
+import { ERROR_MESSAGE } from '../constants'
 
 @injectable()
 export default class AuthenticationService implements i.IAuthenticationService {
@@ -60,17 +61,39 @@ export default class AuthenticationService implements i.IAuthenticationService {
 
     }
 
-
+    
     async authenticate(cr: e.ICredentials): Promise<i.IAuthenticationServiceOutput<i.SerializedCookie>> {
 
-        let student = await this._studentRepository.getStudentByEmailWithPassword(cr.email);
-        let passwordIsCorrect = await bcrypt.compare(cr.password, student.passwordHash)
+        const student = await this._studentRepository.getStudentByEmailWithPassword(cr.email);
+        if(!student){
+            return {
+                status: ERROR_MESSAGE,
+                message:"Unable to authenticate.",
+                data: null
+            }
+        }
+        const passwordIsCorrect = await bcrypt.compare(cr.password, student.passwordHash)
         if(passwordIsCorrect){
             // Secret should be an environment variable for the application, right now it's using the default algorithm HMAC SHA256 with the secret being the string 'secret' 
-            const token = sign({email: student.email}, 'secret')
-            Cookies.set('email', token);
+            const token = sign({sub: student.email}, process.env.SECRET_KEY, {expiresIn: '1h'})
+            const galleta = cookie.serialize('auth', token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV !== 'development', 
+                sameSite: 'strict',
+                maxAge: 3600,
+                path: '/'
+            })
+            return {
+                status:'Ok',
+                message:"Authentication succesfull",
+                data: galleta
+            }
         }
-        return Cookies
+        return {
+            status:ERROR_MESSAGE,
+            message:"invalid email",
+            data:null
+        }
     }
     
 
