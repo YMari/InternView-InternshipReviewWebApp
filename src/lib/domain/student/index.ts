@@ -6,6 +6,7 @@ import {S_TYPES} from './types'
 
 
 
+
 export {
     S_TYPES,
     student_interfaces,
@@ -13,3 +14,4 @@ export {
     StudentService,
     StudentRepository
 }
+ 

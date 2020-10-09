@@ -2,6 +2,7 @@ import { Container } from 'inversify';
 import * as st from './domain/student';
 import * as app from './application'
 import {repositories} from './infrastructure';
+import * as md from './middleware'
 
 const container = new Container();
 
@@ -10,5 +11,7 @@ container.bind<st.student_interfaces.IStudyProgramRepository>(st.S_TYPES.IStudyP
 container.bind<st.student_interfaces.IUniversityRepository>(st.S_TYPES.IUniversityRepository).to(repositories.UniversityRepository)
 container.bind<st.student_interfaces.IStudentRepository>(st.S_TYPES.IStudentRepository).to(st.StudentRepository)
 container.bind<app.application_interfaces.IAuthenticationService>(app.A_TYPES.IAuthenticationService).to(app.AuthenticationService)
+container.bind<md.IMiddleware>(md.M_TYPES.IMiddleWare).to(md.MiddleWares);
+
 
 export default container;
