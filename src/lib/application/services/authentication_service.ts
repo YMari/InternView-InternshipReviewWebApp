@@ -6,7 +6,9 @@ import 'reflect-metadata'
 import { IStudentWithPassword, IStudentDetailed } from '../../domain/student/entities'
 import {ERROR_MESSAGE} from '../../../lib/application/constants';
 import * as bcrypt from 'bcrypt'
-import * as jwt from 'jsonwebtoken'
+import {sign, verify} from 'jsonwebtoken'
+import cookie from 'cookie'
+import { AUTHENTICATION_FAILED, AUTHENTICATION_SUCCESS, ERROR_MESSAGE } from '../constants'
 
 @injectable()
 export default class AuthenticationService implements i.IAuthenticationService {
@@ -63,16 +65,35 @@ export default class AuthenticationService implements i.IAuthenticationService {
 
     async authenticate(cr: e.ICredentials): Promise<i.IAuthenticationServiceOutput<i.SerializedCookie>> {
 
-        // Get user and authenticate
-
-        // Create jwt
-        
-        // Store in cookie and serialize
-
-        // Return Cookie
-        
-        return null
-        
+        const student = await this._studentRepository.getStudentByEmailWithPassword(cr.email);
+        if(!student){
+            return {
+                status: ERROR_MESSAGE,
+                message:AUTHENTICATION_FAILED,
+                data: null
+            }
+        }
+        const passwordIsCorrect = await bcrypt.compare(cr.password, student.passwordHash)
+        if(passwordIsCorrect){
+            const token = sign({sub: student.email}, process.env.SECRET_KEY, {expiresIn: '1h'})
+            const galleta = cookie.serialize('auth', token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV !== 'development', 
+                sameSite: 'strict',
+                maxAge: 3600,
+                path: '/'
+            })
+            return {
+                status:'Ok',
+                message: AUTHENTICATION_SUCCESS,
+                data: galleta
+            }
+        }
+        return {
+            status:ERROR_MESSAGE,
+            message: AUTHENTICATION_FAILED,
+            data:null
+        }
     }
     
 

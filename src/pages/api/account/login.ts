@@ -14,7 +14,7 @@ export default async function login(
   
 
   if (req.method === 'POST') {
-    const output = await ser.authenticate(
+    let output = await ser.authenticate(
       {
           email: req.body.email,
           password: req.body.password
@@ -29,11 +29,11 @@ export default async function login(
     else{
         res.setHeader('Set-Cookie', output.data);
         res.status(200)
+        output.data = null
     }
-      
-    res.json(output);
-    
-  } else {
+      res.json(output) 
+  }
+   else {
     res.status(405).json({ message: 'We only support POST' });
   }
 }
