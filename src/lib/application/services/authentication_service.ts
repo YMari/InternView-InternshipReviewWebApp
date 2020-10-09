@@ -1,14 +1,13 @@
 import * as i from '../interfaces'
 import * as e from '../entities'
-import {StudentRepository, student_interfaces, S_TYPES} from '../../domain/student'
+import {student_interfaces, S_TYPES} from '../../domain/student'
 import {injectable, inject} from 'inversify'
 import 'reflect-metadata'
 import { IStudentWithPassword, IStudentDetailed } from '../../domain/student/entities'
-import {ERROR_MESSAGE} from '../../../lib/application/constants';
 import * as bcrypt from 'bcrypt'
 import {sign, verify} from 'jsonwebtoken'
 import cookie from 'cookie'
-import { AUTHENTICATION_FAILED, AUTHENTICATION_SUCCESS, ERROR_MESSAGE } from '../constants'
+import { AUTHENTICATION_FAILED, AUTHENTICATION_SUCCESS, ERROR_MESSAGE, OK_MESSAGE } from '../constants'
 
 @injectable()
 export default class AuthenticationService implements i.IAuthenticationService {
@@ -99,7 +98,7 @@ export default class AuthenticationService implements i.IAuthenticationService {
 
     async validate(ck: i.SerializedCookie): Promise<i.IAuthenticationServiceOutput<IStudentDetailed>> {
         try{
-            const result = await jwt.verify(ck, process.env.SECRET_KEY) as e.IJwtPayload;
+            const result = await verify(ck, process.env.SECRET_KEY) as e.IJwtPayload;
             const email = result.sub;
             const data = await this._studentRepository.getStudentByEmail(email);
             return {
