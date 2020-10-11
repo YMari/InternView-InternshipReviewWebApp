@@ -1,31 +1,30 @@
 import * as i from '../interfaces'
 import * as e from '../entities'
-import {student_interfaces, S_TYPES} from '../../domain/student'
+import * as st from '../../domain/student'
 import {injectable, inject} from 'inversify'
-import 'reflect-metadata'
-import { IStudentWithPassword, IStudentDetailed } from '../../domain/student/entities'
 import * as bcrypt from 'bcrypt'
 import {sign, verify} from 'jsonwebtoken'
 import cookie from 'cookie'
 import { AUTHENTICATION_FAILED, AUTHENTICATION_SUCCESS, ERROR_MESSAGE, OK_MESSAGE } from '../constants'
+import 'reflect-metadata'
 
 @injectable()
 export default class AuthenticationService implements i.IAuthenticationService {
     
-    private readonly _studentService: student_interfaces.IStudentService
-    private readonly _studentRepository: student_interfaces.IStudentRepository
+    private readonly _studentService: st.IStudentService
+    private readonly _studentRepository: st.IStudentRepository
     private readonly PASSWORD_LENGTH: number = 6
     private readonly SALT_ROUNDS:number = 10
 
     constructor(
-        @inject(S_TYPES.IStudentService) studentService: student_interfaces.IStudentService,
-        @inject(S_TYPES.IStudentRepository) studentRepository: student_interfaces.IStudentRepository
+        @inject(st.S_TYPES.IStudentService) studentService: st.IStudentService,
+        @inject(st.S_TYPES.IStudentRepository) studentRepository: st.IStudentRepository
     ){
         this._studentService = studentService
         this._studentRepository = studentRepository
     }
     
-    async register(st: IStudentWithPassword): Promise<i.IAuthenticationServiceOutput<IStudentDetailed>>{
+    async register(st: st.IStudentWithPassword): Promise<i.IAuthenticationServiceOutput<st.IStudentDetailed>>{
 
         // Validate email
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -96,7 +95,7 @@ export default class AuthenticationService implements i.IAuthenticationService {
     }
     
 
-    async validate(ck: i.SerializedCookie): Promise<i.IAuthenticationServiceOutput<IStudentDetailed>> {
+    async validate(ck: i.SerializedCookie): Promise<i.IAuthenticationServiceOutput<st.IStudentDetailed>> {
         try{
             const result = await verify(ck, process.env.SECRET_KEY) as e.IJwtPayload;
             const email = result.sub;
