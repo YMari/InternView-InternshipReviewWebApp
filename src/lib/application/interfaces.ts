@@ -1,8 +1,9 @@
-import {entities, student_interfaces} from '../domain/student'
-import { IStudentDetailed } from '../domain/student/entities';
+
+
+import { IStudentDetailed, IStudentWithPassword, IStudentServiceOutput } from '../domain/student';
 import { ICredentials } from './entities';
 
-export interface IAuthenticationServiceOutput<E> extends student_interfaces.IStudentServiceOutput<E>{
+export interface IAuthenticationServiceOutput<E> extends IStudentServiceOutput<E>{
 
 }
 
@@ -10,7 +11,7 @@ export type SerializedCookie = string
 
 export interface IAuthenticationService {
     
-    register: (st: entities.IStudentWithPassword) => Promise<IAuthenticationServiceOutput<entities.IStudentDetailed>>,
+    register: (st: IStudentWithPassword) => Promise<IAuthenticationServiceOutput<IStudentDetailed>>,
     authenticate: (cr: ICredentials) => Promise<IAuthenticationServiceOutput<SerializedCookie>>,
     validate: (ck: SerializedCookie) => Promise<IAuthenticationServiceOutput<IStudentDetailed>>
 
