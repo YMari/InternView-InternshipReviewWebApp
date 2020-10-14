@@ -11,6 +11,8 @@ interface ProviderProps {
 
 export function UserProvider(props:ProviderProps) {
 
+    const [user] = useState<Partial<IStudentDetailed>>(props.user)
+
     return (
         <UserContext.Provider value={props.user}>
             {props.children}
