@@ -5,12 +5,12 @@ import { IStudentDetailed } from "../domain/student/entities";
 
 export interface IMiddleware {
 
-    withUser: (fn: NextApiHandler) => (req: NextApiRequest, res: IResponseWithIssuer) => Promise<void>
+    withUser: (fn: NextApiHandler) => (req: IRequestWithIssuer, res: NextApiResponse) => Promise<void>
 
 }
 
 
-export interface IResponseWithIssuer extends NextApiResponse<any>{
+export interface IRequestWithIssuer extends NextApiRequest{
 
     user: IStudentDetailed
 

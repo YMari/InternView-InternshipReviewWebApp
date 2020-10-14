@@ -1,19 +1,19 @@
-import { NextApiRequest } from 'next'
+import {NextApiResponse } from 'next'
 import container from '../../../lib/container'
-import { IMiddleware, M_TYPES, IResponseWithIssuer } from '../../../lib/middleware'
+import { IMiddleware, M_TYPES, IRequestWithIssuer } from '../../../lib/middleware'
 
 
 const midWare = container.get<IMiddleware>(M_TYPES.IMiddleWare)
 
 
 export default midWare.withUser(async function register(
-    req: NextApiRequest,
-    res: IResponseWithIssuer
+    req: IRequestWithIssuer,
+    res: NextApiResponse
 ){
 
     if (req.method==='GET') {
         res.status(200)
-        res.json({data:res.user})
+        res.json({data:req.user})
     }
     else {
         res.status(405)
