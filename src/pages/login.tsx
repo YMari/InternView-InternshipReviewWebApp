@@ -125,8 +125,5 @@ const useStyles = makeStyles((theme: Theme) =>
     gridItem: {
         paddingBottom: theme.spacing(1)
     },
-    // background: {
-    //     backgroundImage: `url(/static/backgroundImage.png)`
-    // }
   }),
 );

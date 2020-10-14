@@ -5,10 +5,9 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../lib/ui/theme';
 import { Container } from '@material-ui/core';
-import MainAppbar from '../lib/ui/components/appbar';
+import NavBar from '../lib/ui/components/appbar';
 import BackToTop from '../lib/ui/components/scrollTop'
 import Universities from './universities/index'
-import NavBar from '../lib/ui/components/appbar2';
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
@@ -31,12 +30,7 @@ export default function MyApp(props) {
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
         <NavBar/>
-        {/* <MainAppbar/> */}
-        {/* {showAppbar} */}
-        {/* <BackToTop {...pageProps}/> */}
-        
-            <Component {...pageProps} />
-        
+        <Component {...pageProps} />
       </ThemeProvider>
     </>
   );
@@ -46,6 +40,3 @@ MyApp.propTypes = {
   Component: PropTypes.elementType.isRequired,
   pageProps: PropTypes.object.isRequired,
 };
-
-const showAppbar = (Universities.withoutAppBar ? <MainAppbar/> : null)
-// const withoutAppBar = Universities.withoutAppBar
