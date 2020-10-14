@@ -36,7 +36,7 @@ export default function Home() {
             justify="space-around"
             alignItems="center"
             wrap="nowrap"
-            className={classes.gridContent}
+            className={classes.gridCards}
             >
                 <Grid item className={classes.gridItem}>
                     <Card className={classes.cardContainer}>
@@ -53,16 +53,22 @@ export default function Home() {
                                 </Typography>
                             </Grid>
                             <Grid item className={classes.cardItem}>
-                                <ButtonGroup variant="text">
-                                    <Button>
-                                        <AccountCircleIcon fontSize="large"/>
-                                    </Button>
-                                    <Button>
-                                        <Link href="/">
-                                            <Typography>Review Summary</Typography>
-                                        </Link>
-                                    </Button>
-                                    <Box>
+                                <ButtonGroup variant="text" fullWidth={true}>
+                                    <Grid item className={classes.accountIcon}>
+                                        <Button>
+                                            <AccountCircleIcon fontSize="large"/>
+                                        </Button>
+                                    </Grid>
+                                    <Grid item xs={9} className={classes.cardSub}>
+                                        <Button>
+                                            <Link href="/">
+                                                <Typography>
+                                                    Review Summary
+                                                </Typography>
+                                            </Link>
+                                        </Button>
+                                    </Grid>
+                                    <Grid item>
                                         <Grid
                                         container
                                         direction='row'
@@ -77,7 +83,7 @@ export default function Home() {
                                                 <Typography className={classes.ratingText}>5/5</Typography>
                                             </Grid>
                                         </Grid>
-                                    </Box>
+                                    </Grid>
                                 </ButtonGroup>
                             </Grid>
                         </Grid>
@@ -98,16 +104,22 @@ export default function Home() {
                                 </Typography>
                             </Grid>
                             <Grid item className={classes.cardItem}>
-                                <ButtonGroup variant="text">
-                                    <Button>
-                                        <AccountCircleIcon fontSize="large"/>
-                                    </Button>
-                                    <Button>
-                                        <Link href="/">
-                                            <Typography>Company X</Typography>
-                                        </Link>
-                                    </Button>
-                                    <Box>
+                                <ButtonGroup variant="text" fullWidth={true}>
+                                    <Grid item className={classes.accountIcon}>
+                                        <Button>
+                                            <AccountCircleIcon fontSize="large"/>
+                                        </Button>
+                                    </Grid>
+                                    <Grid item xs={9} className={classes.cardSub}>
+                                        <Button>
+                                            <Link href="/">
+                                                <Typography>
+                                                    Company X
+                                                </Typography>
+                                            </Link>
+                                        </Button>
+                                    </Grid>
+                                    <Grid item>
                                         <Grid
                                         container
                                         direction='row'
@@ -122,7 +134,7 @@ export default function Home() {
                                                 <Typography className={classes.ratingText}>5/5</Typography>
                                             </Grid>
                                         </Grid>
-                                    </Box>
+                                    </Grid>
                                 </ButtonGroup>
                             </Grid>
                         </Grid>
@@ -144,22 +156,37 @@ const useStyles = makeStyles((theme: Theme) =>
             // marginTop: -610,
             marginTop: 100
         },
-        gridContent: {
+        gridCards: {
             paddingTop: theme.spacing(8)
         },
         gridItem: {
             minWidth: '42%',
-            alignItems: "center"
+            maxWidth: '42%',
+            alignItems: "center",
+            paddingBottom: theme.spacing(2)
         },
         cardContainer: {
-            // backgroundColor: fade(theme.palette.primary.main, 1),
             minHeight: 600,
+            maxHeight: 600
         },
         cardContent: {
-            padding: theme.spacing(4)
+            padding: theme.spacing(4),
+            width: '100%',  
         },
         cardItem: {
-            marginTop: 20
+            marginTop: 30,
+            width: '90%',
+        },
+        cardSub: {
+            wrap: 'wrap',
+            alignItems: 'center',
+            justifyContent: 'center',
+            maxWidth: '80%',
+        },
+        accountIcon: {
+            height: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
         },
         title: {
             color: theme.palette.primary.contrastText,
@@ -172,34 +199,10 @@ const useStyles = makeStyles((theme: Theme) =>
             height: '100%',
             alignItems: 'center',
             justifyContent: 'center',
+            paddingLeft: theme.spacing(2)
         },
         ratingText: {
             fontSize: 20,
+            paddingLeft: theme.spacing(1)
         },
     }))
-
-                    {/* <Box>
-                    <Link as="/companies" href="/companies/">
-                        <a>Navigate to Companies</a>
-                    </Link>
-                </Box>
-                <Box>
-                    <Link as="/universities" href="/universities/">
-                        <a>Navigate to Universities</a>
-                    </Link>
-                </Box>
-                <Box>
-                    <Link as="/reviews" href="/reviews/">
-                        <a>Navigate to Reviews</a>
-                    </Link>
-                </Box>
-                <Box>
-                    <Link href="/login">
-                        <a>Login Page</a>
-                    </Link>
-                </Box>
-                <Box>
-                    <Link href="/register">
-                        <a>Register Page</a>
-                    </Link>
-                </Box> */}
