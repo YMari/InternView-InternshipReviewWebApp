@@ -1,15 +1,19 @@
-import { Box, Card, createStyles, fade, Grid, makeStyles, Theme, Typography } from '@material-ui/core'
+import { Box, Card, createStyles, fade, Grid, makeStyles, Theme, Typography, Button, CardContent, ButtonGroup, Divider } from '@material-ui/core'
 import Link from 'next/link'
 import React from 'react'
+import theme from '../../lib/ui/theme';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import GradeIcon from '@material-ui/icons/Grade';
 
 export default function Home() {
     const classes = useStyles();
     return(
         <>
-        <Box width="100%" maxHeight="500" >
-            <img src="/backgroundImage.png" style={{width:"100%",maxHeight:700, opacity:'0.5', objectFit:'cover'}}/>
-        </Box>
-        {/* <Grid
+        <Box className={classes.main}>
+        {/* <Box width="100%" maxHeight="500">
+            <img src="/backgroundImage.png" style={{width:"100%",maxHeight:700, opacity:'0.5', objectFit:'cover', position:"relative"}}/>
+        </Box> */}
+        <Grid
         container
         direction='column'
         alignItems="center"
@@ -36,38 +40,126 @@ export default function Home() {
             >
                 <Grid item className={classes.gridItem}>
                     <Card className={classes.cardContainer}>
-                        <Link as="/reviews" href="/reviews/">
-                            <a>Navigate to Reviews</a>
-                        </Link>
+                        <Grid
+                        container
+                        direction='column'
+                        alignItems="center"
+                        wrap="nowrap"
+                        className={classes.cardContent}
+                        >
+                            <Grid item>
+                                <Typography variant='h4'>
+                                    Most Helpful Reviews
+                                </Typography>
+                            </Grid>
+                            <Grid item className={classes.cardItem}>
+                                <ButtonGroup variant="text">
+                                    <Button>
+                                        <AccountCircleIcon fontSize="large"/>
+                                    </Button>
+                                    <Button>
+                                        <Link href="/">
+                                            <Typography>Review Summary</Typography>
+                                        </Link>
+                                    </Button>
+                                    <Box>
+                                        <Grid
+                                        container
+                                        direction='row'
+                                        alignItems="center"
+                                        wrap="nowrap"
+                                        className={classes.rating}
+                                        >
+                                            <Grid item>
+                                                <GradeIcon fontSize="large"/>
+                                            </Grid>
+                                            <Grid item>
+                                                <Typography className={classes.ratingText}>5/5</Typography>
+                                            </Grid>
+                                        </Grid>
+                                    </Box>
+                                </ButtonGroup>
+                            </Grid>
+                        </Grid>
                     </Card>
                 </Grid>
                 <Grid item className={classes.gridItem}>
                     <Card className={classes.cardContainer}>
-                        <Link as="/companies" href="/companies/">
-                            <a>Navigate to Companies</a>
-                        </Link>
+                        <Grid
+                        container
+                        direction='column'
+                        alignItems="center"
+                        wrap="nowrap"
+                        className={classes.cardContent}
+                        >
+                            <Grid item>
+                                <Typography variant='h4'>
+                                    Top Rated Companies
+                                </Typography>
+                            </Grid>
+                            <Grid item className={classes.cardItem}>
+                                <ButtonGroup variant="text">
+                                    <Button>
+                                        <AccountCircleIcon fontSize="large"/>
+                                    </Button>
+                                    <Button>
+                                        <Link href="/">
+                                            <Typography>Company X</Typography>
+                                        </Link>
+                                    </Button>
+                                    <Box>
+                                        <Grid
+                                        container
+                                        direction='row'
+                                        alignItems="center"
+                                        wrap="nowrap"
+                                        className={classes.rating}
+                                        >
+                                            <Grid item>
+                                                <GradeIcon fontSize="large"/>
+                                            </Grid>
+                                            <Grid item>
+                                                <Typography className={classes.ratingText}>5/5</Typography>
+                                            </Grid>
+                                        </Grid>
+                                    </Box>
+                                </ButtonGroup>
+                            </Grid>
+                        </Grid>
                     </Card>
                 </Grid>
             </Grid>
-        </Grid> */}
+        </Grid>
+        </Box>
         </>
     )
 }
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
+        main: {
+
+        },
         gridFull: {
-            marginTop: -610,
+            // marginTop: -610,
+            marginTop: 100
         },
         gridContent: {
             paddingTop: theme.spacing(8)
         },
         gridItem: {
             minWidth: '42%',
+            alignItems: "center"
         },
         cardContainer: {
-            backgroundColor: fade(theme.palette.primary.main, 1),
+            // backgroundColor: fade(theme.palette.primary.main, 1),
             minHeight: 600,
+        },
+        cardContent: {
+            padding: theme.spacing(4)
+        },
+        cardItem: {
+            marginTop: 20
         },
         title: {
             color: theme.palette.primary.contrastText,
@@ -75,7 +167,15 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         subtitle: {
             color: theme.palette.primary.contrastText,
-        }
+        },
+        rating: {
+            height: '100%',
+            alignItems: 'center',
+            justifyContent: 'center',
+        },
+        ratingText: {
+            fontSize: 20,
+        },
     }))
 
                     {/* <Box>

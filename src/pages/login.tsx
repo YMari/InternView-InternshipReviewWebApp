@@ -83,6 +83,7 @@ export default function LoginPage() {
                         </Button>
                     </Grid>
                     <Divider/>
+                    <br/>
                     <Grid item className={classes.gridItem}>
                         <Typography>Don't have an account?</Typography>
                         <Link  href="/register">

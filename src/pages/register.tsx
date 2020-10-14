@@ -1,5 +1,5 @@
 import { Box, Button, Card, CardHeader, createStyles, FormControl, Grid, IconButton, 
-    InputAdornment, InputLabel, makeStyles, NativeSelect, OutlinedInput, Select, TextField, Theme, Typography } from "@material-ui/core";
+    InputAdornment, InputLabel, makeStyles, NativeSelect, OutlinedInput, Select, TextField, Theme, Typography, Divider } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import Link from "next/link";
 import React from "react";
@@ -91,17 +91,19 @@ export default function RegisterPage() {
                         </FormControl>   
                     </Grid>
                     <Grid item className={classes.gridItem}>
+                        <Box id="new-account-box">
+                            <Button variant="contained" color="secondary">
+                                <Typography>Register</Typography>
+                            </Button>
+                        </Box>
+                        <br/>
+                        <Divider/>
                         <Box id="login-ref-box">
                             <Link  href="/login">
                                 <Button color="primary">
                                     <Typography>Already have an account?</Typography>
                                 </Button>
                             </Link>
-                        </Box>
-                        <Box id="new-account-box">
-                            <Button variant="contained" color="secondary">
-                                <Typography>Register</Typography>
-                            </Button>
                         </Box>
                     </Grid>
                 </Card>
