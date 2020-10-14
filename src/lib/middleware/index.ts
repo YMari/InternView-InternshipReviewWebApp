@@ -1,4 +1,4 @@
-import {IMiddleware, IResponseWithIssuer} from './interfaces'
+import {IMiddleware, IRequestWithIssuer} from './interfaces'
 import MiddleWares from  './middleware_class'
 import {M_TYPES} from './types'
 
@@ -10,4 +10,4 @@ export {
     M_TYPES
 }
 
-export type { IMiddleware, IResponseWithIssuer }
+export type { IMiddleware, IRequestWithIssuer }

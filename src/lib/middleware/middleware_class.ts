@@ -1,5 +1,5 @@
 
-import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
+import { NextApiHandler, NextApiResponse } from 'next';
 import {injectable, inject} from 'inversify'
 import 'reflect-metadata'
 import * as i from './interfaces'
@@ -20,17 +20,17 @@ export default class Middlewares implements i.IMiddleware {
   }
   
 
-  withUser = (fn: NextApiHandler) => async (req: NextApiRequest, res: i.IResponseWithIssuer) => {
+  withUser = (fn: NextApiHandler) => async (req: i.IRequestWithIssuer, res: NextApiResponse) => {
 
     const result = await this._authenticationService.validate(req.cookies.auth)
 
     if (result.status === constants.ERROR_MESSAGE){ 
 
-      res.user = null
+      req.user = null
 
-    }else{
+    } else {
 
-      res.user = result.data
+      req.user = result.data
 
     }
 
