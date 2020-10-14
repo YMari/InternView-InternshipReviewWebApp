@@ -83,6 +83,7 @@ export default function LoginPage() {
                         </Button>
                     </Grid>
                     <Divider/>
+                    <br/>
                     <Grid item className={classes.gridItem}>
                         <Typography>Don't have an account?</Typography>
                         <Link  href="/register">
@@ -125,8 +126,5 @@ const useStyles = makeStyles((theme: Theme) =>
     gridItem: {
         paddingBottom: theme.spacing(1)
     },
-    // background: {
-    //     backgroundImage: `url(/static/backgroundImage.png)`
-    // }
   }),
 );
