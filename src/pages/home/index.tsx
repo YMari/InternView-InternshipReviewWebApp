@@ -10,9 +10,9 @@ export default function Home() {
     return(
         <>
         <Box className={classes.main}>
-        {/* <Box width="100%" maxHeight="500">
-            <img src="/backgroundImage.png" style={{width:"100%",maxHeight:700, opacity:'0.5', objectFit:'cover', position:"relative"}}/>
-        </Box> */}
+        <Box width="100%" maxHeight="500" position="absolute" top={0} >
+            <img src="/backgroundImage.png" style={{width:"100%",maxHeight:700, opacity:0.5, objectFit:'cover', position:"relative", zIndex:-1000}}/>
+        </Box>
         <Grid
         container
         direction='column'
@@ -25,10 +25,16 @@ export default function Home() {
                     InternView
                 </Typography>
             </Grid>
-            <Grid item className={classes.subtitle}>
-                <Typography variant="h5">
-                    something something darkness
+            <Grid item className={classes.subtitle} style={{textAlign:"center"}} >
+                <Typography variant="h5" style={{textAlign:"center"}}>
+                    The best platform to research companies for students.<br />
+                    Made by students for students.
                 </Typography>
+                <br />
+                <br />
+                <Button variant="contained" color="primary">
+                    Start Searching
+                </Button>
             </Grid>
             <Grid
             container
