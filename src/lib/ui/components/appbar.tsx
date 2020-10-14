@@ -7,7 +7,7 @@ import React from "react";
 export default function NavBar() {
     const classes = useStyles();
     return(
-        <AppBar position='fixed' style={{ background: 'transparent', boxShadow: 'none', color:'transparent', padding:5, paddingTop:10}}>
+        <AppBar position='relative' style={{ zIndex:10, background: 'transparent', boxShadow: 'none', color:'transparent', padding:5, paddingTop:10}}>
             <Grid 
             container
             direction='row'
