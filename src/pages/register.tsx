@@ -1,16 +1,25 @@
 import { Box, Button, Card, CardHeader, createStyles, FormControl, Grid, IconButton, 
-    InputAdornment, InputLabel, makeStyles, NativeSelect, OutlinedInput, Select, TextField, Theme, Typography, Divider } from "@material-ui/core";
+    InputAdornment, InputLabel, makeStyles, NativeSelect, OutlinedInput, Select, TextField, Theme, Typography, Divider, MenuItem } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
+import { NextPageContext } from "next";
 import Link from "next/link";
-import React from "react";
+import React, {useEffect} from "react";
+import container from "../lib/container";
+import { IStudyProgram, IStudyProgramRepository, IUniversity, IUniversityRepository, S_TYPES } from "../lib/domain/student";
 
 interface State {
     password: string;
     showPassword: boolean;
 }
 
-export default function RegisterPage() {
+interface RegisterProps {
+    universityList: IUniversity[],
+    studyProgramList: IStudyProgram[]
+}
+
+export default function RegisterPage(props:RegisterProps) {
     const classes = useStyles();
+
     const [values, setValues] = React.useState<State>({
       password: '',
       showPassword: false,
@@ -81,13 +90,37 @@ export default function RegisterPage() {
                     <Grid item className={classes.gridItem}>
                         <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
                             <InputLabel htmlFor="outlined-study-program">Study Program</InputLabel>
-                            <Select native label="Study Program"/>
+                            <Select defaultValue={props.studyProgramList[0].id} label="Study Program">
+                                    {
+                                        props.studyProgramList.map((val, index) => (
+                                            <MenuItem 
+                                                key={index*900}
+                                                value={val.id}
+                                            >
+                                                {val.name}
+                                            </MenuItem>
+                                        ))
+                                    }
+                            </Select>
                         </FormControl>     
                     </Grid>
                     <Grid item className={classes.gridItem}>
                         <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
                             <InputLabel htmlFor="outlined-university">University</InputLabel>
-                            <Select native label="Study Program"/>
+                            <Select
+                                defaultValue={props.universityList[0].id}  
+                                label="University">
+                                    {
+                                        props.universityList.map((val, index) => (
+                                            <MenuItem
+                                                key={index*800}
+                                                value={val.id}
+                                            >
+                                                {val.name}
+                                            </MenuItem>
+                                        ))
+                                    }
+                            </Select>
                         </FormControl>   
                     </Grid>
                     <Grid item className={classes.gridItem}>
@@ -111,6 +144,27 @@ export default function RegisterPage() {
         </Box>         
     )
 }
+
+
+interface IServerSideProps {
+    props: RegisterProps
+} 
+
+export async function getServerSideProps(ctx:NextPageContext): Promise<IServerSideProps> {
+    
+    const uniRepo = container.get<IUniversityRepository>(S_TYPES.IUniversityRepository) 
+    const spRepo = container.get<IStudyProgramRepository>(S_TYPES.IStudyProgramRepository)
+
+    return {
+        props: {
+            universityList: await uniRepo.getAllUniversity(),
+            studyProgramList: await spRepo.getAllStudyProgram()
+        }
+    }
+
+}
+
+
 
 const useStyles = makeStyles((theme: Theme) =>    
     createStyles({
