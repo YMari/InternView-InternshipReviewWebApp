@@ -11,7 +11,6 @@ export default function NavBar() {
             <Grid 
             container
             direction='row'
-            
             justify="space-between"
             wrap="nowrap"
             >

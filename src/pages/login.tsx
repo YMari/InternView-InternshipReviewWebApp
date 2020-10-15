@@ -5,6 +5,7 @@ import Link from "next/link";
 import React from "react";
 
 interface State {
+    email: string;
     password: string;
     showPassword: boolean;
 }
@@ -12,8 +13,9 @@ interface State {
 export default function LoginPage() {
     const classes = useStyles();
     const [values, setValues] = React.useState<State>({
-      password: '',
-      showPassword: false,
+        email: '',
+        password: '',
+        showPassword: false,
     });
 
     const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,13 +45,19 @@ export default function LoginPage() {
                 <Card className={classes.card}>
                     <CardHeader className={(classes.titleCard)} title="Sign In"/>
                     <Grid item className={classes.gridItem}>
-                        <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
+                        <FormControl className={(classes.input)} variant="outlined" fullWidth={true} required={true}>
                             <InputLabel htmlFor="outlined-email">Email</InputLabel>
-                            <OutlinedInput id="email-input" label="Email"  />
+                            <OutlinedInput
+                                id="email-input"
+                                label="Email"
+                                value={values.email}
+                                onChange={handleChange('email')}
+
+                            />
                         </FormControl>
                     </Grid>
                     <Grid item className={classes.gridItem}>
-                        <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
+                        <FormControl className={(classes.input)} variant="outlined" fullWidth={true} required={true}>
                             <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                                 <OutlinedInput
                                     id="outlined-adornment-password"
@@ -107,8 +115,9 @@ const useStyles = makeStyles((theme: Theme) =>
         padding: theme.spacing(4, 12),
         textAlign: "center",
         color: theme.palette.text.primary,
-        // width: '30vw',
-        // height: '32vw'
+        minWidth: 500,
+        minHeight: 500,
+        maxHight: 600
     },
     container: {
         gridGap: theme.spacing(3),
@@ -116,6 +125,8 @@ const useStyles = makeStyles((theme: Theme) =>
     titlePage: {
         textAlign: "center",
         padding: theme.spacing(1),
+        paddingBottom: theme.spacing(4),
+        paddingTop: theme.spacing(6),
         color: theme.palette.text.hint,
         fontSize: 40,
         fontWeight: 500,
@@ -125,6 +136,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     gridItem: {
         paddingBottom: theme.spacing(1)
+    },
+    input: {
+        backgroundColor: theme.palette.info.main,
+        margin: theme.spacing(1)
     },
   }),
 );
