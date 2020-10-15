@@ -3,7 +3,7 @@ import { Box, Button, Card, CardHeader, createStyles, FormControl, Grid, IconBut
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import { NextPageContext } from "next";
 import Link from "next/link";
-import React, {useEffect} from "react";
+import React from "react";
 import container from "../lib/container";
 import { IStudyProgram, IStudyProgramRepository, IUniversity, IUniversityRepository, S_TYPES } from "../lib/domain/student";
 
@@ -163,7 +163,6 @@ export async function getServerSideProps(ctx:NextPageContext): Promise<IServerSi
     }
 
 }
-
 
 
 const useStyles = makeStyles((theme: Theme) =>    
