@@ -8,8 +8,12 @@ import container from "../lib/container";
 import { IStudyProgram, IStudyProgramRepository, IUniversity, IUniversityRepository, S_TYPES } from "../lib/domain/student";
 
 interface State {
+    name: string;
+    email: string;
     password: string;
     showPassword: boolean;
+    studyProgramId?: number;
+    universityId?: number;
 }
 
 interface RegisterProps {
@@ -21,8 +25,12 @@ export default function RegisterPage(props:RegisterProps) {
     const classes = useStyles();
 
     const [values, setValues] = React.useState<State>({
-      password: '',
-      showPassword: false,
+        name: '',
+        email: '',
+        password: '',
+        showPassword: false,
+        studyProgramId: -1,
+        universityId: -1,
     });
 
     const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,19 +60,30 @@ export default function RegisterPage(props:RegisterProps) {
                 <Card className={classes.card}>
                     <CardHeader className={(classes.titleCard)} title="Create Account"/>
                     <Grid item className={classes.gridItem}>
-                        <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
+                        <FormControl className={(classes.input)} variant="outlined" fullWidth={true} required={true}>
                             <InputLabel htmlFor="outlined-email">Name</InputLabel>
-                            <OutlinedInput id="name-input" label="Name"  />
+                            <OutlinedInput
+                                id="name-input"
+                                label="Name"
+                                value={values.name}
+                                onChange={handleChange('name')}
+                            />
                         </FormControl>
                     </Grid>
                     <Grid item className={classes.gridItem}>
-                        <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
+                        <FormControl className={(classes.input)} variant="outlined" fullWidth={true} required={true}>
                             <InputLabel htmlFor="outlined-email">Email</InputLabel>
-                            <OutlinedInput id="email-input" label="Email"  />
+                            <OutlinedInput
+                                id="email-input"
+                                label="Email"
+                                value={values.email}
+                                onChange={handleChange('email')}
+
+                            />
                         </FormControl>
                     </Grid>
                     <Grid item className={classes.gridItem}>
-                        <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
+                        <FormControl className={(classes.input)} variant="outlined" fullWidth={true} required={true}>
                             <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                                 <OutlinedInput
                                     id="outlined-adornment-password"
@@ -88,9 +107,14 @@ export default function RegisterPage(props:RegisterProps) {
                         </FormControl>
                     </Grid>
                     <Grid item className={classes.gridItem}>
-                        <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
+                        <FormControl className={(classes.input)} variant="outlined" fullWidth={true} required={true}>
                             <InputLabel htmlFor="outlined-study-program">Study Program</InputLabel>
-                            <Select defaultValue={props.studyProgramList[0].id} label="Study Program">
+                            <Select 
+                                label="Study Program"
+                                value={values.studyProgramId}
+                                onChange={handleChange('studyProgramId')}
+                                defaultValue={props.studyProgramList[0].id}
+                            >
                                     {
                                         props.studyProgramList.map((val, index) => (
                                             <MenuItem 
@@ -102,12 +126,15 @@ export default function RegisterPage(props:RegisterProps) {
                                         ))
                                     }
                             </Select>
+                            
                         </FormControl>     
                     </Grid>
                     <Grid item className={classes.gridItem}>
-                        <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
+                        <FormControl className={(classes.input)} variant="outlined" fullWidth={true} required={true}>
                             <InputLabel htmlFor="outlined-university">University</InputLabel>
                             <Select
+                                value={values.universityId}
+                                onChange={handleChange('universityId')}
                                 defaultValue={props.universityList[0].id}  
                                 label="University">
                                     {
@@ -174,8 +201,9 @@ const useStyles = makeStyles((theme: Theme) =>
         padding: theme.spacing(4, 12),
         textAlign: "center",
         color: theme.palette.text.primary,
-        // width: '30vw',
-        // height: '32vw'
+        minWidth: 500,
+        minHeight: 500,
+        maxHeight: 800,
     },
     container: {
         gridGap: theme.spacing(3),
@@ -192,6 +220,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     gridItem: {
         paddingBottom: theme.spacing(1)
+    },
+    input: {
+        backgroundColor: theme.palette.info.main,
+        margin: theme.spacing(1)
     },
   }),
 );
