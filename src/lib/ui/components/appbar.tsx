@@ -3,6 +3,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import PanoramaFishEyeIcon from '@material-ui/icons/PanoramaFishEye';
 import Link from "next/link";
 import React from "react";
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 export default function NavBar() {
     const classes = useStyles();
@@ -50,6 +51,11 @@ export default function NavBar() {
                                 </Typography>
                             </Link> 
                         </Button>
+                        {/* <Button>
+                            <Link href="">
+                                <AccountCircleIcon fontSize="large"/>
+                            </Link>
+                        </Button> */}
                     </ButtonGroup>
 
                 </Grid>

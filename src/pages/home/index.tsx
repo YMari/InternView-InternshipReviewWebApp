@@ -1,7 +1,6 @@
 import { Box, Card, createStyles, fade, Grid, makeStyles, Theme, Typography, Button, CardContent, ButtonGroup, Divider } from '@material-ui/core'
 import Link from 'next/link'
 import React from 'react'
-import theme from '../../lib/ui/theme';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import GradeIcon from '@material-ui/icons/Grade';
 
@@ -66,7 +65,7 @@ export default function Home() {
                                     </Grid>
                                     <Grid item xs={9} className={classes.cardSub}>
                                         <Button>
-                                            <Link href="/">
+                                            <Link href="/reviews/">
                                                 <Typography>
                                                     Review Summary
                                                 </Typography>

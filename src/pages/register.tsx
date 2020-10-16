@@ -37,17 +37,18 @@ export default function RegisterPage() {
     };
 
     return(
-        <Box className={(classes.margin)}>
-            <Typography className={(classes.titlePage)}>InternView</Typography>
+        <Box className={(classes.main)}>
             <Grid
             container
             direction="column"
             alignContent="center"
             justify="center"
             wrap='wrap'
-            style={{ minHeight: '50vh' }}
             spacing={4}
             >
+                <Grid item className={classes.gridItem}>
+                    <Typography className={(classes.titlePage)}>InternView</Typography>
+                </Grid>
                 <Card className={classes.card}>
                     <CardHeader className={(classes.titleCard)} title="Create Account"/>
                     <Grid item className={classes.gridItem}>
@@ -143,7 +144,7 @@ export default function RegisterPage() {
 
 const useStyles = makeStyles((theme: Theme) =>    
     createStyles({
-    margin: {
+    main: {
         margin: theme.spacing(1),
     },
     card: {
