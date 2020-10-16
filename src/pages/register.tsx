@@ -1,11 +1,14 @@
 import { Box, Button, Card, CardHeader, createStyles, FormControl, Grid, IconButton, 
-    InputAdornment, InputLabel, makeStyles, NativeSelect, OutlinedInput, Select, TextField, Theme, Typography, Divider, MenuItem } from "@material-ui/core";
+    InputAdornment, InputLabel, makeStyles,  OutlinedInput, Select, TextField, Theme, Typography, Divider, MenuItem, CircularProgress } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import { NextPageContext } from "next";
 import Link from "next/link";
 import React from "react";
-import container from "../lib/container";
+import backend_container from "../lib/container";
 import { IStudyProgram, IStudyProgramRepository, IUniversity, IUniversityRepository, S_TYPES } from "../lib/domain/student";
+import {container, UI_TYPES} from '../lib/ui/client_container'
+import { IRequestService } from "../lib/ui/interfaces";
+import { useRouter } from 'next/router'
 
 interface State {
     name: string;
@@ -23,6 +26,10 @@ interface RegisterProps {
 
 export default function RegisterPage(props:RegisterProps) {
     const classes = useStyles();
+
+    const router = useRouter()
+
+    const [loading, setLoading] = React.useState<boolean>(false);
 
     const [values, setValues] = React.useState<State>({
         name: '',
@@ -45,6 +52,32 @@ export default function RegisterPage(props:RegisterProps) {
         event.preventDefault();
     };
 
+    const onSubmit = async () => {
+        
+        setLoading(true)
+
+        const req = container.get<IRequestService>(UI_TYPES.IRequestService)
+
+        const result = await req.register({
+            email:values.email,
+            name: values.email,
+            password:values.password,
+            studyProgramId:values.studyProgramId,
+            universityId:values.universityId
+        })
+        
+        alert(result?.message)
+
+        if (result?.status === 'Ok') {
+            router.push('/login')
+        }else {
+            setLoading(false)
+        }
+
+    }
+
+
+
     return(
         <Box className={(classes.margin)}>
             <Typography className={(classes.titlePage)}>InternView</Typography>
@@ -57,7 +90,7 @@ export default function RegisterPage(props:RegisterProps) {
             style={{ minHeight: '50vh' }}
             spacing={4}
             >
-                <Card className={classes.card}>
+                {!loading?<Card className={classes.card}>
                     <CardHeader className={(classes.titleCard)} title="Create Account"/>
                     <Grid item className={classes.gridItem}>
                         <FormControl className={(classes.input)} variant="outlined" fullWidth={true} required={true}>
@@ -78,7 +111,6 @@ export default function RegisterPage(props:RegisterProps) {
                                 label="Email"
                                 value={values.email}
                                 onChange={handleChange('email')}
-
                             />
                         </FormControl>
                     </Grid>
@@ -152,7 +184,9 @@ export default function RegisterPage(props:RegisterProps) {
                     </Grid>
                     <Grid item className={classes.gridItem}>
                         <Box id="new-account-box">
-                            <Button variant="contained" color="secondary">
+                            <Button 
+                            onClick={onSubmit}
+                            variant="contained" color="secondary">
                                 <Typography>Register</Typography>
                             </Button>
                         </Box>
@@ -166,7 +200,8 @@ export default function RegisterPage(props:RegisterProps) {
                             </Link>
                         </Box>
                     </Grid>
-                </Card>
+                </Card>: <CircularProgress />}
+                
             </Grid>
         </Box>         
     )
@@ -179,8 +214,8 @@ interface IServerSideProps {
 
 export async function getServerSideProps(ctx:NextPageContext): Promise<IServerSideProps> {
     
-    const uniRepo = container.get<IUniversityRepository>(S_TYPES.IUniversityRepository) 
-    const spRepo = container.get<IStudyProgramRepository>(S_TYPES.IStudyProgramRepository)
+    const uniRepo = backend_container.get<IUniversityRepository>(S_TYPES.IUniversityRepository) 
+    const spRepo = backend_container.get<IStudyProgramRepository>(S_TYPES.IStudyProgramRepository)
 
     return {
         props: {
