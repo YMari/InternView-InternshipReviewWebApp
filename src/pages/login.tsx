@@ -127,7 +127,7 @@ const useStyles = makeStyles((theme: Theme) =>
         padding: theme.spacing(1),
         paddingBottom: theme.spacing(4),
         paddingTop: theme.spacing(6),
-        color: theme.palette.text.hint,
+        color: "white",
         fontSize: 40,
         fontWeight: 500,
     },

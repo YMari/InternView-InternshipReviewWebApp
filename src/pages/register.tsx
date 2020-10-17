@@ -80,7 +80,8 @@ export default function RegisterPage(props:RegisterProps) {
 
     return(
         <Box className={(classes.margin)}>
-            <Typography className={(classes.titlePage)}>InternView</Typography>
+            <Typography  className={(classes.titlePage)}>InternView</Typography>
+            <br />
             <Grid
             container
             direction="column"
@@ -246,7 +247,7 @@ const useStyles = makeStyles((theme: Theme) =>
     titlePage: {
         textAlign: "center",
         padding: theme.spacing(1),
-        color: theme.palette.text.hint,
+        color: "white",
         fontSize: 40,
         fontWeight: 500,
     },
