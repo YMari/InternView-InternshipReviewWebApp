@@ -2,9 +2,14 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import container from '../../../lib/container'
 import * as app from '../../../lib/application'
 import {ERROR_MESSAGE} from '../../../lib/application/constants';
+import { IRegister } from '../../../lib/ui/entities'
+
+interface RegisterRequest extends NextApiRequest {
+  body: IRegister
+} 
 
 export default async function register(
-  req: NextApiRequest,
+  req: RegisterRequest,
   res: NextApiResponse
 ) {
 

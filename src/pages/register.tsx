@@ -1,27 +1,43 @@
 import { Box, Button, Card, CardHeader, createStyles, FormControl, Grid, IconButton, 
-    InputAdornment, InputLabel, makeStyles, NativeSelect, OutlinedInput, Select, TextField, Theme, Typography, Divider } from "@material-ui/core";
+    InputAdornment, InputLabel, makeStyles,  OutlinedInput, Select, TextField, Theme, Typography, Divider, MenuItem, CircularProgress } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
+import { NextPageContext } from "next";
 import Link from "next/link";
 import React from "react";
+import backend_container from "../lib/container";
+import { IStudyProgram, IStudyProgramRepository, IUniversity, IUniversityRepository, S_TYPES } from "../lib/domain/student";
+import {container, UI_TYPES} from '../lib/ui/client_container'
+import { IRequestService } from "../lib/ui/interfaces";
+import { useRouter } from 'next/router'
 
 interface State {
     name: string;
     email: string;
     password: string;
     showPassword: boolean;
-    studyProgram: string;
-    university: string;
+    studyProgramId?: number;
+    universityId?: number;
 }
 
-export default function RegisterPage() {
+interface RegisterProps {
+    universityList: IUniversity[],
+    studyProgramList: IStudyProgram[]
+}
+
+export default function RegisterPage(props:RegisterProps) {
     const classes = useStyles();
+
+    const router = useRouter()
+
+    const [loading, setLoading] = React.useState<boolean>(false);
+
     const [values, setValues] = React.useState<State>({
         name: '',
         email: '',
         password: '',
         showPassword: false,
-        studyProgram: '',
-        university: '',
+        studyProgramId: -1,
+        universityId: -1,
     });
 
     const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,6 +52,32 @@ export default function RegisterPage() {
         event.preventDefault();
     };
 
+    const onSubmit = async () => {
+        
+        setLoading(true)
+
+        const req = container.get<IRequestService>(UI_TYPES.IRequestService)
+
+        const result = await req.register({
+            email:values.email,
+            name: values.email,
+            password:values.password,
+            studyProgramId:values.studyProgramId,
+            universityId:values.universityId
+        })
+        
+        alert(result?.message)
+
+        if (result?.status === 'Ok') {
+            router.push('/login')
+        }else {
+            setLoading(false)
+        }
+
+    }
+
+
+
     return(
         <Box className={(classes.margin)}>
             <Typography className={(classes.titlePage)}>InternView</Typography>
@@ -48,7 +90,7 @@ export default function RegisterPage() {
             style={{ minHeight: '50vh' }}
             spacing={4}
             >
-                <Card className={classes.card}>
+                {!loading?<Card className={classes.card}>
                     <CardHeader className={(classes.titleCard)} title="Create Account"/>
                     <Grid item className={classes.gridItem}>
                         <FormControl className={(classes.input)} variant="outlined" fullWidth={true} required={true}>
@@ -69,7 +111,6 @@ export default function RegisterPage() {
                                 label="Email"
                                 value={values.email}
                                 onChange={handleChange('email')}
-
                             />
                         </FormControl>
                     </Grid>
@@ -100,28 +141,52 @@ export default function RegisterPage() {
                     <Grid item className={classes.gridItem}>
                         <FormControl className={(classes.input)} variant="outlined" fullWidth={true} required={true}>
                             <InputLabel htmlFor="outlined-study-program">Study Program</InputLabel>
-                            <Select
-                                native
+                            <Select 
                                 label="Study Program"
-                                value={values.studyProgram}
-                                onChange={handleChange('studyProgram')}
-                            />
+                                value={values.studyProgramId}
+                                onChange={handleChange('studyProgramId')}
+                                defaultValue={props.studyProgramList[0].id}
+                            >
+                                    {
+                                        props.studyProgramList.map((val, index) => (
+                                            <MenuItem 
+                                                key={index*900}
+                                                value={val.id}
+                                            >
+                                                {val.name}
+                                            </MenuItem>
+                                        ))
+                                    }
+                            </Select>
+                            
                         </FormControl>     
                     </Grid>
                     <Grid item className={classes.gridItem}>
                         <FormControl className={(classes.input)} variant="outlined" fullWidth={true} required={true}>
                             <InputLabel htmlFor="outlined-university">University</InputLabel>
                             <Select
-                                native
-                                label="University"
-                                value={values.university}
-                                onChange={handleChange('university')}
-                            />
+                                value={values.universityId}
+                                onChange={handleChange('universityId')}
+                                defaultValue={props.universityList[0].id}  
+                                label="University">
+                                    {
+                                        props.universityList.map((val, index) => (
+                                            <MenuItem
+                                                key={index*800}
+                                                value={val.id}
+                                            >
+                                                {val.name}
+                                            </MenuItem>
+                                        ))
+                                    }
+                            </Select>
                         </FormControl>   
                     </Grid>
                     <Grid item className={classes.gridItem}>
                         <Box id="new-account-box">
-                            <Button variant="contained" color="secondary">
+                            <Button 
+                            onClick={onSubmit}
+                            variant="contained" color="secondary">
                                 <Typography>Register</Typography>
                             </Button>
                         </Box>
@@ -135,11 +200,32 @@ export default function RegisterPage() {
                             </Link>
                         </Box>
                     </Grid>
-                </Card>
+                </Card>: <CircularProgress />}
+                
             </Grid>
         </Box>         
     )
 }
+
+
+interface IServerSideProps {
+    props: RegisterProps
+} 
+
+export async function getServerSideProps(ctx:NextPageContext): Promise<IServerSideProps> {
+    
+    const uniRepo = backend_container.get<IUniversityRepository>(S_TYPES.IUniversityRepository) 
+    const spRepo = backend_container.get<IStudyProgramRepository>(S_TYPES.IStudyProgramRepository)
+
+    return {
+        props: {
+            universityList: await uniRepo.getAllUniversity(),
+            studyProgramList: await spRepo.getAllStudyProgram()
+        }
+    }
+
+}
+
 
 const useStyles = makeStyles((theme: Theme) =>    
     createStyles({
