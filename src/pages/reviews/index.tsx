@@ -21,58 +21,50 @@ export default function Review() {
     return (
         <Box className={classes.main}>
             <Card className={classes.cardMain}>
-                <CardHeader className={classes.cardTitle} title="Review Title"/>
-                <Grid
-                container
-                direction='column'
-                alignItems="center"
-                wrap="nowrap"
-                className={classes.gridMain}
-                >
-                    <Grid item direction='row'>
-                        <Box>
-                            <AccountCircleIcon fontSize="large"/>
-                        </Box>
-                        <Box>
-                            <Typography>Student Name</Typography>
-                        </Box>
-                    </Grid>
-                    <Grid item>
-                        <Typography>Company X</Typography>
-                    </Grid>
-                    <Grid item direction="row">
-                        <Grid item>
-                            <Typography>Date</Typography>
+                
+                <Grid container direction='column' alignItems="center">
+                    <Typography className={classes.cardTitle}>Review Title</Typography>
+                </Grid>
+
+                <Grid container direction='column' wrap="nowrap" className={classes.gridMain}>
+
+                    <Grid container direction='column' wrap="nowrap">
+                        <Grid container direction='row' wrap="nowrap">                    
+                            <Grid item>
+                                <AccountCircleIcon fontSize="large"/>
+                            </Grid>
+                            <Grid item>
+                                <Typography>Student Name</Typography>
+                            </Grid>
                         </Grid>
                         <Grid item>
-                            <Box>
-                                <Checkbox disabled/>
-                            </Box>
-                            <Box>
-                                <Typography>No offer</Typography>
-                            </Box> 
+                                <Typography>Company X</Typography>
                         </Grid>
-                        <Grid item>
-                            <Box>
+
+                        <Grid container direction='row' wrap="nowrap">
+                            <Grid item>
+                                <Typography>Date</Typography>
+                            </Grid>
+                            <Grid container direction='row' wrap="nowrap">
                                 <Checkbox disabled/>
-                            </Box>
-                            <Box>
+                                <Typography>No offer</Typography>  
+                            </Grid>
+                            <Grid container direction='row' wrap="nowrap">
+                                <Checkbox disabled/>
                                 <Typography>Accepted but declined</Typography>
-                            </Box> 
-                        </Grid>
-                        <Grid item>
-                            <Box>
+                            </Grid> 
+                            <Grid container direction='row' wrap="nowrap">
                                 <Checkbox disabled checked/>
-                            </Box>
-                            <Box>
-                                <Typography>Worked</Typography>
-                            </Box>  
+                                <Typography>Worked</Typography> 
+                            </Grid>
                         </Grid>
                     </Grid>
+
                     <Grid item>
                         <Card className={classes.cardInner1}>
-                            <Grid item direction="row">
-                                <Grid item direction="column">
+
+                            <Grid container direction='row' alignItems="center" wrap="nowrap">
+                                <Grid container direction='column' alignItems="center" wrap="nowrap">
                                     <Grid item>
                                         <Typography>Location</Typography>
                                     </Grid>
@@ -83,15 +75,16 @@ export default function Review() {
                                         <Typography>Salary</Typography>
                                     </Grid>
                                 </Grid>
-                                <Grid item direction="column">
+                                <Grid container direction='column' alignItems="center" wrap="nowrap">
                                     <Grid item>
                                         <Typography>Degree</Typography>
                                     </Grid>
                                     <Grid item>
                                         <Typography>Work Type</Typography>
                                     </Grid>
+                                </Grid>
                             </Grid>
-                            </Grid>
+
                             <Card className={classes.cardInner2}>
                                 <CardHeader className={classes.cardSubtitle} title="Interview"/>
                                 <Grid item >
@@ -118,7 +111,7 @@ export default function Review() {
                                 <Grid item >
                                     <Typography>Recommendations and Tips</Typography>
                                 </Grid>
-                                <Grid item direction='row'>
+                                <Grid container direction='row' alignItems="center" wrap="nowrap">
                                     <Typography>Interview Difficulty: </Typography>
                                     <GradeIcon fontSize="small"/>
                                     <GradeIcon fontSize="small"/>
@@ -127,15 +120,17 @@ export default function Review() {
                                     <GradeIcon fontSize="small"/>
                                 </Grid>
                             </Card>
+
                         </Card>
-                        <Grid item direction='row'>
-                            <Grid item direction='row'>
+
+                        <Grid container direction='column' alignItems="center" wrap="nowrap">
+                            <Grid item>
                                 <Button>
                                     <ArrowDownward fontSize="large"/>
                                 </Button>
                                 <Typography># Downvotes</Typography>
                             </Grid>
-                            <Grid item direction='row'>
+                            <Grid item>
                                 <Button>
                                     <ArrowUpward fontSize="large"/>
                                 </Button>
@@ -147,7 +142,9 @@ export default function Review() {
                                 </Button>
                             </Grid>
                         </Grid>
+
                     </Grid>
+
                 </Grid>
             </Card>
         </Box>
@@ -157,16 +154,34 @@ export default function Review() {
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         main: {
+            marginTop: 10,
+            padding: theme.spacing(1),
+            display: 'flex',
+            justifyContent: 'center',
 
         },
         cardMain: {
+            padding: theme.spacing(2),
+            // maxWidth: '90%',
+            // minWidth: '90%',
+            // minHeight: 800,
+
+
 
         },
         gridMain: {
 
         },
-        cardTitle: {
+        gridTitleItem: {
+            justifyContent: 'center',
+            alignItems: 'center',
+            alignContent: 'center'
+        },
+        gridItem: {
 
+        },
+        cardTitle: {
+            fontSize: 30,
         },
         cardInner1: {
 
