@@ -29,16 +29,24 @@ export default function Review() {
                 <Grid container direction='column' wrap="nowrap" className={classes.gridMain}>
 
                     <Grid container direction='column' wrap="nowrap">
-                        <Grid container direction='row' wrap="nowrap">                    
-                            <Grid item>
-                                <AccountCircleIcon fontSize="large"/>
-                            </Grid>
-                            <Grid item>
-                                <Typography>Student Name</Typography>
-                            </Grid>
+                        <Grid container direction='row' wrap="nowrap">
+                            <Link href="">    
+                                <Button>                
+                                    <Grid item>
+                                        <AccountCircleIcon fontSize="large"/>
+                                    </Grid>
+                                    <Grid item>
+                                        <Typography>Student Name</Typography>
+                                    </Grid>                          
+                                </Button>
+                            </Link>
                         </Grid>
                         <Grid item>
-                                <Typography>Company X</Typography>
+                            <Link href="">
+                                <Button>   
+                                    <Typography>Company X</Typography>   
+                                </Button>
+                            </Link>
                         </Grid>
 
                         <Grid container direction='row' wrap="nowrap">
@@ -123,14 +131,14 @@ export default function Review() {
 
                         </Card>
 
-                        <Grid container direction='column' alignItems="center" wrap="nowrap">
-                            <Grid item>
+                        <Grid container direction='row' alignItems="center" wrap="nowrap">
+                            <Grid container direction='row'>
                                 <Button>
                                     <ArrowDownward fontSize="large"/>
                                 </Button>
                                 <Typography># Downvotes</Typography>
                             </Grid>
-                            <Grid item>
+                            <Grid container direction='row'>
                                 <Button>
                                     <ArrowUpward fontSize="large"/>
                                 </Button>
