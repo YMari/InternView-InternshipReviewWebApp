@@ -1,13 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../lib/ui/theme';
-import { Container } from '@material-ui/core';
 import NavBar from '../lib/ui/components/appbar';
-import BackToTop from '../lib/ui/components/scrollTop'
-import Universities from './universities/index'
+
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
@@ -18,6 +16,7 @@ export default function MyApp(props) {
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles);
     }
+
   }, []);
 
   return (

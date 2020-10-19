@@ -60,7 +60,7 @@ export default function RegisterPage(props:RegisterProps) {
 
         const result = await req.register({
             email:values.email,
-            name: values.email,
+            name: values.name,
             password:values.password,
             studyProgramId:values.studyProgramId,
             universityId:values.universityId

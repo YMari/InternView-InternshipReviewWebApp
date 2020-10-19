@@ -1,8 +1,13 @@
-import { Box, Button, Card, CardHeader, createStyles, Divider, FormControl, Grid, IconButton, 
+import { Box, Button, Card, CardHeader, CircularProgress, createStyles, Divider, FormControl, Grid, IconButton, 
     InputAdornment, InputLabel, makeStyles, OutlinedInput, Theme, Typography } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
+import { OK_MESSAGE } from "../lib/application/constants";
+import {container, UI_TYPES} from '../lib/ui/client_container'
+import { IRequestService } from "../lib/ui/interfaces";
+
 
 interface State {
     email: string;
@@ -11,12 +16,18 @@ interface State {
 }
 
 export default function LoginPage() {
+    
     const classes = useStyles();
+
+    const router = useRouter();
+
     const [values, setValues] = React.useState<State>({
         email: '',
         password: '',
         showPassword: false,
     });
+
+    const [loading, setLoading]  = React.useState<boolean>(false)
 
     const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
         setValues({ ...values, [prop]: event.target.value });
@@ -30,6 +41,33 @@ export default function LoginPage() {
         event.preventDefault();
     };
 
+    const onSubmit = async () => {
+        
+        const ser = container.get<IRequestService>(UI_TYPES.IRequestService)
+
+        const result = await ser.login({email: values.email, password:values.password})
+
+        setLoading(true)
+
+        if ( result?.status === OK_MESSAGE ) {
+
+            alert(result.message)
+            router.push('/')
+
+        } else {
+
+            if(result.message){
+                alert(result.message)
+            }
+            else {
+                alert('Unexpected Error Try Again')
+            }
+            setLoading(false)
+
+        }
+
+    } 
+
     return(
         <Box className={(classes.margin)}>
             <Typography className={(classes.titlePage)}>InternView</Typography>
@@ -42,7 +80,7 @@ export default function LoginPage() {
             style={{ minHeight: '50vh' }}
             spacing={4}
             >
-                <Card className={classes.card}>
+                {!loading?<Card className={classes.card}>
                     <CardHeader className={(classes.titleCard)} title="Sign In"/>
                     <Grid item className={classes.gridItem}>
                         <FormControl className={(classes.input)} variant="outlined" fullWidth={true} required={true}>
@@ -81,7 +119,7 @@ export default function LoginPage() {
                         </FormControl>
                     </Grid>
                     <Grid item className={classes.gridItem}>
-                        <Button variant="contained" color="secondary">
+                        <Button onClick={onSubmit} variant="contained" color="secondary">
                             <Typography>Log In</Typography>
                         </Button>
                     </Grid>
@@ -100,7 +138,7 @@ export default function LoginPage() {
                             </Button>
                         </Link>
                     </Grid>
-                </Card>
+                </Card>:<CircularProgress />}
             </Grid>
         </Box>     
     )   

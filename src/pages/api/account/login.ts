@@ -1,10 +1,7 @@
-import { hash } from 'bcrypt';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { stringify } from 'querystring';
 import container from '../../../lib/container';
 import * as app from '../../../lib/application';
 import {ERROR_MESSAGE} from '../../../lib/application/constants';
-import {sign} from 'jsonwebtoken';
 
 export default async function login(
   req: NextApiRequest,
@@ -12,7 +9,6 @@ export default async function login(
 ) {
   const ser = container.get<app.application_interfaces.IAuthenticationService>(app.A_TYPES.IAuthenticationService)
   
-
   if (req.method === 'POST') {
     let output = await ser.authenticate(
       {
