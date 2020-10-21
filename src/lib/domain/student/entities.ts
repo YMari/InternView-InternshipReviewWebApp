@@ -22,6 +22,11 @@ export interface IUniversity {
     location: string
 } 
 
+export interface ICompany {
+    id: number | undefined,
+    name: string
+} 
+
 export interface IStudyProgram {
     id: number | undefined,
     name: string 

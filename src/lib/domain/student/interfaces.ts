@@ -16,6 +16,13 @@ export interface IUniversityRepository {
 
 }
 
+export interface ICompanyRepository {
+    
+    getCompanyById: (c_id: number) => Promise<i.ICompany>;
+    getAllCompany: () => Promise<i.ICompany[]>;
+
+}
+
 export interface IStudyProgramRepository {
 
     getStudyProgramById: (sp_id: number) => Promise<i.IStudyProgram>;
