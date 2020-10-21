@@ -12,6 +12,8 @@ export default class EmailService implements i.IEmailService {
     {
 
     }
+    resetPasswordEmail: () => Promise<Object>;
+    sendNotificationEmail: () => Promise<Object>;
     sendVerificationEmail: () => Promise<Object>;
 
 
