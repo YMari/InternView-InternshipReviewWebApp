@@ -7,7 +7,7 @@ import React from "react";
 import { OK_MESSAGE } from "../lib/application/constants";
 import {container, UI_TYPES} from '../lib/ui/client_container'
 import { IRequestService } from "../lib/ui/interfaces";
-
+import {useUser} from '../lib/ui/hooks/useUser'
 
 interface State {
     email: string;
@@ -19,6 +19,8 @@ export default function LoginPage() {
     
     const classes = useStyles();
 
+    const user = useUser();
+
     const router = useRouter();
 
     const [values, setValues] = React.useState<State>({
@@ -26,6 +28,10 @@ export default function LoginPage() {
         password: '',
         showPassword: false,
     });
+
+    React.useEffect(()=>{
+        console.log(user)
+    }, [])
 
     const [loading, setLoading]  = React.useState<boolean>(false)
 
