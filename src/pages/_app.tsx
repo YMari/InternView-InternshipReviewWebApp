@@ -6,24 +6,21 @@ import theme from '../lib/ui/theme';
 import NavBar from '../lib/ui/components/appbar';
 import { container, UI_TYPES } from '../lib/ui/client_container';
 import { IRequestService } from '../lib/ui/interfaces';
-import { NextPageContext } from 'next';
 import { UserProvider } from '../lib/ui/contexts/providers'
-
+import  useSWR from 'swr'
 
 
 
 export default function MyApp(props) {
-  const { Component, pageProps, user } = props;
 
-  React.useEffect(() => {
-    // Remove the server-side injected CSS.
-    const jssStyles = document.querySelector('#jss-server-side');
-    if (jssStyles) {
-      jssStyles.parentElement.removeChild(jssStyles);
-    }
-    console.log(props.result)
+  const { Component, pageProps } = props;
 
-  }, []);
+  const { data } = useSWR('/api/account/user', async ()=>{
+    const ser = container.get<IRequestService>(UI_TYPES.IRequestService)
+    const result =  await ser.loggedIn()
+    console.log(result)
+    return result.data
+  })
 
   return (
     <>
@@ -33,7 +30,7 @@ export default function MyApp(props) {
       </Head>
       <ThemeProvider theme={theme}>
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-        <UserProvider user={user} >
+        <UserProvider user={data} >
           <CssBaseline />
           <NavBar/>
           <Component {...pageProps} />
@@ -43,17 +40,3 @@ export default function MyApp(props) {
   );
 }
 
-
-MyApp.getInitialProps = async (ctx: NextPageContext) => {
-
-  const ser = container.get<IRequestService>(UI_TYPES.IRequestService)
-
-  const result = await ser.loggedIn()
-
-  console.log(result)
-
-  return  {
-    user: result.data
-  }
-
-}

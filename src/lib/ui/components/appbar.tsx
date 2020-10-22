@@ -1,11 +1,14 @@
-import { AppBar, Box, Button, ButtonGroup, createStyles, Divider, fade, Grid, InputBase, makeStyles, Theme, Typography} from "@material-ui/core";
+import { AppBar, Box, Button, ButtonGroup, createStyles, fade, Grid, InputBase, makeStyles, Theme, Typography} from "@material-ui/core";
 import SearchIcon from '@material-ui/icons/Search';
 import PanoramaFishEyeIcon from '@material-ui/icons/PanoramaFishEye';
 import Link from "next/link";
 import React from "react";
+import {useUser} from '../hooks/useUser'
 
 export default function NavBar() {
     const classes = useStyles();
+    const user = useUser();
+
     return(
         <AppBar position='relative' style={{ zIndex:10, background: 'transparent', boxShadow: 'none', color:'transparent', padding:5, paddingTop:10}}>
             <Grid 
@@ -35,6 +38,7 @@ export default function NavBar() {
                     />
                 </Grid>
                 <Grid item >
+                {!user?
                     <ButtonGroup variant="text">
                         <Button className={classes.buttons}>
                             <Link href="/login">        
@@ -51,7 +55,18 @@ export default function NavBar() {
                             </Link> 
                         </Button>
                     </ButtonGroup>
-
+                :   <ButtonGroup variant="text">
+                        <Button className={classes.buttons}>
+                            <Typography variant="h6" noWrap>
+                                {user?.email}
+                            </Typography>
+                        </Button>
+                        <Button className={classes.buttons}>  
+                            <Typography variant="h6" noWrap>
+                                Log Out
+                            </Typography>
+                        </Button>
+                    </ButtonGroup>}
                 </Grid>
             </Grid>
         </AppBar>

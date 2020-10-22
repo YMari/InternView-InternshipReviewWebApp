@@ -2,6 +2,8 @@ import React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheets } from '@material-ui/core/styles';
 import theme from '../lib/ui/theme';
+import { SWRConfig } from 'swr';
+import { SwapCalls } from '@material-ui/icons';
 
 export default class MyDocument extends Document {
   render() {
@@ -17,7 +19,9 @@ export default class MyDocument extends Document {
           <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet"/>
         </Head>
         <body>
-          <Main />
+          <SWRConfig value={{ refreshInterval: 1000 }}>
+            <Main />
+          </SWRConfig>
           <NextScript />
         </body>
       </Html>
