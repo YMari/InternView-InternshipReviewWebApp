@@ -1,7 +1,8 @@
 export interface IReview {
     content: string;
-    date: string; // Might need to change to a date interface or something
+    date: Date;
     anonymous: boolean;
+    email: string;
     experienceType: string;
     degreeType: string;
     score: number; // Helpful or not helpful
