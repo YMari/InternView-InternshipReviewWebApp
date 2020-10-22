@@ -19,8 +19,6 @@ export default function LoginPage() {
     
     const classes = useStyles();
 
-    const user = useUser();
-
     const router = useRouter();
 
     const [values, setValues] = React.useState<State>({
@@ -28,10 +26,6 @@ export default function LoginPage() {
         password: '',
         showPassword: false,
     });
-
-    React.useEffect(()=>{
-        console.log(user)
-    }, [])
 
     const [loading, setLoading]  = React.useState<boolean>(false)
 
