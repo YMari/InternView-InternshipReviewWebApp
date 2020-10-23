@@ -12,61 +12,65 @@ export default function NavBar() {
     return(
         <AppBar position='relative' style={{ zIndex:10, background: 'transparent', boxShadow: 'none', color:'transparent', padding:5, paddingTop:10}}>
             <Grid 
-            container
-            direction='row'
-            justify="space-between"
-            wrap="nowrap"
+                container
+                direction='row'
             >
-                <Grid item className={classes.iconContainer}>
+                <Grid item className={classes.iconContainer} md={4}>
                     <Link href="/">
                         <Button>
                             <PanoramaFishEyeIcon fontSize="large"/>
                         </Button>
                     </Link>
                 </Grid>
-                <Grid item className={classes.search}>
-                    <Box className={classes.searchIcon}>
-                        <SearchIcon color='primary'/>
-                    </Box>
-                    <InputBase
-                    placeholder="Search…"
-                    inputProps={{ 'aria-label': 'search' }}
-                    classes={{
-                        root: classes.inputRoot,
-                        input: classes.inputInput,
-                    }}
-                    />
+                <Grid item md={4}>
+                    <Grid container justify="center">
+                        <Box className={classes.search}>
+                        <Box className={classes.searchIcon}>
+                            <SearchIcon color='primary'/>
+                        </Box>
+                        <InputBase
+                        placeholder="Search…"
+                        inputProps={{ 'aria-label': 'search' }}
+                        classes={{
+                            root: classes.inputRoot,
+                            input: classes.inputInput,
+                        }}
+                        />
+                        </Box>
+                    </Grid>
                 </Grid>
-                <Grid item >
-                {!user?
-                    <ButtonGroup variant="text">
-                        <Button className={classes.buttons}>
-                            <Link href="/login">        
+                <Grid item md={4}  >
+                    <Grid container justify="flex-end">
+                    {!user?
+                        <ButtonGroup variant="text">
+                            <Button className={classes.buttons}>
+                                <Link href="/login">        
+                                    <Typography variant="h6" noWrap>
+                                        Log in
+                                    </Typography>
+                                </Link>
+                            </Button>
+                            <Button className={classes.buttons}>
+                                <Link href="/register">            
+                                    <Typography variant="h6" noWrap>
+                                        Register
+                                    </Typography>
+                                </Link> 
+                            </Button>
+                        </ButtonGroup>
+                    :   <ButtonGroup variant="text">
+                            <Button className={classes.buttons}>
                                 <Typography variant="h6" noWrap>
-                                    Log in
+                                    {user?.email}
                                 </Typography>
-                            </Link>
-                        </Button>
-                        <Button className={classes.buttons}>
-                            <Link href="/register">            
+                            </Button>
+                            <Button className={classes.buttons}>  
                                 <Typography variant="h6" noWrap>
-                                    Register
+                                    Log Out
                                 </Typography>
-                            </Link> 
-                        </Button>
-                    </ButtonGroup>
-                :   <ButtonGroup variant="text">
-                        <Button className={classes.buttons}>
-                            <Typography variant="h6" noWrap>
-                                {user?.email}
-                            </Typography>
-                        </Button>
-                        <Button className={classes.buttons}>  
-                            <Typography variant="h6" noWrap>
-                                Log Out
-                            </Typography>
-                        </Button>
-                    </ButtonGroup>}
+                            </Button>
+                        </ButtonGroup>}
+                    </Grid>
                 </Grid>
             </Grid>
         </AppBar>
@@ -79,28 +83,28 @@ const useStyles = makeStyles((theme: Theme) =>
             alignItems: 'left',
         },
         search: {
-            position: 'relative',
+            //position: 'relative',
             borderRadius: theme.shape.borderRadius,
             backgroundColor: fade(theme.palette.common.white, 0.65),
             '&:hover': {
                 backgroundColor: fade(theme.palette.common.white, 0.40),
             },
-            // marginRight: theme.spacing(2),
-            // margin:'auto',
-            width: '100%',
-            [theme.breakpoints.up('sm')]: {
-                marginLeft: 120,
-                width: 450,
-            },
+            
+            width: '600',
+            // [theme.breakpoints.up('sm')]: {
+            //     marginLeft: 120,
+            //     width: 450,
+            // },
         },
         searchIcon: {
-            padding: theme.spacing(0, 2),
+            // padding: theme.spacing(0, 2),
             height: '100%',
             position: 'absolute',
             pointerEvents: 'none',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            bottom:-2
         },
         inputRoot: {
             color: theme.palette.secondary.contrastText,
