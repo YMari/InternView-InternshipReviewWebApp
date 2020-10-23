@@ -1,9 +1,8 @@
 import { Backdrop, Box, Button, Card, CardHeader, Checkbox, createStyles, Fade, FormControl, Grid, InputLabel, makeStyles, Menu, MenuItem, Modal, OutlinedInput, TextField, Theme, Typography } from '@material-ui/core';
 import Link from 'next/link';
 import React from 'react';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import GradeIcon from '@material-ui/icons/Grade';
-import { ArrowDownward, ArrowUpward } from '@material-ui/icons';
+import { ArrowDownward, ArrowUpward, AccountCircle, Grade, ArrowDropDown } from '@material-ui/icons';
+import theme from '../../lib/ui/theme';
 
 export default function Review() {
     const classes = useStyles();
@@ -44,7 +43,7 @@ export default function Review() {
                             <Grid item>
                                 <Link href="">    
                                     <Button>                
-                                        <AccountCircleIcon fontSize="large"/>
+                                        <AccountCircle fontSize="large"/>
                                         <Typography className={classes.name}>Student Name</Typography>
                                     </Button>
                                 </Link>
@@ -86,39 +85,41 @@ export default function Review() {
                     <Grid item>
                         <Card className={classes.cardInner1}>
                             
-                            <Grid container direction='row' alignItems="center" wrap="nowrap">
-                                <Grid container direction='column' alignItems="center" wrap="nowrap">
+                            <Grid container direction='row' alignItems="center" wrap="nowrap" className={classes.inner1Info}>
+                                <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.inner1InfoCol1}>
                                     <Grid item>
-                                        <Typography>Location</Typography>
+                                        <Typography>Location: [text]</Typography>
                                     </Grid>
                                     <Grid item>
-                                        <Typography>Duration</Typography>
+                                        <Typography>Duration: [text]</Typography>
                                     </Grid>
                                     <Grid item>
-                                        <Typography>Salary</Typography>
+                                        <Typography>Salary: [text]</Typography>
                                     </Grid>
                                 </Grid>
-                                <Grid container direction='column' alignItems="center" wrap="nowrap">
+                                <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.inner1InfoCol2}>
                                     <Grid item>
-                                        <Typography>Degree</Typography>
+                                        <Typography>Degree: [text]</Typography>
                                     </Grid>
                                     <Grid item>
-                                        <Typography>Work Type</Typography>
+                                        <Typography>Work Type: [text]</Typography>
                                     </Grid>
                                 </Grid>
                             </Grid>
 
                             <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.gridItem}>
                                 <Card className={classes.cardInner2}>
-                                    <CardHeader className={classes.cardSubtitle} title="Interview"/>
-                                    <Grid item >
+
+                                    <Grid item className={classes.inner2Item}>
+                                        <Typography>Interview</Typography>
+                                    </Grid>
+                                    
+                                    <Grid container direction='row' alignItems="center" justify='center' wrap="nowrap">
                                         <Button
-                                        aria-controls="customized-menu"
-                                        aria-haspopup="true"
                                         variant="contained"
                                         color="primary"
+                                        endIcon={<ArrowDropDown/>}
                                         onClick={handleClick}
-                                        fullWidth={true}
                                         className={classes.buttonQuestions}
                                         >
                                         Interview Questions
@@ -134,10 +135,13 @@ export default function Review() {
                                             <MenuItem onClick={handleCloseMenu}>Q3</MenuItem>
                                         </Menu>
                                     </Grid>
-                                    <Grid item >
+                                    
+                                    <Grid item className={classes.inner2Item}>
                                         <Typography>Recommendations and Tips</Typography>
-                                        {/* <OutlinedInput value={'text text text'}/> */}
-                                        <FormControl fullWidth={true}>
+                                    </Grid>
+
+                                    <Grid container direction='row' alignItems="center" justify='center' wrap="nowrap">
+                                        <FormControl className={classes.textBox}>
                                             <TextField
                                                 disabled
                                                 defaultValue={'text text text'}
@@ -151,82 +155,87 @@ export default function Review() {
                                             />
                                         </FormControl>
                                     </Grid>
-                                    <Grid container direction='row' alignItems="center" wrap="nowrap">
+
+                                    <Grid container direction='row' alignItems="center" wrap="nowrap" className={classes.inner2Item}>
                                         <Typography>Interview Difficulty: </Typography>
-                                        <GradeIcon fontSize="small"/>
-                                        <GradeIcon fontSize="small"/>
-                                        <GradeIcon fontSize="small"/>
-                                        <GradeIcon fontSize="small"/>
-                                        <GradeIcon fontSize="small"/>
+                                        <Grade fontSize="small"/>
+                                        <Grade fontSize="small"/>
+                                        <Grade fontSize="small"/>
+                                        <Grade fontSize="small"/>
+                                        <Grade fontSize="small"/>
                                     </Grid>
+
                                 </Card>
                             </Grid>
-
-                        </Card>
-
-                        <Grid container direction='row' alignItems="center" wrap="nowrap">
-                            <Grid container direction='row' alignItems="center">
-                                <Button>
-                                    <ArrowDownward fontSize="large"/>
-                                </Button>
-                                <Typography># Downvotes</Typography>
-                            </Grid>
-                            <Grid container direction='row' alignItems="center">
-                                <Button>
-                                    <ArrowUpward fontSize="large"/>
-                                </Button>
-                                <Typography># Upvotes</Typography>
-                            </Grid>
-                            <Grid item >
-                                <Button onClick={handleOpenModal}>
-                                    <Typography>Report</Typography>
-                                </Button>
-                                <Modal
-                                className={classes.modal}
-                                open={open}
-                                onClose={handleCloseModal}
-                                closeAfterTransition
-                                BackdropComponent={Backdrop}
-                                BackdropProps={{
-                                    timeout: 500,
-                                }}
-                                >
-                                    <Fade in={open}>
-                                        <Card className={classes.modalCard}>
-                                            <Grid container direction='column' alignItems="center" wrap="nowrap">
-                                                <Grid item>
-                                                    <Typography>Why would you like to report?</Typography>
-                                                </Grid>
-                                                <Grid item>
-                                                    <FormControl className={(classes.modalInput)} variant="outlined" fullWidth={true} required={true}>
-                                                        <OutlinedInput
-                                                            // value={''}
-                                                            // onChange={handleChange('')}
-                                                        />
-                                                    </FormControl>
-                                                </Grid>
-                                                <Grid item>
-                                                    <Grid container direction='row' alignItems="center" wrap="nowrap">
-                                                        <Grid item>
-                                                            <Button>
-                                                                <Typography>Report</Typography>
-                                                            </Button>
-                                                        </Grid>
-                                                        <Grid item>
-                                                            <Button onClick={handleCloseModal}>
-                                                                <Typography>Cancel</Typography>
-                                                            </Button>
+                            <Grid container direction='row' alignItems="center" wrap="nowrap" className={classes.ratingRow}>
+                                <Grid container direction='row' alignItems="center">
+                                    <Grid item>
+                                        <Grid container direction='row' alignItems="center">
+                                            <Button>
+                                                <ArrowDownward fontSize="large"/>
+                                            </Button>
+                                            <Typography className={classes.ratingNum}># Downvotes</Typography>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid item>
+                                        <Grid container direction='row' alignItems="center">
+                                            <Button>
+                                                <ArrowUpward fontSize="large"/>
+                                            </Button>
+                                            <Typography className={classes.ratingNum}># Upvotes</Typography>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                <Grid item >
+                                    <Button  className={classes.buttonReport} onClick={handleOpenModal}>
+                                        <Typography>Report</Typography>
+                                    </Button>
+                                    <Modal
+                                    className={classes.modal}
+                                    open={open}
+                                    onClose={handleCloseModal}
+                                    closeAfterTransition
+                                    BackdropComponent={Backdrop}
+                                    BackdropProps={{
+                                        timeout: 500,
+                                    }}
+                                    >
+                                        <Fade in={open}>
+                                            <Card className={classes.modalCard}>
+                                                <Grid container direction='column' alignItems="center" wrap="nowrap">
+                                                    <Grid item>
+                                                        <Typography>Why would you like to report?</Typography>
+                                                    </Grid>
+                                                    <Grid item>
+                                                        <FormControl className={(classes.modalInput)} variant="outlined" fullWidth={true} required={true}>
+                                                            <OutlinedInput
+                                                                // value={''}
+                                                                // onChange={handleChange('')}
+                                                            />
+                                                        </FormControl>
+                                                    </Grid>
+                                                    <Grid item>
+                                                        <Grid container direction='row' alignItems="center" wrap="nowrap">
+                                                            <Grid item>
+                                                                <Button>
+                                                                    <Typography>Report</Typography>
+                                                                </Button>
+                                                            </Grid>
+                                                            <Grid item>
+                                                                <Button onClick={handleCloseModal}>
+                                                                    <Typography>Cancel</Typography>
+                                                                </Button>
+                                                            </Grid>
                                                         </Grid>
                                                     </Grid>
                                                 </Grid>
-                                            </Grid>
-                                        </Card>
+                                            </Card>
+                                        </Fade>
 
-                                    </Fade>
-                                </Modal>
+                                    </Modal>
+                                </Grid>
                             </Grid>
-                        </Grid>
-
+                        </Card>
                     </Grid>
 
                 </Grid>
@@ -248,10 +257,6 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(2),
             maxWidth: '90%',
             minWidth: '50%',
-            minHeight: 800,
-
-
-
         },
         gridMain: {
             
@@ -268,19 +273,49 @@ const useStyles = makeStyles((theme: Theme) =>
             fontSize: 30,
         },
         cardInner1: {
-            backgroundColor: theme.palette.primary.main
+            backgroundColor: theme.palette.secondary.main,
+            paddingTop: theme.spacing(1),
+            paddingBottom: theme.spacing(1),
+        },
+        inner1Info: {
+            paddingBottom: theme.spacing(1),
+        },
+        inner1InfoCol1: {
+            
+        },
+        inner1InfoCol2: {
+
         },
         cardInner2: {
-            minWidth: '97%',
-            minHeight: '97%',
-            maxWidth: '97%',
-            maxHeight: '97%',
+            width: '97%',
+            height: '97%',
+        },
+        inner2Item: {
+            padding: theme.spacing(1),
+            paddingLeft: theme.spacing(2),
         },
         cardSubtitle: {
 
         },
         buttonQuestions: {
-            
+            width: '97%',
+        },
+        textBox: {
+            width: '97%',
+        },
+        ratingRow: {
+            paddingLeft: theme.spacing(2),
+            paddingRight: theme.spacing(2),
+        },
+        buttonReport: {
+            backgroundColor: theme.palette.primary.main,
+            color: theme.palette.primary.contrastText,
+            padding: theme.spacing(1),
+        },
+        ratingNum: {
+            // backgroundColor: theme.palette.primary.contrastText,
+            color: theme.palette.primary.contrastText,
+            padding: theme.spacing(1),
         },
         checklist: {
             paddingLeft: theme.spacing(1),
@@ -307,5 +342,5 @@ const useStyles = makeStyles((theme: Theme) =>
               color: theme.palette.info.contrastText
             }
         },
-        disabled: {}
+        disabled: {},
     }))
