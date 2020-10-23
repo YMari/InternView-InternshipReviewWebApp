@@ -7,7 +7,7 @@ import React from "react";
 import { OK_MESSAGE } from "../lib/application/constants";
 import {container, UI_TYPES} from '../lib/ui/client_container'
 import { IRequestService } from "../lib/ui/interfaces";
-import {useUser} from '../lib/ui/hooks/useUser'
+import { mutate } from 'swr';
 
 interface State {
     email: string;
@@ -50,7 +50,8 @@ export default function LoginPage() {
         setLoading(true)
 
         if ( result?.status === OK_MESSAGE ) {
-
+            
+            mutate("/api/account/user")
             alert(result.message)
             router.push('/')
 
