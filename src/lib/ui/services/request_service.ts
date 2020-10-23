@@ -1,6 +1,6 @@
 import {injectable} from 'inversify'
 import "reflect-metadata";
-import { IRegister } from '../entities';
+import { ILogin, IRegister } from '../entities';
 import { IRequestService } from '../interfaces';
 import axios from 'axios'
 
@@ -13,7 +13,6 @@ export default class RequestService implements IRequestService {
             const result = await axios.post('/api/account/register', data)
             return result.data
         }catch(e){
-            console.log(e)
             if (e.response?.data) {
                 return e.response.data
             }
@@ -21,5 +20,33 @@ export default class RequestService implements IRequestService {
         }
 
     }
+
+    async login(data: ILogin) {
+        try {
+            const result = await axios.post('/api/account/login', data)
+            return result.data
+        }catch(e) {
+            if (e.response?.data) {
+                return e.response.data
+            }
+            return e
+        }
+    }
+
+    async loggedIn() {
+
+        try {
+            const result = await axios.get('http://localhost:3000/api/account/user')
+            return result.data
+        } catch(e) {
+            if (e.response?.data) {
+                return e.response.data
+            }
+            return e
+        }
+
+    }
+
+
 
 } 

@@ -9,6 +9,7 @@ services:
         ports:
             - '3000:3000'
         volumes:
+            - nextjs:/usr/src/app/node_modules/
             - './:/usr/src/app'
         command: >
             sh -c 'db-migrate up && 
@@ -37,3 +38,4 @@ services:
 
 volumes:
   postgres_data:
+  nextjs:

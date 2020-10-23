@@ -1,8 +1,10 @@
-import { IRegister } from "./entities";
+import { ILogin, IRegister } from "./entities";
 
 
 export interface IRequestService {
     
-    register(data: IRegister): Promise<any> 
+    register(data: IRegister): Promise<any>
+    login(data: ILogin): Promise<any> 
+    loggedIn(): Promise<any>
 
 }
