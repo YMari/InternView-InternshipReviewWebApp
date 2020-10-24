@@ -146,6 +146,8 @@ export default function Review() {
                                                 disabled
                                                 defaultValue={'text text text'}
                                                 variant="outlined"
+                                                multiline={true}
+                                                rows={10}
                                                 InputProps={{
                                                     classes: {
                                                         root: classes.inputRoot,
@@ -202,33 +204,34 @@ export default function Review() {
                                     >
                                         <Fade in={open}>
                                             <Card className={classes.modalCard}>
-                                                <Grid container direction='column' alignItems="center" wrap="nowrap">
-                                                    <Grid item>
-                                                        <Typography>Why would you like to report?</Typography>
+
+                                                <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.modalGrid}>
+                                                    <Grid item className={classes.gridItem}>
+                                                        <Typography className={classes.modalTitle}>Why would you like to report this review?</Typography>
                                                     </Grid>
-                                                    <Grid item>
-                                                        <FormControl className={(classes.modalInput)} variant="outlined" fullWidth={true} required={true}>
-                                                            <OutlinedInput
-                                                                // value={''}
-                                                                // onChange={handleChange('')}
+                                                    <Grid container direction='row' alignItems="center" justify='center' className={classes.gridItem}>
+                                                        <FormControl className={classes.textBox}>
+                                                            <TextField
+                                                                variant="outlined"
+                                                                multiline={true}
+                                                                rows={10}
                                                             />
                                                         </FormControl>
                                                     </Grid>
-                                                    <Grid item>
-                                                        <Grid container direction='row' alignItems="center" wrap="nowrap">
-                                                            <Grid item>
-                                                                <Button>
-                                                                    <Typography>Report</Typography>
-                                                                </Button>
-                                                            </Grid>
-                                                            <Grid item>
-                                                                <Button onClick={handleCloseModal}>
-                                                                    <Typography>Cancel</Typography>
-                                                                </Button>
-                                                            </Grid>
+                                                    <Grid container direction='row' alignItems="center" wrap="nowrap" justify='flex-end'>
+                                                        <Grid item className={classes.modalButtonPos}>
+                                                            <Button className={classes.modalButton1}>
+                                                                <Typography>Report</Typography>
+                                                            </Button>
+                                                        </Grid>
+                                                        <Grid item className={classes.modalButtonPos}>
+                                                            <Button className={classes.modalButton2} onClick={handleCloseModal}>
+                                                                <Typography>Cancel</Typography>
+                                                            </Button>
                                                         </Grid>
                                                     </Grid>
                                                 </Grid>
+                                                
                                             </Card>
                                         </Fade>
 
@@ -330,9 +333,16 @@ const useStyles = makeStyles((theme: Theme) =>
             justifyContent: 'center',
         },
         modalCard: {
-            width: 600,
-            height: 400,
+            width: 700,
+            height: 330,
             maxWidth: '90%',
+            maxHeight: '90%',
+        },
+        modalGrid: {
+            padding: theme.spacing(1),
+        },
+        modalTitle: {
+            fontSize: 20,
         },
         modalInput: {
             
@@ -343,4 +353,25 @@ const useStyles = makeStyles((theme: Theme) =>
             }
         },
         disabled: {},
+        
+        modalButtonPos: {
+            paddingLeft: theme.spacing(1),
+            paddingRight: theme.spacing(1),
+        },
+        modalButton1: {
+            color: theme.palette.primary.contrastText,
+            backgroundColor: theme.palette.secondary.main,
+            padding: theme.spacing(1),
+            paddingLeft: theme.spacing(2),
+            paddingRight: theme.spacing(2),
+        },
+
+        modalButton2: {
+            color: theme.palette.primary.contrastText,
+            backgroundColor: theme.palette.primary.main,
+            padding: theme.spacing(1),
+            paddingLeft: theme.spacing(2),
+            paddingRight: theme.spacing(2),
+        },
+        
     }))
