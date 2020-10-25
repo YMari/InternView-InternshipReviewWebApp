@@ -31,6 +31,7 @@ export default function LoginPage() {
 
     const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
         setValues({ ...values, [prop]: event.target.value });
+        
     };
     
     const handleClickShowPassword = () => {
@@ -70,17 +71,18 @@ export default function LoginPage() {
     } 
 
     return(
-        <Box className={(classes.margin)}>
-            <Typography className={(classes.titlePage)}>InternView</Typography>
+        <Box className={(classes.main)}>
             <Grid
             container
             direction="column"
             alignContent="center"
             justify="center"
             wrap='wrap'
-            style={{ minHeight: '50vh' }}
             spacing={4}
             >
+                <Grid item className={classes.gridItem}>
+                    <Typography className={(classes.titlePage)}>InternView</Typography>
+                </Grid>
                 {!loading?<Card className={classes.card}>
                     <CardHeader className={(classes.titleCard)} title="Sign In"/>
                     <Grid item className={classes.gridItem}>
@@ -139,7 +141,11 @@ export default function LoginPage() {
                             </Button>
                         </Link>
                     </Grid>
-                </Card>:<CircularProgress />}
+                </Card>:<Grid item>
+                    <Grid container justify="center" alignItems="center">
+                    <CircularProgress />
+                    </Grid>
+                    </Grid>}
             </Grid>
         </Box>     
     )   
@@ -147,8 +153,9 @@ export default function LoginPage() {
 
 const useStyles = makeStyles((theme: Theme) =>    
     createStyles({
-    margin: {
+    main: {
         margin: theme.spacing(1),
+        
     },
     card: {
         padding: theme.spacing(4, 12),

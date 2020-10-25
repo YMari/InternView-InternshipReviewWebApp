@@ -79,18 +79,19 @@ export default function RegisterPage(props:RegisterProps) {
 
 
     return(
-        <Box className={(classes.margin)}>
-            <Typography  className={(classes.titlePage)}>InternView</Typography>
-            <br />
+        <Box className={(classes.main)}>
+            
             <Grid
             container
             direction="column"
-            alignContent="center"
+            alignItems="center"
             justify="center"
             wrap='wrap'
-            style={{ minHeight: '50vh' }}
             spacing={4}
             >
+                <Grid item className={classes.gridItem}>
+                    <Typography className={(classes.titlePage)}>InternView</Typography>
+                </Grid>
                 {!loading?<Card className={classes.card}>
                     <CardHeader className={(classes.titleCard)} title="Create Account"/>
                     <Grid item className={classes.gridItem}>
@@ -201,7 +202,11 @@ export default function RegisterPage(props:RegisterProps) {
                             </Link>
                         </Box>
                     </Grid>
-                </Card>: <CircularProgress />}
+                </Card>: <Grid item>
+                    <Grid container justify="center" direction="column" alignItems="center">
+                        <CircularProgress />
+                    </Grid>
+                    </Grid>}
                 
             </Grid>
         </Box>         
@@ -230,7 +235,7 @@ export async function getServerSideProps(ctx:NextPageContext): Promise<IServerSi
 
 const useStyles = makeStyles((theme: Theme) =>    
     createStyles({
-    margin: {
+    main: {
         margin: theme.spacing(1),
     },
     card: {

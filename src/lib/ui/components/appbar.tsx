@@ -3,6 +3,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import PanoramaFishEyeIcon from '@material-ui/icons/PanoramaFishEye';
 import Link from "next/link";
 import React from "react";
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import {useUser} from '../hooks/useUser'
 
 export default function NavBar() {
@@ -14,17 +15,19 @@ export default function NavBar() {
             <Grid 
                 container
                 direction='row'
+                justify="space-between"
+                wrap="nowrap"
             >
-                <Grid item className={classes.iconContainer} md={4}>
+                <Grid item className={classes.iconContainer}>
                     <Link href="/">
                         <Button>
                             <PanoramaFishEyeIcon fontSize="large"/>
                         </Button>
                     </Link>
                 </Grid>
-                <Grid item md={4}>
-                    <Grid container justify="center">
-                        <Box className={classes.search}>
+                <Grid item className={classes.search}>
+                    
+                        
                         <Box className={classes.searchIcon}>
                             <SearchIcon color='primary'/>
                         </Box>
@@ -36,10 +39,10 @@ export default function NavBar() {
                             input: classes.inputInput,
                         }}
                         />
-                        </Box>
-                    </Grid>
+                        
+                    
                 </Grid>
-                <Grid item md={4}  >
+                <Grid item >
                     <Grid container justify="flex-end">
                     {!user?
                         <ButtonGroup variant="text">
@@ -83,28 +86,28 @@ const useStyles = makeStyles((theme: Theme) =>
             alignItems: 'left',
         },
         search: {
-            //position: 'relative',
+            position: 'relative',
             borderRadius: theme.shape.borderRadius,
             backgroundColor: fade(theme.palette.common.white, 0.65),
             '&:hover': {
                 backgroundColor: fade(theme.palette.common.white, 0.40),
             },
-            
-            width: '600',
-            // [theme.breakpoints.up('sm')]: {
-            //     marginLeft: 120,
-            //     width: 450,
-            // },
+            // marginRight: theme.spacing(2),
+            // margin:'auto',
+            width: '100%',
+            [theme.breakpoints.up('sm')]: {
+                marginLeft: 120,
+                width: 450,
+            },
         },
         searchIcon: {
-            // padding: theme.spacing(0, 2),
+            padding: theme.spacing(0, 2),
             height: '100%',
             position: 'absolute',
             pointerEvents: 'none',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            bottom:-2
         },
         inputRoot: {
             color: theme.palette.secondary.contrastText,
