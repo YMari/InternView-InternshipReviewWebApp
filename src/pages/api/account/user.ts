@@ -1,4 +1,4 @@
-import {NextApiResponse } from 'next'
+import { NextApiResponse } from 'next'
 import container from '../../../lib/container'
 import { IMiddleware, M_TYPES, IRequestWithIssuer } from '../../../lib/middleware'
 

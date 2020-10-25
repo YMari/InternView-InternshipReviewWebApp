@@ -1,19 +1,22 @@
-import { AppBar, Box, Button, ButtonGroup, createStyles, Divider, fade, Grid, InputBase, makeStyles, Theme, Typography} from "@material-ui/core";
+import { AppBar, Box, Button, ButtonGroup, createStyles, fade, Grid, InputBase, makeStyles, Theme, Typography} from "@material-ui/core";
 import SearchIcon from '@material-ui/icons/Search';
 import PanoramaFishEyeIcon from '@material-ui/icons/PanoramaFishEye';
 import Link from "next/link";
 import React from "react";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import {useUser} from '../hooks/useUser'
 
 export default function NavBar() {
     const classes = useStyles();
+    const user = useUser();
+
     return(
         <AppBar position='relative' style={{ zIndex:10, background: 'transparent', boxShadow: 'none', color:'transparent', padding:5, paddingTop:10}}>
             <Grid 
-            container
-            direction='row'
-            justify="space-between"
-            wrap="nowrap"
+                container
+                direction='row'
+                justify="space-between"
+                wrap="nowrap"
             >
                 <Grid item className={classes.iconContainer}>
                     <Link href="/">
@@ -23,41 +26,54 @@ export default function NavBar() {
                     </Link>
                 </Grid>
                 <Grid item className={classes.search}>
-                    <Box className={classes.searchIcon}>
-                        <SearchIcon color='primary'/>
-                    </Box>
-                    <InputBase
-                    placeholder="Search…"
-                    inputProps={{ 'aria-label': 'search' }}
-                    classes={{
-                        root: classes.inputRoot,
-                        input: classes.inputInput,
-                    }}
-                    />
+                    
+                        
+                        <Box className={classes.searchIcon}>
+                            <SearchIcon color='primary'/>
+                        </Box>
+                        <InputBase
+                        placeholder="Search…"
+                        inputProps={{ 'aria-label': 'search' }}
+                        classes={{
+                            root: classes.inputRoot,
+                            input: classes.inputInput,
+                        }}
+                        />
+                        
+                    
                 </Grid>
                 <Grid item >
-                    <ButtonGroup variant="text">
-                        <Button className={classes.buttons}>
-                            <Link href="/login">        
+                    <Grid container justify="flex-end">
+                    {!user?
+                        <ButtonGroup variant="text">
+                            <Button className={classes.buttons}>
+                                <Link href="/login">        
+                                    <Typography variant="h6" noWrap>
+                                        Log in
+                                    </Typography>
+                                </Link>
+                            </Button>
+                            <Button className={classes.buttons}>
+                                <Link href="/register">            
+                                    <Typography variant="h6" noWrap>
+                                        Register
+                                    </Typography>
+                                </Link> 
+                            </Button>
+                        </ButtonGroup>
+                    :   <ButtonGroup variant="text">
+                            <Button className={classes.buttons}>
                                 <Typography variant="h6" noWrap>
-                                    Log in
+                                    {user?.email}
                                 </Typography>
-                            </Link>
-                        </Button>
-                        <Button className={classes.buttons}>
-                            <Link href="/register">            
+                            </Button>
+                            <Button className={classes.buttons}>  
                                 <Typography variant="h6" noWrap>
-                                    Register
+                                    Log Out
                                 </Typography>
-                            </Link> 
-                        </Button>
-                        {/* <Button>
-                            <Link href="">
-                                <AccountCircleIcon fontSize="large"/>
-                            </Link>
-                        </Button> */}
-                    </ButtonGroup>
-
+                            </Button>
+                        </ButtonGroup>}
+                    </Grid>
                 </Grid>
             </Grid>
         </AppBar>
