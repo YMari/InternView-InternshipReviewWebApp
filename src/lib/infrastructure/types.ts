@@ -1,4 +1,7 @@
 
-export const E_TYPES ={
+
+
+export const I_TYPES ={
     IEmailService: Symbol("IEmailService")
+    
 }
