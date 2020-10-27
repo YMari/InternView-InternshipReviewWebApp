@@ -33,7 +33,7 @@ export default class EmailService implements i.IEmailService {
         text: "Please validate your email using this link: . validateemail.com"
     }
 
-    transporter.sendMail(mailOptions, function(err,data){
+    transporter.sendMail(mailOptions, function(err, data){
         if(err) {
             console.log("error");
         } else {
