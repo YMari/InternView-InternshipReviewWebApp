@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import cookie from 'cookie'
-import { serialize } from "v8";
 
 
 export default async function logout(req:NextApiRequest, res:NextApiResponse) {
@@ -13,12 +12,11 @@ export default async function logout(req:NextApiRequest, res:NextApiResponse) {
         path: '/'
     })
 
-
     res.setHeader(
         "Set-Cookie",
         co
     );
 
-    res.end()
+    res.status(200).end()
 
 }
