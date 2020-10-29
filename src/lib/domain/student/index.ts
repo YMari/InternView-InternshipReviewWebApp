@@ -1,5 +1,5 @@
 import {IUniversityRepository, IStudentRepository, IStudentService, IStudentServiceOutput, IStudyProgramRepository} from './interfaces';
-import {IStudent, IStudentDetailed, IStudentDetailedIds, IStudentWithPassword, IStudentWithPasswordSimple, IStudyProgram, IUniversity} from './entities'
+import {IStudent, IStudyProgram, IUniversity} from './entities'
 import StudentService from './services/student_service';
 import StudentRepository from '../../infrastructure/repositories/student_repository';
 import {S_TYPES} from './types';
@@ -12,11 +12,7 @@ export {
 }
 
 export type {
-    IStudent, 
-    IStudentDetailed, 
-    IStudentDetailedIds, 
-    IStudentWithPassword, 
-    IStudentWithPasswordSimple, 
+    IStudent,  
     IStudyProgram, 
     IUniversity,
     IUniversityRepository, 

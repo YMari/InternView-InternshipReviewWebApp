@@ -24,9 +24,9 @@ export default class AuthenticationService implements i.IAuthenticationService {
         this._studentRepository = studentRepository
     }
     
-    async register(st: st.IStudentWithPassword): Promise<i.IAuthenticationServiceOutput<st.IStudentDetailed>>{
+    async register(st: st.IStudent): Promise<i.IAuthenticationServiceOutput<st.IStudent>>{
 
-        // Validate email
+        // Validate email can be moved to IStuden class in future
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (!re.test(st.email?.toLowerCase())){
             return {
@@ -37,7 +37,7 @@ export default class AuthenticationService implements i.IAuthenticationService {
         }
 
         // Validate Password
-        if (st.passwordHash === null) {
+        if (!st.passwordHash!) {
             return {
                 status:ERROR_MESSAGE,
                 message: "no password given",
@@ -45,6 +45,7 @@ export default class AuthenticationService implements i.IAuthenticationService {
             }
         }
 
+        // Can be moved to student class instance
         if (st.passwordHash.length < this.PASSWORD_LENGTH) {
             return {
                 status:ERROR_MESSAGE,
@@ -52,17 +53,17 @@ export default class AuthenticationService implements i.IAuthenticationService {
                 data:null
             } 
         }
+
         // Use Student Service
-
+        // can be moved to IStudent class instance
         st.passwordHash = await bcrypt.hash(st.passwordHash, this.SALT_ROUNDS)
-
         return await this._studentService.registerStudent(st);
 
     }
 
 
     async authenticate(cr: e.ICredentials): Promise<i.IAuthenticationServiceOutput<i.SerializedCookie>> {
-
+        
         const student = await this._studentRepository.getStudentByEmailWithPassword(cr.email);
         if(!student){
             return {
@@ -71,6 +72,8 @@ export default class AuthenticationService implements i.IAuthenticationService {
                 data: null
             }
         }
+
+        // can be moved to student class instance
         const passwordIsCorrect = await bcrypt.compare(cr.password, student.passwordHash)
         if(passwordIsCorrect){
             const token = sign({sub: student.email}, process.env.SECRET_KEY, {expiresIn: '1h'})
@@ -95,7 +98,7 @@ export default class AuthenticationService implements i.IAuthenticationService {
     }
     
 
-    async validate(ck: i.SerializedCookie): Promise<i.IAuthenticationServiceOutput<st.IStudentDetailed>> {
+    async validate(ck: i.SerializedCookie): Promise<i.IAuthenticationServiceOutput<st.IStudent>> {
         try{
             const result = await verify(ck, process.env.SECRET_KEY) as e.IJwtPayload;
             const email = result.sub;
