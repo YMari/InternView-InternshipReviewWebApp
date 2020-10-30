@@ -9,7 +9,7 @@ import 'reflect-metadata'
 class StudentRepository implements st.IStudentRepository {
     
     
-    async getStudentByEmailWithPassword(st_email: string): Promise<st.IStudentWithPasswordSimple>{
+    async getStudentByEmailWithPassword(st_email: string): Promise<st.IStudent>{
         try{
             let result = await db.student.findOne({
 
@@ -36,7 +36,7 @@ class StudentRepository implements st.IStudentRepository {
         }
     }
 
-    async getStudentByEmail(st_email: string): Promise<st.IStudentDetailed> {
+    async getStudentByEmail(st_email: string): Promise<st.IStudent> {
 
       try{
             const result = await db.student.findOne({
@@ -64,7 +64,7 @@ class StudentRepository implements st.IStudentRepository {
         }
     }
 
-    async updateStudent(st_email: string, st_target: st.IStudentWithPassword): Promise<st.IStudentDetailed> {
+    async updateStudent(st_email: string, st_target: st.IStudent): Promise<st.IStudent> {
 
         const student = await this.getStudentByEmail(st_email);
         let update = {
@@ -104,8 +104,8 @@ class StudentRepository implements st.IStudentRepository {
         } 
     }
     
-    async createStudent(st: st.IStudentWithPassword): Promise<st.IStudentDetailed> {
-        
+    async createStudent(st: st.IStudent): Promise<st.IStudent> {
+
         try {
 
             const res = await db.student.create({
@@ -114,10 +114,10 @@ class StudentRepository implements st.IStudentRepository {
                     passwordHash: st.passwordHash,
                     name: st.name,
                     university: {
-                        connect: { id:st.universityId }
+                        connect: { id:st.universityId! }
                     },
                     studyprogram: {
-                        connect: { id:st.studyProgramId }
+                        connect: { id:st.universityId! }
                     }
                 },
                 

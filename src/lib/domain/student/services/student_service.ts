@@ -17,7 +17,7 @@ class StudentService implements i.IStudentService {
         this._studentRepository = studentRepository
     }
     
-    async registerStudent(st: e.IStudentWithPassword): Promise<i.IStudentServiceOutput<e.IStudentDetailed>>{
+    async registerStudent(st: e.IStudent): Promise<i.IStudentServiceOutput<e.IStudent>>{
 
         const checkIfExists = await this._studentRepository.getStudentByEmail(st.email)
 

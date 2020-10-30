@@ -2,10 +2,10 @@ import * as i from './entities'
 
 export interface IStudentRepository {
 
-    createStudent: (st: i.IStudentWithPassword) => Promise<i.IStudentDetailed>;
-    getStudentByEmail: (st_email: string) => Promise<i.IStudentDetailed>;
-    getStudentByEmailWithPassword: (st_email: string) => Promise<i.IStudentWithPasswordSimple>;
-    updateStudent: (st_email: string, st_target: i.IStudentWithPassword) => Promise<i.IStudentDetailed>;
+    createStudent: (st: i.IStudent) => Promise<i.IStudent>;
+    getStudentByEmail: (st_email: string) => Promise<i.IStudent>;
+    getStudentByEmailWithPassword: (st_email: string) => Promise<i.IStudent>;
+    updateStudent: (st_email: string, st_target: i.IStudent) => Promise<i.IStudent>;
 
 }
 
@@ -33,7 +33,7 @@ export interface IStudentServiceOutput<T> {
 
 export interface IStudentService {
 
-    registerStudent: (st: i.IStudentWithPassword) => Promise<IStudentServiceOutput<i.IStudentDetailed>>;
+    registerStudent: (st: i.IStudent) => Promise<IStudentServiceOutput<i.IStudent>>;
 
 }
 

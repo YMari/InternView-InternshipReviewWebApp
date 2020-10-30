@@ -1,5 +1,5 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { IStudentDetailed } from "../domain/student/entities";
+import { IStudent } from "../domain/student/entities";
 
 
 
@@ -12,6 +12,6 @@ export interface IMiddleware {
 
 export interface IRequestWithIssuer extends NextApiRequest{
 
-    user: IStudentDetailed
+    user: IStudent
 
 }
