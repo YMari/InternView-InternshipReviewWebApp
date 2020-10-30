@@ -91,6 +91,11 @@ export default function Home() {
                                 </ButtonGroup>
                             </Grid>
                         </Grid>
+                        <Link href="/profile/">
+                            <Button>
+                            user profile
+                            </Button>
+                        </Link>
                     </Card>
                 </Grid>
                 <Grid item className={classes.gridItem}>
