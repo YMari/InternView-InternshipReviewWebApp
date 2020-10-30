@@ -1,7 +1,7 @@
 
 
 export interface IEmailService {
-    sendVerificationEmail: (recipient:String) => Promise<Object>
-    resetPasswordEmail: () => Promise<Object>
-    sendNotificationEmail:() => Promise<Object> 
+    sendVerificationEmail: (recipient:string, subject:string, text:string) => Promise<Object>
+    resetPasswordEmail: (recipient:string, subject:string, text:string) => Promise<Object>
+    sendNotificationEmail:(recipient:string, subject:string, text:string) => Promise<Object> 
 }

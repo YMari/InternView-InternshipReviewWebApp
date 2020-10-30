@@ -1,48 +1,44 @@
 import * as i from '../interfaces'
-import {injectable, inject} from 'inversify'
+import {injectable} from 'inversify'
 import nodemailer from 'nodemailer'
 
-
-
-
-@injectable()
-export default class EmailService implements i.IEmailService {
+export async function sendEmail(recipient:string, subject:string, text:string): Promise<Object> {
     
-    constructor( )
-    {
-
-    }
-
-    async sendVerificationEmail(recipient:String):Promise<Object>{
-
-    const nodemailer = require('nodemailer');
-
-
     var transporter = nodemailer.createTransport({
-        service: 'gmail',
+        service:"gmail",
         auth: {
-            user: process.env.COMPANY_EMAIL, 
-            pass: process.env.COMPANY_EMAIL_PASSWORD
+            user: "internviewpr@gmail.com", 
+            pass: "Strongpassword1234"
         }
     })
 
     let mailOptions = {
-        from: 'internviewpr@gmail.com',
+        from: process.env.COMPANY_EMAIL,
         to: recipient,
-        subject: "Sign up confirmation",
-        text: "Please validate your email using this link: . validateemail.com"
+        subject: subject,
+        text: text
     }
-
-    await transporter.sendMail(mailOptions) // add try and catch
-
+    try {
+        await transporter.sendMail(mailOptions)
+    } 
+    catch(Exception) {
+        console.log(Exception)
+    }
     return null
-
 }
 
-    resetPasswordEmail:() => Promise<Object>;
-    sendNotificationEmail: () => Promise<Object>;
 
+@injectable()
+export default class EmailService implements i.IEmailService {
+
+    async sendVerificationEmail(recipient:string, subject:string, text:string):Promise<Object>{
+        return sendEmail(recipient, subject, text);
+    }
+    async resetPasswordEmail(recipient:String, subject:String, text:String):Promise<Object>{
+    return null
+    }
+    async sendNotificationEmail(recipient:String, subject:String, text:String):Promise<Object>{
+        return null
+    }
 }
    
-
-
