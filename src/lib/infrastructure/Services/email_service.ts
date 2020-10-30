@@ -3,12 +3,13 @@ import {injectable} from 'inversify'
 import nodemailer from 'nodemailer'
 
 export async function sendEmail(recipient:string, subject:string, text:string): Promise<Object> {
+
     
     var transporter = nodemailer.createTransport({
-        service:"gmail",
+        service: process.env.EMAIL_SERVICE,
         auth: {
-            user: "internviewpr@gmail.com", 
-            pass: "Strongpassword1234"
+            user: process.env.COMPANY_EMAIL, 
+            pass: process.env.COMPANY_EMAIL_PASS
         }
     })
 
@@ -23,6 +24,10 @@ export async function sendEmail(recipient:string, subject:string, text:string): 
     } 
     catch(Exception) {
         console.log(Exception)
+        console.log(process.env.EMAIL_SERVICE)
+        console.log(process.env.COMPANY_EMAIL)
+        console.log(process.env.COMPANY_EMAIL_PASS)
+
     }
     return null
 }
