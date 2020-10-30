@@ -1,14 +1,14 @@
-import * as st from '../../domain/student'
+import * as com from '../../domain/company'
 import db from '../prisma-cli'
 import { injectable } from 'inversify'
 import 'reflect-metadata'
 
 @injectable()
-class CompanyRepository implements st.ICompanyRepository {
+class CompanyRepository implements com.ICompanyRepository {
 
-    async getCompanyById(c_id:number):Promise<st.ICompany> {
+    async getCompanyById(c_id:number):Promise<com.ICompany> {
 
-        const company = db.university.findOne({
+        const company = await db.university.findOne({
             where: {
                 id: c_id
             }
@@ -17,7 +17,7 @@ class CompanyRepository implements st.ICompanyRepository {
         return company
     }
 
-    async getAllCompany() : Promise<st.ICompany[]> {
+    async getAllCompany() : Promise<com.ICompany[]> {
 
         const com = await db.company.findMany({})
 

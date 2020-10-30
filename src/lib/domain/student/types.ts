@@ -5,5 +5,4 @@ export const S_TYPES = {
     IStudentService: Symbol("IStudentService"),
     IUniversityRepository: Symbol("IUniversityRepository"),
     IStudyProgramRepository: Symbol("IStudyProgramRepository"),
-    ICompanyRepository: Symbol("ICompanyRepository")
 }
