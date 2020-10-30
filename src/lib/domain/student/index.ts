@@ -19,7 +19,7 @@ export type {
     IStudentWithPasswordSimple, 
     IStudyProgram, 
     IUniversity,
-    IUniversityRepository, 
+    IUniversityRepository,
     IStudentRepository, 
     IStudentService, 
     IStudentServiceOutput, 
