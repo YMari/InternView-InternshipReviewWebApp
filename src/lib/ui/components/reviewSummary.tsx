@@ -42,9 +42,9 @@ export default function ReviewSummary() {
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         cardItem: {
-            minWidth: '97%',
-            height: 200,
-            paddingBottom: theme.spacing(1),
+            // minWidth: '97%',
+            // height: 200,
+            // paddingBottom: theme.spacing(1),
         },
         cardItemCard: {
             backgroundColor: theme.palette.info.main,

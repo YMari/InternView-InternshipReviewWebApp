@@ -69,9 +69,12 @@ export default function Profile() {
                                 </Grid>
                             </Grid>
 
-                            <ReviewSummary/>
-                            <ReviewSummary/>
-                            <ReviewSummary/>
+                            {/* v Reviews Here v */}
+                            <Grid item className={classes.cardItem}> <ReviewSummary/></Grid>
+                            <Grid item className={classes.cardItem}> <ReviewSummary/></Grid>
+                            <Grid item className={classes.cardItem}> <ReviewSummary/></Grid>
+
+                            {/* ^ Reviews Here ^ */}
                             
                         </Grid>
                     </Card>
@@ -96,6 +99,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         accIcon: {
             fontSize: 150,
+            color: theme.palette.primary.contrastText,
         },
         accName: {
             fontSize: 50,
@@ -119,6 +123,10 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         cardGrid: {
             padding: theme.spacing(1),
+        },
+        cardItem: {
+            minWidth: '97%',
+            paddingBottom: theme.spacing(2),
         },
         searchRow: {
             paddingTop: theme.spacing(0.2),
