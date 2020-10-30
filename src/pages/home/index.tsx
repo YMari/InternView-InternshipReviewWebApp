@@ -1,7 +1,6 @@
 import { Box, Card, createStyles, fade, Grid, makeStyles, Theme, Typography, Button, CardContent, ButtonGroup, Divider } from '@material-ui/core'
 import Link from 'next/link'
 import React from 'react'
-import theme from '../../lib/ui/theme';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import GradeIcon from '@material-ui/icons/Grade';
 
@@ -9,9 +8,8 @@ export default function Home() {
     const classes = useStyles();
     return(
         <>
-        <Box className={classes.main}>
         <Box width="100%" maxHeight="500" position="absolute" top={0} >
-            <img src="/backgroundImage.png" style={{width:"100%",maxHeight:700, opacity:0.5, objectFit:'cover', position:"relative", zIndex:-1000}}/>
+            <img src="/backgroundImage.png" style={{width:"100%",maxHeight:750, opacity:0.5, objectFit:'cover', position:"relative", zIndex:-1000}}/>
         </Box>
         <Grid
         container
@@ -20,8 +18,8 @@ export default function Home() {
         wrap="nowrap"
         className={classes.gridFull}
         >
-            <Grid item className={classes.title}>
-                <Typography variant="h2">
+            <Grid item>
+                <Typography className={classes.title}>
                     InternView
                 </Typography>
             </Grid>
@@ -30,8 +28,8 @@ export default function Home() {
                     The best platform to research companies for students.<br />
                     Made by students for students.
                 </Typography>
-                <br />
-                <br />
+            </Grid>
+            <Grid item className={classes.buttonSearch}>
                 <Button variant="contained" color="primary">
                     Start Searching
                 </Button>
@@ -67,7 +65,7 @@ export default function Home() {
                                     </Grid>
                                     <Grid item xs={9} className={classes.cardSub}>
                                         <Button>
-                                            <Link href="/">
+                                            <Link href="/reviews/">
                                                 <Typography>
                                                     Review Summary
                                                 </Typography>
@@ -148,19 +146,14 @@ export default function Home() {
                 </Grid>
             </Grid>
         </Grid>
-        </Box>
         </>
     )
 }
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        main: {
-
-        },
         gridFull: {
-            // marginTop: -610,
-            marginTop: 100
+            marginTop: 40
         },
         gridCards: {
             paddingTop: theme.spacing(8)
@@ -196,10 +189,14 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         title: {
             color: theme.palette.primary.contrastText,
+            fontSize: 80,
 
         },
         subtitle: {
             color: theme.palette.primary.contrastText,
+        },
+        buttonSearch: {
+            paddingTop: theme.spacing(1)
         },
         rating: {
             height: '100%',

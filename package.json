@@ -13,6 +13,7 @@
     "@material-ui/icons": "^4.9.1",
     "@prisma/client": "^2.6.2",
     "@types/bcrypt": "^3.0.0",
+    "axios": "^0.20.0",
     "bcrypt": "^5.0.0",
     "cookie": "^0.4.1",
     "inversify": "^5.0.1",
@@ -21,7 +22,8 @@
     "nodemailer": "^6.4.14",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "reflect-metadata": "^0.1.13"
+    "reflect-metadata": "^0.1.13",
+    "swr": "^0.3.6"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.10.4",

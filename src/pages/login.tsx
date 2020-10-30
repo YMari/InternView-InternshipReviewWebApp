@@ -1,23 +1,37 @@
-import { Box, Button, Card, CardHeader, createStyles, Divider, FormControl, Grid, IconButton, 
+import { Box, Button, Card, CardHeader, CircularProgress, createStyles, Divider, FormControl, Grid, IconButton, 
     InputAdornment, InputLabel, makeStyles, OutlinedInput, Theme, Typography } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
+import { OK_MESSAGE } from "../lib/application/constants";
+import {container, UI_TYPES} from '../lib/ui/client_container'
+import { IRequestService } from "../lib/ui/interfaces";
+import { mutate } from 'swr';
 
 interface State {
+    email: string;
     password: string;
     showPassword: boolean;
 }
 
 export default function LoginPage() {
+    
     const classes = useStyles();
+
+    const router = useRouter();
+
     const [values, setValues] = React.useState<State>({
-      password: '',
-      showPassword: false,
+        email: '',
+        password: '',
+        showPassword: false,
     });
+
+    const [loading, setLoading]  = React.useState<boolean>(false)
 
     const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
         setValues({ ...values, [prop]: event.target.value });
+        
     };
     
     const handleClickShowPassword = () => {
@@ -28,28 +42,63 @@ export default function LoginPage() {
         event.preventDefault();
     };
 
+    const onSubmit = async () => {
+        
+        const ser = container.get<IRequestService>(UI_TYPES.IRequestService)
+
+        const result = await ser.login({email: values.email, password:values.password})
+
+        setLoading(true)
+
+        if ( result?.status === OK_MESSAGE ) {
+            
+            mutate("/api/account/user")
+            alert(result.message)
+            router.push('/')
+
+        } else {
+
+            if(result.message){
+                alert(result.message)
+            }
+            else {
+                alert('Unexpected Error Try Again')
+            }
+            setLoading(false)
+
+        }
+
+    } 
+
     return(
-        <Box className={(classes.margin)}>
-            <Typography className={(classes.titlePage)}>InternView</Typography>
+        <Box className={(classes.main)}>
             <Grid
             container
             direction="column"
             alignContent="center"
             justify="center"
             wrap='wrap'
-            style={{ minHeight: '50vh' }}
             spacing={4}
             >
-                <Card className={classes.card}>
+                <Grid item className={classes.gridItem}>
+                    <Typography className={(classes.titlePage)}>InternView</Typography>
+                </Grid>
+                {!loading?<Card className={classes.card}>
                     <CardHeader className={(classes.titleCard)} title="Sign In"/>
                     <Grid item className={classes.gridItem}>
-                        <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
+                        <FormControl className={(classes.input)} variant="outlined" fullWidth={true} required={true}>
                             <InputLabel htmlFor="outlined-email">Email</InputLabel>
-                            <OutlinedInput id="email-input" label="Email"  />
+                            <OutlinedInput
+                                id="email-input"
+                                label="Email"
+                                value={values.email}
+                                onChange={handleChange('email')}
+
+                            />
                         </FormControl>
                     </Grid>
                     <Grid item className={classes.gridItem}>
-                        <FormControl className={(classes.margin)} variant="outlined" fullWidth={true}>
+                        <FormControl className={(classes.input)} variant="outlined" fullWidth={true} required={true}>
                             <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                                 <OutlinedInput
                                     id="outlined-adornment-password"
@@ -73,7 +122,7 @@ export default function LoginPage() {
                         </FormControl>
                     </Grid>
                     <Grid item className={classes.gridItem}>
-                        <Button variant="contained" color="secondary">
+                        <Button onClick={onSubmit} variant="contained" color="secondary">
                             <Typography>Log In</Typography>
                         </Button>
                     </Grid>
@@ -92,7 +141,11 @@ export default function LoginPage() {
                             </Button>
                         </Link>
                     </Grid>
-                </Card>
+                </Card>:<Grid item>
+                    <Grid container justify="center" alignItems="center">
+                    <CircularProgress />
+                    </Grid>
+                    </Grid>}
             </Grid>
         </Box>     
     )   
@@ -100,15 +153,17 @@ export default function LoginPage() {
 
 const useStyles = makeStyles((theme: Theme) =>    
     createStyles({
-    margin: {
+    main: {
         margin: theme.spacing(1),
+        
     },
     card: {
         padding: theme.spacing(4, 12),
         textAlign: "center",
         color: theme.palette.text.primary,
-        // width: '30vw',
-        // height: '32vw'
+        minWidth: 500,
+        minHeight: 500,
+        maxHight: 600
     },
     container: {
         gridGap: theme.spacing(3),
@@ -116,7 +171,9 @@ const useStyles = makeStyles((theme: Theme) =>
     titlePage: {
         textAlign: "center",
         padding: theme.spacing(1),
-        color: theme.palette.text.hint,
+        paddingBottom: theme.spacing(4),
+        paddingTop: theme.spacing(6),
+        color: "white",
         fontSize: 40,
         fontWeight: 500,
     },
@@ -125,6 +182,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     gridItem: {
         paddingBottom: theme.spacing(1)
+    },
+    input: {
+        backgroundColor: theme.palette.info.main,
+        margin: theme.spacing(1)
     },
   }),
 );

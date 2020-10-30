@@ -11,10 +11,14 @@ interface ProviderProps {
 
 export function UserProvider(props:ProviderProps) {
 
-    const [user] = useState<Partial<IStudentDetailed>>(props.user)
+    const [user, setUser] = useState<Partial<IStudentDetailed>>(props.user)
+
+    React.useEffect(()=>{
+        setUser(props.user)
+    }, [props.user])
 
     return (
-        <UserContext.Provider value={props.user}>
+        <UserContext.Provider value={user}>
             {props.children}
         </UserContext.Provider>
     )
