@@ -1,4 +1,4 @@
-import { Box, Card, createStyles, fade, Grid, makeStyles, Theme, Typography, Button, CardContent, ButtonGroup, Divider } from '@material-ui/core'
+import { Box, Card, createStyles, fade, Grid, makeStyles, Theme, Typography, Button, CardContent, ButtonGroup, Divider, TextField, FormControl } from '@material-ui/core'
 import Link from 'next/link'
 import React from 'react'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -34,14 +34,8 @@ export default function Home() {
                     Start Searching
                 </Button>
             </Grid>
-            <Grid
-            container
-            direction='row'
-            justify="space-around"
-            alignItems="center"
-            wrap="nowrap"
-            className={classes.gridCards}
-            >
+
+            <Grid container direction='row' justify="space-around" alignItems="center" wrap="nowrap" className={classes.gridCards}>
                 <Grid item className={classes.gridItem}>
                     <Card className={classes.cardContainer}>
                         <Grid
@@ -91,8 +85,77 @@ export default function Home() {
                                 </ButtonGroup>
                             </Grid>
                         </Grid>
+                        <Link href="/profile/">
+                            <Button>
+                            user profile
+                            </Button>
+                        </Link>
                     </Card>
                 </Grid>
+
+                {/* <Grid item className={classes.gridItem}>
+                    <Card className={classes.cardContainer}>
+                        
+                        <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.cardContent}>
+                            <Grid item>
+                                <Typography variant='h4'>
+                                    Most Helpful Reviews
+                                </Typography>
+                            </Grid>
+                            <Grid item className={classes.cardItem}>
+                                <Grid container direction='row' justify='space-between' alignItems='center'>
+                                    <Grid item className={classes.accountIcon} xs={1}>
+                                        <Button>
+                                            <AccountCircleIcon fontSize="large"/>
+                                        </Button>
+                                    </Grid>
+                                    <Grid item className={classes.cardSub} zeroMinWidth xs={10}>
+                                        <Button className={classes.buttonReview}>
+                                            <Link href="/reviews/">
+                                                <FormControl className={classes.reviewSummary}>
+                                                    <TextField
+                                                        variant='outlined'
+                                                        value={'Lorem ipsum dolor sit amet, consectetur adipiscing elit . . . Nunc ornare interdum elementum. Suspendisse imperdiet ligula . . . '}
+                                                        disabled={true}
+                                                        multiline={true}
+                                                        rows={2}
+                                                        InputProps={{
+                                                            classes: {
+                                                                root: classes.inputRoot,
+                                                                disabled: classes.disabled
+                                                            }   
+                                                        }}
+                                                    />
+                                                </FormControl>
+                                            </Link>
+                                        </Button>
+                                    </Grid>
+                                    <Grid item xs={1}>
+                                        <Grid container direction='row' alignItems="center" wrap="nowrap" className={classes.rating}>
+                                            <Grid item>
+                                                <GradeIcon fontSize="large"/>
+                                            </Grid>
+                                            <Grid item>
+                                                <Typography className={classes.ratingText}>5/5</Typography>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+
+
+                        <Link href="/profile/">
+                            <Button>
+                            user profile
+                            </Button>
+                        </Link>
+                    </Card>
+                </Grid> */}
+
+
+
+
                 <Grid item className={classes.gridItem}>
                     <Card className={classes.cardContainer}>
                         <Grid
@@ -174,14 +237,23 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         cardItem: {
             marginTop: 30,
-            width: '90%',
+            width: '95%',
         },
         cardSub: {
-            wrap: 'wrap',
-            alignItems: 'center',
-            justifyContent: 'center',
-            maxWidth: '80%',
+            // width: '80%',
         },
+        buttonReview: {
+            width: '100%' 
+        },
+        reviewSummary: {
+            width: '95%',
+        },
+        inputRoot: {
+            "&$disabled": {
+              color: theme.palette.info.contrastText
+            }
+        },
+        disabled: {},
         accountIcon: {
             height: '100%',
             alignItems: 'center',
