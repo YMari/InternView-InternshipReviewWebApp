@@ -2,9 +2,9 @@ import * as i from '../interfaces'
 import {injectable} from 'inversify'
 import nodemailer from 'nodemailer'
 
+
 export async function sendEmail(recipient:string, subject:string, text:string): Promise<Object> {
 
-    
     var transporter = nodemailer.createTransport({
         service: process.env.EMAIL_SERVICE,
         auth: {
@@ -23,11 +23,9 @@ export async function sendEmail(recipient:string, subject:string, text:string): 
         await transporter.sendMail(mailOptions)
     } 
     catch(Exception) {
-        console.log(Exception)
         console.log(process.env.EMAIL_SERVICE)
         console.log(process.env.COMPANY_EMAIL)
         console.log(process.env.COMPANY_EMAIL_PASS)
-
     }
     return null
 }
