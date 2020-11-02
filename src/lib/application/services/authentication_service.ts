@@ -1,6 +1,7 @@
 import * as i from '../interfaces'
 import * as e from '../entities'
 import * as st from '../../domain/student'
+import * as infrastruct from '../../infrastructure';
 import {injectable, inject} from 'inversify'
 import * as bcrypt from 'bcrypt'
 import {sign, verify} from 'jsonwebtoken'
@@ -13,12 +14,15 @@ export default class AuthenticationService implements i.IAuthenticationService {
     
     private readonly _studentService: st.IStudentService
     private readonly _studentRepository: st.IStudentRepository
+    private readonly _emailService: infrastruct.interfaces.IEmailService
     private readonly PASSWORD_LENGTH: number = 6
     private readonly SALT_ROUNDS:number = 10
 
     constructor(
         @inject(st.S_TYPES.IStudentService) studentService: st.IStudentService,
-        @inject(st.S_TYPES.IStudentRepository) studentRepository: st.IStudentRepository
+        @inject(st.S_TYPES.IStudentRepository) studentRepository: st.IStudentRepository,
+        @inject(infrastruct.I_TYPES.IEmailService) emailService: infrastruct.interfaces.IEmailService
+
     ){
         this._studentService = studentService
         this._studentRepository = studentRepository

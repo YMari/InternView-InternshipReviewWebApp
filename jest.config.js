@@ -12,7 +12,7 @@ module.exports = {
       '^.+\\.css$': '<rootDir>/config/jest/cssTransform.js',
     },
     transformIgnorePatterns: [
-      '/node_modules/',
+      './node_modules/',
       '^.+\\.module\\.(css|sass|scss)$',
     ],
     moduleNameMapper: {
