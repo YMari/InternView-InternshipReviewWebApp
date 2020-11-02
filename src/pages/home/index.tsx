@@ -36,7 +36,7 @@ export default function Home() {
             </Grid>
 
             <Grid container direction='row' justify="space-around" alignItems="center" wrap="nowrap" className={classes.gridCards}>
-                {/* <Grid item className={classes.gridItem}>
+                <Grid item className={classes.gridItem}>
                     <Card className={classes.cardContainer}>
                         <Grid
                         container
@@ -91,9 +91,9 @@ export default function Home() {
                             </Button>
                         </Link>
                     </Card>
-                </Grid> */}
+                </Grid>
 
-                <Grid item className={classes.gridItem}>
+                {/* <Grid item className={classes.gridItem}>
                     <Card className={classes.cardContainer}>
                         
                         <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.cardContent}>
@@ -151,7 +151,7 @@ export default function Home() {
                             </Button>
                         </Link>
                     </Card>
-                </Grid>
+                </Grid> */}
 
 
 
