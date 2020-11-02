@@ -36,7 +36,7 @@ export default class RequestService implements IRequestService {
     async loggedIn() {
 
         try {
-            const result = await axios.get('http://localhost:3000/api/account/user')
+            const result = await axios.get('/api/account/user')
             return result.data
         } catch(e) {
             if (e.response?.data) {
@@ -47,6 +47,17 @@ export default class RequestService implements IRequestService {
 
     }
 
+    async logout() {
+        try {
+            const result = await axios.post('/api/account/logout')
+            return result.data
+        } catch(e) {
+            if (e.response?.data) {
+                return e.response.data
+            }
+            return e
+        }
+    }
 
 
 } 
