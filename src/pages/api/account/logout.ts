@@ -16,6 +16,8 @@ export default async function logout(req:NextApiRequest, res:NextApiResponse) {
         "Set-Cookie",
         co
     );
+    
+    res.json({'status':'Ok', message:"Done"})
 
     res.status(200).end()
 
