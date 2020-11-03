@@ -6,8 +6,6 @@ import Link from "next/link";
 import React from "react";
 import backend_container from "../lib/container";
 import { IStudyProgram, IStudyProgramRepository, IUniversity, IUniversityRepository, S_TYPES } from "../lib/domain/student";
-import {container, UI_TYPES} from '../lib/ui/client_container'
-import { IRequestService } from "../lib/ui/interfaces";
 import { useRouter } from 'next/router'
 import { useRequestService } from '../lib/ui/hooks'
 
