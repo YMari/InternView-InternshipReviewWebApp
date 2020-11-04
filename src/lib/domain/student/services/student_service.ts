@@ -13,7 +13,6 @@ class StudentService implements i.IStudentService {
     private readonly _studentRepository: i.IStudentRepository;
     private readonly _emailService: infrastruct.interfaces.IEmailService;
    
-
     constructor(
         @inject(S_TYPES.IStudentRepository) studentRepository: i.IStudentRepository,
         @inject(infrastruct.I_TYPES.IEmailService) emailService: infrastruct.interfaces.IEmailService
@@ -41,7 +40,7 @@ class StudentService implements i.IStudentService {
         if (result === null) {
             message = "Unable to create student"
             output = {
-                status:"Error",
+                status:status,
                 message: message,
                 data:null
             }
