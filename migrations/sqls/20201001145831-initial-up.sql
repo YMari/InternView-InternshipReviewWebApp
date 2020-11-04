@@ -43,7 +43,7 @@ PRIMARY KEY ("id")
 CREATE TABLE "public"."Review" (
 "id" SERIAL,
 "recommendation" text   NOT NULL ,
-"interviewQuestions" text   NOT NULL ,
+"interviewQuestions" text[],
 "dateCreated" timestamp(3)   NOT NULL DEFAULT CURRENT_TIMESTAMP,
 "anonymous" boolean   NOT NULL DEFAULT false,
 "experienceType" text   NOT NULL ,
