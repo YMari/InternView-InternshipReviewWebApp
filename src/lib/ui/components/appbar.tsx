@@ -1,14 +1,36 @@
-import { AppBar, Box, Button, ButtonGroup, createStyles, fade, Grid, InputBase, makeStyles, Theme, Typography} from "@material-ui/core";
+import { AppBar, Box, Button, ButtonGroup, createStyles, fade, Grid, InputBase, makeStyles, Menu, MenuItem, Theme, Typography} from "@material-ui/core";
 import SearchIcon from '@material-ui/icons/Search';
 import PanoramaFishEyeIcon from '@material-ui/icons/PanoramaFishEye';
 import Link from "next/link";
 import React from "react";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import {useUser} from '../hooks/useUser'
+import {useUser, useRequestService} from '../hooks'
+import {mutate} from 'swr'
 
 export default function NavBar() {
+    
+    // Hooks
     const classes = useStyles();
     const user = useUser();
+    const request_service = useRequestService();
+
+    // States
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+    const open = Boolean(anchorEl);
+
+    // Functions
+    const handleUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+    
+    const handleUserMenuClose = () => {
+        setAnchorEl(null);
+    };
+
+    const logout = async () => {
+        await request_service.logout()
+        mutate('/api/account/user', null)
+    }
 
     return(
         <AppBar position='relative' style={{ zIndex:10, background: 'transparent', boxShadow: 'none', color:'transparent', padding:5, paddingTop:10}}>
@@ -26,21 +48,18 @@ export default function NavBar() {
                     </Link>
                 </Grid>
                 <Grid item className={classes.search}>
-                    
-                        
-                        <Box className={classes.searchIcon}>
-                            <SearchIcon color='primary'/>
-                        </Box>
-                        <InputBase
-                        placeholder="Search…"
-                        inputProps={{ 'aria-label': 'search' }}
-                        classes={{
-                            root: classes.inputRoot,
-                            input: classes.inputInput,
-                        }}
-                        />
-                        
-                    
+                    <Box className={classes.searchIcon}>
+                        <SearchIcon color='primary'/>
+                    </Box>
+                    <InputBase
+                    placeholder="Search…"
+                    inputProps={{ 'aria-label': 'search' }}
+                    fullWidth={true}
+                    classes={{
+                        root: classes.inputRoot,
+                        input: classes.inputInput,
+                    }}
+                    />  
                 </Grid>
                 <Grid item >
                     <Grid container justify="flex-end">
@@ -60,19 +79,22 @@ export default function NavBar() {
                                     </Typography>
                                 </Link> 
                             </Button>
-                        </ButtonGroup>
-                    :   <ButtonGroup variant="text">
-                            <Button className={classes.buttons}>
-                                <Typography variant="h6" noWrap>
-                                    {user?.email}
-                                </Typography>
-                            </Button>
-                            <Button className={classes.buttons}>  
-                                <Typography variant="h6" noWrap>
-                                    Log Out
-                                </Typography>
-                            </Button>
-                        </ButtonGroup>}
+                        </ButtonGroup>   
+                    :   <Button className={classes.buttons} onClick={handleUserMenu}>
+                            <Typography variant="h6" noWrap>
+                                {user?.email}
+                            </Typography>
+                        </Button>}
+                        <Menu
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleUserMenuClose}
+                        >
+                            <Link href="/profile/">
+                                <MenuItem onClick={handleUserMenuClose}>Profile</MenuItem>
+                            </Link>
+                                <MenuItem onClick={() => {handleUserMenuClose();logout()}}>Log Out</MenuItem>
+                            </Menu>
                     </Grid>
                 </Grid>
             </Grid>

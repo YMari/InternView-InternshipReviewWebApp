@@ -56,7 +56,7 @@ model Company {
 model Review {
   id                        Int          @default(autoincrement()) @id
   recommendation            String
-  interviewQuestions        String
+  interviewQuestions        String[]
   dateCreated               DateTime     @default(now())
   anonymous                 Boolean      @default(false)
   experienceType            String
@@ -90,3 +90,8 @@ model Rating {
   student     Student @relation(fields: [studentId], references: [id])
 }
 
+model migrations {
+  id     Int      @default(autoincrement()) @id
+  name   String
+  run_on DateTime
+}

@@ -12,6 +12,6 @@ export interface IReview {
     interviewDifficulty: number;
     reviewTitle: string;
     company: string; // Might be company interface?
-    interviewQuestions?: string;
+    interviewQuestions?: string[];
 
 }
