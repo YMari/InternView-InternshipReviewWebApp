@@ -3,6 +3,7 @@ import * as st from './domain/student';
 import * as app from './application'
 import * as infrastruct from './infrastructure';
 import * as md from './middleware'
+import * as re from './domain/review'
 
 const container = new Container();
 
@@ -13,6 +14,6 @@ container.bind<st.IStudentRepository>(st.S_TYPES.IStudentRepository).to(st.Stude
 container.bind<app.application_interfaces.IAuthenticationService>(app.A_TYPES.IAuthenticationService).to(app.AuthenticationService)
 container.bind<md.IMiddleware>(md.M_TYPES.IMiddleWare).to(md.MiddleWares);
 container.bind<infrastruct.interfaces.IEmailService>(infrastruct.I_TYPES.IEmailService).to(infrastruct.EmailService)
-
+container.bind<re.IReviewRepository>(re.R_TYPES.IReviewRepository).to(infrastruct.repositories.ReviewRepository)
 
 export default container;
