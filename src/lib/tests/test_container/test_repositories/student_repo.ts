@@ -1,6 +1,5 @@
-import * as st from '../../domain/student'
-
-import db from '../prisma-cli'
+import * as st from '../../../domain/student'
+import db from '../../../infrastructure/prisma-cli'
 import { injectable } from 'inversify'
 import 'reflect-metadata'
 

@@ -1,13 +1,13 @@
 import { Container } from 'inversify';
-import * as st from './domain/student';
-import * as app from './application'
-import {repositories} from './test_repositories;
-import * as md from './middleware'
+import * as st from '../../domain/student';
+import student_repo from '../test_container/test_repositories/student_repo';
+import university_repo from '../test_container/test_repositories/university_repo';
+import studyprogram_repo from '../test_container/test_repositories/studyprogram_repo';
 
 const container = new Container();
 
-container.bind<st.IStudyProgramRepository>(st.S_TYPES.IStudyProgramRepository).to(repositories.StudyProgramRepository)
-container.bind<st.IUniversityRepository>(st.S_TYPES.IUniversityRepository).to(repositories.UniversityRepository)
-container.bind<st.IStudentRepository>(st.S_TYPES.IStudentRepository).to(repositories.StudentRepository)
+container.bind<st.IStudyProgramRepository>(st.S_TYPES.IStudyProgramRepository).to(studyprogram_repo)
+container.bind<st.IUniversityRepository>(st.S_TYPES.IUniversityRepository).to(university_repo)
+container.bind<st.IStudentRepository>(st.S_TYPES.IStudentRepository).to(student_repo)
 
 export default container;
