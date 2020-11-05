@@ -90,6 +90,11 @@ export default function Home() {
                             user profile
                             </Button>
                         </Link>
+                        <Link href="/companies/">
+                            <Button>
+                            company profile
+                            </Button>
+                        </Link>
                     </Card>
                 </Grid>
 
@@ -152,6 +157,8 @@ export default function Home() {
                         </Link>
                     </Card>
                 </Grid> */}
+
+
 
 
 
