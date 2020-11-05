@@ -2,8 +2,6 @@ import { Box, Button, Card, createStyles, fade, Grid, InputBase, makeStyles, The
 import { ArrowDownward, ArrowUpward, AccountCircle, Grade, AddCircle } from '@material-ui/icons';
 import React from "react";
 import ReviewSummary from "../../lib/ui/components/reviewSummary";
-import theme from "../../lib/ui/theme";
-
 
 export default function Profile() {
     const classes = useStyles();
@@ -12,29 +10,47 @@ export default function Profile() {
         <Box className={classes.main}>
             <Grid container direction='row' alignItems="center" justify='center' wrap="nowrap" className={classes.mainGrid}>
 
-                <Grid container direction='column' alignItems="center" wrap="nowrap" >
+                <Grid container direction='column' alignItems="center" wrap="nowrap" justify='center' >
+
                     <Grid item>
                         <AccountCircle className={classes.accIcon}/>
                     </Grid>
+
                     <Grid item>
-                        <Typography className={classes.accName}>Full Name</Typography>
+                        <Typography className={classes.accName}>Student Name</Typography>
                     </Grid>
-                    <Grid item>
+
+                    <Grid item className={classes.accRatingContainer}>
                         <Grid container direction='row' alignItems="center" wrap="nowrap" justify='space-between' className={classes.accRatingPts}>
+
                             <Grid item>
                                 <Grid container direction='row' alignItems="center" wrap="nowrap">
                                     <ArrowUpward fontSize="small" className={classes.accUpvotes}/>
                                     <Typography className={classes.accUpvotes}># upvotes</Typography>
                                 </Grid>
                             </Grid>
+
+                            <Grid item>
+                                <Grid container direction='row' alignItems="center" wrap="nowrap" justify='center' className={classes.accRatingPts}>
+                                    <Grade fontSize="large" className={classes.ratingIcon}/>
+                                    <Grade fontSize="large" className={classes.ratingIcon}/>
+                                    <Grade fontSize="large" className={classes.ratingIcon}/>
+                                    <Grade fontSize="large" className={classes.ratingIcon}/>
+                                    <Grade fontSize="large" className={classes.ratingIcon}/>
+                                </Grid>
+                            </Grid>
+
                             <Grid item>
                                 <Grid container direction='row' alignItems="center" wrap="nowrap">
                                     <ArrowDownward fontSize="small" className={classes.accDownvotes}/>
                                     <Typography className={classes.accDownvotes}># downvotes</Typography>
                                 </Grid>
                             </Grid>
+
                         </Grid>
+
                     </Grid>
+
                     <Grid container direction='row' alignItems="center" wrap="nowrap">
                         <Typography className={classes.textWhite}>Joined on: Date</Typography>
                     </Grid>
@@ -70,6 +86,7 @@ export default function Profile() {
                             </Grid>
 
                             {/* v Reviews Here v */}
+
                             <Grid item className={classes.cardItem}> <ReviewSummary/></Grid>
                             <Grid item className={classes.cardItem}> <ReviewSummary/></Grid>
                             <Grid item className={classes.cardItem}> <ReviewSummary/></Grid>
@@ -105,8 +122,15 @@ const useStyles = makeStyles((theme: Theme) =>
             fontSize: 50,
             color: theme.palette.primary.contrastText,
         },
+        accRatingContainer: {
+            minWidth: '32%',
+            paddingBottom: theme.spacing(2),
+        },
         accRatingPts: {
-          width: 320
+            width: '100%',
+        },
+        ratingIcon: {
+            color: theme.palette.secondary.main,
         },
         accUpvotes: {
             color: theme.palette.secondary.main,
