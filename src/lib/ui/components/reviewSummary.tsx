@@ -30,7 +30,7 @@ export default function ReviewSummary() {
                         <Typography className={classes.reviewDate}>Posted on: Date</Typography>
                     </Grid>
                     <Grid container direction='row' alignItems="center" wrap="nowrap" zeroMinWidth>
-                        <Typography noWrap className={classes.reviewSummary}>Review Summary</Typography>
+                        <Typography noWrap className={classes.reviewSummary}>Review Summary (limit characters i.e. 150)</Typography>
                     </Grid>
 
                 </Grid>
