@@ -46,7 +46,13 @@ export default function Home() {
                             </Grid>
 
                             <Grid item className={classes.cardItem}>
+                                {/* v Top Reviews Here v */}
                                 
+                                <TopReview/>
+                                <TopReview/>
+                                <TopReview/>
+
+                                {/* ^ Top Reviews Here ^ */}
                             </Grid>
                             
                         </Grid>
@@ -77,7 +83,13 @@ export default function Home() {
                             </Grid>
 
                             <Grid item className={classes.cardItem}>
-                                
+                                {/* v Top Companies Here v */}
+
+                                <TopCompany/>
+                                <TopCompany/>
+                                <TopCompany/>
+
+                                {/* ^ Top Companies Here ^ */}
                             </Grid>
                             
                         </Grid>

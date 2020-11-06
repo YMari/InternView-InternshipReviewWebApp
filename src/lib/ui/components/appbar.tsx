@@ -36,7 +36,7 @@ export default function NavBar() {
         <AppBar position='relative' style={{ zIndex:10, background: 'transparent', boxShadow: 'none', color:'transparent', padding:5, paddingTop:10}}>
             <Grid container direction='row' wrap="nowrap" justify="space-between">
 
-                <Grid item justify='flex-start' className={classes.iconContainer}>
+                <Grid item className={classes.iconContainer}>
                     <Link href="/">
                         <Button>
                             <PanoramaFishEyeIcon fontSize="large"/>
@@ -60,7 +60,7 @@ export default function NavBar() {
                 </Grid>
 
                 <Grid item >
-                    <Grid container justify="flex-end">
+                    <Grid container>
                     {!user?
                         <Grid item>
                             <ButtonGroup variant="text">
