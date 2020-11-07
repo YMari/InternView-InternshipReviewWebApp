@@ -7,42 +7,45 @@ export default function TopReview() {
     const classes = useStyles();
 
     return (
-        <Link href="/reviews/">
-            <Button className={classes.buttonReview}>
-                <Grid container direction='row' justify='space-between' alignItems='center' wrap="nowrap">
+        <Grid container direction='row' justify='space-between' alignItems='center' wrap="nowrap">
 
-                    <Grid item className={classes.accountIconItem}>
-                        <AccountCircle className={classes.accountIcon} />
+            <Grid item className={classes.accountIconItem}>
+                <Link href="/profile/">
+                    <Button className={classes.buttonAccount}>
+                        <AccountCircle className={classes.accountIcon}/>
+                    </Button>
+                </Link>
+            </Grid>
+
+            <Grid item className={classes.reviewSummaryItem}>
+                <Link href="/reviews/">
+                    <Button className={classes.buttonReview}>
+                        <Card variant='outlined' className={classes.reviewSummary}>
+                            <Typography className={classes.reviewText}>Sample Text</Typography>
+                        </Card>
+                    </Button>
+                </Link>
+            </Grid>
+
+            <Grid item className={classes.ratingItem}>
+                <Grid container direction='row' alignItems="center" wrap="nowrap">
+                    <Grid item>
+                        <Grade fontSize="large"/>
                     </Grid>
-
-                    <Grid item className={classes.reviewSummaryItem}>
-                        <Button disabled className={classes.buttonReview}>
-                            <Card variant='outlined' className={classes.reviewSummary}>
-                                <Typography className={classes.reviewText}>Sample Text</Typography>
-                            </Card>
-                        </Button>
+                    <Grid item>
+                        <Typography className={classes.ratingText}>5/5</Typography>
                     </Grid>
-
-                    <Grid item className={classes.ratingItem}>
-                        <Grid container direction='row' alignItems="center" wrap="nowrap">
-                            <Grid item>
-                                <Grade fontSize="large"/>
-                            </Grid>
-                            <Grid item>
-                                <Typography className={classes.ratingText}>5/5</Typography>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-
                 </Grid>
-            </Button>
-        </Link>
+            </Grid>
+
+        </Grid>
     )
 }
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        buttonReview: {
+        buttonAccount: {
+            height: '100%',
             width: '100%' 
         },
         accountIcon: {
@@ -51,6 +54,9 @@ const useStyles = makeStyles((theme: Theme) =>
         accountIconItem: {
             height: '100%',
             paddingLeft: theme.spacing(1),
+        },
+        buttonReview: {
+            width: '100%' 
         },
         reviewSummaryItem: {
             width: '100%',
