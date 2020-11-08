@@ -1,5 +1,6 @@
 
 export interface ICompany {
-    id: number | undefined,
-    name: string
+    id?: number,
+    name: string,
+    imageUrl: string
 } 

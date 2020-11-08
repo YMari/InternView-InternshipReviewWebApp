@@ -8,7 +8,7 @@ class CompanyRepository implements com.ICompanyRepository {
 
     async getCompanyById(c_id:number):Promise<com.ICompany> {
 
-        const company = await db.university.findOne({
+        const company = await db.company.findOne({
             where: {
                 id: c_id
             }
@@ -22,6 +22,23 @@ class CompanyRepository implements com.ICompanyRepository {
         const com = await db.company.findMany({})
 
         return com
+    }
+
+    async searchCompany(c_name: string) : Promise<com.ICompany[]> {
+
+        const search_result = await db.company.findMany({
+            where:{
+                name: {
+                    contains: c_name
+                }
+            }, 
+            select: {
+                name:true, 
+                imageUrl:true
+            }
+        })
+
+        return search_result
     }
  
 }

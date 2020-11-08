@@ -1,17 +1,17 @@
 import React from 'react';
 import { ReactNode, useState } from 'react'
-import { IStudentDetailed } from '../../domain/student';
+import { IStudent } from '../../domain/student';
 import { UserContext } from './contexts'
 
 
-interface ProviderProps {
+interface UserProviderProps {
     children:ReactNode,
-    user:Partial<IStudentDetailed>
+    user:Partial<IStudent>
 }
 
-export function UserProvider(props:ProviderProps) {
+export function UserProvider(props:UserProviderProps) {
 
-    const [user, setUser] = useState<Partial<IStudentDetailed>>(props.user)
+    const [user, setUser] = useState<Partial<IStudent>>(props.user)
 
     React.useEffect(()=>{
         setUser(props.user)
@@ -22,6 +22,13 @@ export function UserProvider(props:ProviderProps) {
             {props.children}
         </UserContext.Provider>
     )
+}
 
+interface SearchProviderProps {
+    search: string
+}
+
+export function SearchProvider(props:SearchProviderProps) {
+    
 }
 

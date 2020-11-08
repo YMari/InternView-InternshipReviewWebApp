@@ -1,5 +1,6 @@
 import React, {Context} from 'react'
-import {IStudentDetailed} from '../../domain/student'
+import {IStudent} from '../../domain/student'
 
 
-export const UserContext:Context<Partial<IStudentDetailed>> = React.createContext<Partial<IStudentDetailed>>(null)
+export const UserContext:Context<Partial<IStudent>> = React.createContext<Partial<IStudent>>(null)
+export const SearchContext:Context<any[]> = React.createContext<any[]>(null);

@@ -1,5 +1,6 @@
 import { Container } from 'inversify';
 import * as st from './domain/student';
+import * as com from './domain/company'
 import * as app from './application'
 import * as infrastruct from './infrastructure';
 import * as md from './middleware'
@@ -13,6 +14,6 @@ container.bind<st.IStudentRepository>(st.S_TYPES.IStudentRepository).to(st.Stude
 container.bind<app.application_interfaces.IAuthenticationService>(app.A_TYPES.IAuthenticationService).to(app.AuthenticationService)
 container.bind<md.IMiddleware>(md.M_TYPES.IMiddleWare).to(md.MiddleWares);
 container.bind<infrastruct.interfaces.IEmailService>(infrastruct.I_TYPES.IEmailService).to(infrastruct.EmailService)
-
+container.bind<com.ICompanyRepository>(com.C_TYPES.ICompanyRepository).to(infrastruct.repositories.CompanyRepository)
 
 export default container;

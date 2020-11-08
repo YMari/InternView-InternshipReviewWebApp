@@ -6,6 +6,7 @@ import React from "react";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import {useUser, useRequestService} from '../hooks'
 import {mutate} from 'swr'
+import  Search from './appbar/search'
 
 export default function NavBar() {
     
@@ -45,18 +46,7 @@ export default function NavBar() {
                 </Grid>
 
                 <Grid item className={classes.search}>
-                    <Box className={classes.searchIcon}>
-                        <SearchIcon color='primary'/>
-                    </Box>
-                    <InputBase
-                    placeholder="Search…"
-                    inputProps={{ 'aria-label': 'search' }}
-                    fullWidth={true}
-                    classes={{
-                        root: classes.inputRoot,
-                        input: classes.inputInput,
-                    }}
-                    />  
+                    <Search />
                 </Grid>
 
                 <Grid item >
@@ -124,28 +114,6 @@ const useStyles = makeStyles((theme: Theme) =>
             marginLeft: '6.5%',
             [theme.breakpoints.up('sm')]: {
                 width: 450,
-            },
-        },
-        searchIcon: {
-            padding: theme.spacing(0, 2),
-            height: '100%',
-            position: 'absolute',
-            pointerEvents: 'none',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-        },
-        inputRoot: {
-            color: theme.palette.secondary.contrastText,
-        },
-        inputInput: {
-            padding: theme.spacing(2, 1, 1, 0),
-            // vertical padding + font size from searchIcon
-            paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-            transition: theme.transitions.create('width'),
-            width: '100%',
-            [theme.breakpoints.up('md')]: {
-                width: '20ch',
             },
         },
         buttons: {
