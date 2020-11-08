@@ -1,24 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { Box,  createStyles,  fade,  InputBase, makeStyles, Theme, TextField, CircularProgress } from "@material-ui/core";
+import { Box,  createStyles,  fade,  InputBase, makeStyles, Theme, TextField, CircularProgress, InputAdornment } from "@material-ui/core";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import axios from 'axios'
 import SearchIcon from '@material-ui/icons/Search';
 
+
 export default function Search() {
 
-    const classes = useStyles();
-    const [search, setSearch] = useState<string>("")
-    const [open, setOpen] = React.useState(false);
+    const classes = useStyles()
+    const [search, setSearch] = useState("");;
     const [companyList, setCompanyList] = useState<any[]>([])
 
-    const loading = open && companyList.length === 0;
-
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (event) => {
         setSearch(event.target.value);
     };
+    const changeSearch = (val:string) => {
+        setSearch(val)
+    }
 
     useEffect(() => {
         console.log(companyList)
+    }, [companyList])
+
+    useEffect(() => {
         const CancelToken = axios.CancelToken;
         const call1 = CancelToken.source()
 
@@ -31,17 +35,13 @@ export default function Search() {
                 }
             ).then(res => {
                 if(res.status === 200) { 
-                    console.log(res.data)
-                    if (res.data) {
-                        setCompanyList(res.data.map((com)=>com.name));
-                    }
-                    else {
-                        setCompanyList([])
+                    if (res.data?.data) {
+
+                        setCompanyList(res.data.data);
                     }
                 }
             }).catch( thrown => {
                 if(axios.isCancel(thrown)) { console.log("Request Cancelled") }
-                else{setCompanyList([])}
             })
 
         }
@@ -51,54 +51,63 @@ export default function Search() {
         return () => {
             call1.cancel()
         }
+
     }, [search])
 
-    useEffect(() => {
-        if (!open) {
-          setCompanyList([]);
-        }
-    }, [open]);
 
     return (
         <>
-            <Box className={classes.searchIcon}>
+            {/* <Box className={classes.searchIcon}>
                 <SearchIcon color='primary'/>
-            </Box>
-            
-            <Autocomplete 
-                // open={open}
-                // onOpen={() => {
-                //     setOpen(true);
-                // }}
-                // onClose={() => {
-                //     setOpen(false);
-                // }}
-                getOptionSelected={(option, value) => option === value}
-                options={companyList}
-                loading={loading}
-                disableClearable
+            </Box> */}
+            {/* <Autocomplete
+                options={top100Films}
                 
-                getOptionLabel={(option) => option}
-                value={search}
-                inputValue={search}
-                onInputChange={handleChange}
-                onChange={handleChange}
-                renderInput={(params) => 
-                    <InputBase
-                        placeholder="Search…"
-                        inputProps={{ 'aria-label': 'search' }}
-                        classes={{
-                            root: classes.inputRoot,
-                            input: classes.inputInput,
-                        }}
-                        endAdornment={
-                            <>
-                            {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                            {params.InputProps.endAdornment}
-                            </>
-                        }
-                        {...params}
+                style={{ width: 300 }}
+                freeSolo
+                renderInput={params => (
+                    <TextField
+                    {...params}
+                    label="Combo box"
+                    variant="outlined"
+                    fullWidth
+                    
                     />
+                )}
+            /> */}
+            <Autocomplete 
+                options={companyList!==null || companyList !== undefined?companyList:[]}
+                getOptionLabel={option => {      
+                    return option.name
+                }}                
+                freeSolo
+                disableClearable
+                onChange={(event, newVal)=>changeSearch(newVal?.name)}
+                inputValue={search}
+                renderInput={(params) => {
+                    // return <InputBase
+                    //     placeholder="Search…"
+                    //     inputProps={{ 'aria-label': 'search' }}
+                        // classes={{
+                        //     root: classes.inputRoot,
+                        //     input: classes.inputInput,
+                        // }}
+                    //     {...params}
+                    // />
+                    return <TextField
+                    {...params}
+                    // InputProps={{
+                    //     startAdornment: <InputAdornment position="start"><SearchIcon /></InputAdornment>,
+                    // }}
+                    label="Search"
+                    variant="outlined"
+                    fullWidth
+                    onChange={handleChange}
+                    classes={{
+                        root: classes.inputRoot,
+                    }}
+                    />
+                }
                 }
             />
         </>
@@ -120,7 +129,7 @@ const useStyles = makeStyles((theme: Theme) =>
             justifyContent: 'center',
         },
         inputRoot: {
-            color: theme.palette.secondary.contrastText,
+            color: theme.palette.secondary.contrastText
         },
         inputInput: {
             padding: theme.spacing(2, 1, 1, 0),
@@ -135,3 +144,14 @@ const useStyles = makeStyles((theme: Theme) =>
         
     }),
 );
+
+
+const top100Films = [
+    { title: "The Shawshank Redemption", year: 1994 },
+    { title: "The Godfather", year: 1972 },
+    { title: "The Godfather: Part II", year: 1974 },
+    { title: "The Dark Knight", year: 2008 },
+    { title: "12 Angry Men", year: 1957 },
+    { title: "Schindler's List", year: 1993 },
+    { title: "Pulp Fiction", year: 1994 }
+]
