@@ -20,11 +20,11 @@ export default function Review() {
 
     const handleOpenModal = () => {
         setOpen(true);
-      };
+    };
 
     const handleCloseModal = () => {
         setOpen(false);
-      };
+    };
       
     
 
@@ -193,7 +193,6 @@ export default function Review() {
                                         <Typography>Report</Typography>
                                     </Button>
                                     <Modal
-                                    className={classes.modal}
                                     open={open}
                                     onClose={handleCloseModal}
                                     closeAfterTransition
@@ -201,6 +200,7 @@ export default function Review() {
                                     BackdropProps={{
                                         timeout: 500,
                                     }}
+                                    className={classes.modal}
                                     >
                                         <Fade in={open}>
                                             <Card className={classes.modalCard}>

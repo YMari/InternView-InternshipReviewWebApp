@@ -1,10 +1,22 @@
-import { Box, Button, Card, createStyles, fade, Grid, InputBase, makeStyles, Theme, Typography} from "@material-ui/core";
+import { Backdrop, Box, Button, Card, createStyles, Fade, fade, Grid, InputBase, makeStyles, Modal, Theme, Typography} from "@material-ui/core";
 import { ArrowDownward, ArrowUpward, AccountCircle, Grade, AddCircle } from '@material-ui/icons';
 import React from "react";
+import ReviewMake from "../../lib/ui/components/reviewMake";
 import ReviewSummary from "../../lib/ui/components/reviewSummary";
 
 export default function Company() {
     const classes = useStyles();
+
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const [open, setOpen] = React.useState(false);
+
+    const handleOpenModal = () => {
+        setOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setOpen(false);
+    };
 
     return(
         <Box className={classes.main}>
@@ -76,9 +88,25 @@ export default function Company() {
                                 <Grid item justify='flex-end'>
                                     <Grid container direction='row' alignItems="center" wrap="nowrap">
                                         <Button>
-                                            <Typography className={classes.addReview}>Add Review</Typography>
+                                            <Typography className={classes.addReview} onClick={handleOpenModal}>Add Review</Typography>
                                             <AddCircle fontSize="large" className={classes.addReviewIcon}/>
                                         </Button>
+                                        
+                                        <Modal
+                                        open={open}
+                                        onClose={handleCloseModal}
+                                        closeAfterTransition
+                                        BackdropComponent={Backdrop}
+                                        BackdropProps={{
+                                            timeout: 500,
+                                        }}
+                                        className={classes.modal}
+                                        >
+                                            <Fade in={open}>
+                                                <ReviewMake/>
+                                            </Fade>
+                                        </Modal>
+
                                     </Grid>
                                 </Grid>
                             </Grid>
@@ -189,6 +217,14 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         textWhite: {
             color: theme.palette.primary.contrastText,
+        },
+
+        modal:{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            // width: '60%',
+            // height: '90%',
         },
     }))
     
