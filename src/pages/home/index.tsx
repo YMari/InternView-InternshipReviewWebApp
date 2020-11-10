@@ -1,8 +1,10 @@
-import { Box, Card, createStyles, fade, Grid, makeStyles, Theme, Typography, Button, CardContent, ButtonGroup, Divider } from '@material-ui/core'
+import { Box, Card, createStyles, fade, Grid, makeStyles, Theme, Typography, Button, CardContent, ButtonGroup, Divider, TextField, FormControl } from '@material-ui/core'
 import Link from 'next/link'
 import React from 'react'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import GradeIcon from '@material-ui/icons/Grade';
+import TopReview from '../../lib/ui/components/topReview';
+import TopCompany from '../../lib/ui/components/topCompany';
 
 export default function Home() {
     const classes = useStyles();
@@ -11,13 +13,9 @@ export default function Home() {
         <Box width="100%" maxHeight="500" position="absolute" top={0} >
             <img src="/backgroundImage.png" style={{width:"100%",maxHeight:750, opacity:0.5, objectFit:'cover', position:"relative", zIndex:-1000}}/>
         </Box>
-        <Grid
-        container
-        direction='column'
-        alignItems="center"
-        wrap="nowrap"
-        className={classes.gridFull}
-        >
+
+        <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.gridFull}>
+
             <Grid item>
                 <Typography className={classes.title}>
                     InternView
@@ -34,116 +32,71 @@ export default function Home() {
                     Start Searching
                 </Button>
             </Grid>
-            <Grid
-            container
-            direction='row'
-            justify="space-around"
-            alignItems="center"
-            wrap="nowrap"
-            className={classes.gridCards}
-            >
+
+            <Grid container direction='row' justify="space-around" alignItems="center" wrap="nowrap" className={classes.gridCards}>
                 <Grid item className={classes.gridItem}>
                     <Card className={classes.cardContainer}>
-                        <Grid
-                        container
-                        direction='column'
-                        alignItems="center"
-                        wrap="nowrap"
-                        className={classes.cardContent}
-                        >
+
+                        <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.cardContent}>
+
                             <Grid item>
                                 <Typography variant='h4'>
                                     Most Helpful Reviews
                                 </Typography>
                             </Grid>
+
                             <Grid item className={classes.cardItem}>
-                                <ButtonGroup variant="text" fullWidth={true}>
-                                    <Grid item className={classes.accountIcon}>
-                                        <Button>
-                                            <AccountCircleIcon fontSize="large"/>
-                                        </Button>
-                                    </Grid>
-                                    <Grid item xs={9} className={classes.cardSub}>
-                                        <Button>
-                                            <Link href="/reviews/">
-                                                <Typography>
-                                                    Review Summary
-                                                </Typography>
-                                            </Link>
-                                        </Button>
-                                    </Grid>
-                                    <Grid item>
-                                        <Grid
-                                        container
-                                        direction='row'
-                                        alignItems="center"
-                                        wrap="nowrap"
-                                        className={classes.rating}
-                                        >
-                                            <Grid item>
-                                                <GradeIcon fontSize="large"/>
-                                            </Grid>
-                                            <Grid item>
-                                                <Typography className={classes.ratingText}>5/5</Typography>
-                                            </Grid>
-                                        </Grid>
-                                    </Grid>
-                                </ButtonGroup>
+                                {/* v Top Reviews Here v */}
+                                
+                                <TopReview/>
+                                <TopReview/>
+                                <TopReview/>
+
+                                {/* ^ Top Reviews Here ^ */}
                             </Grid>
+                            
                         </Grid>
+
+                        <Link href="/profile/">
+                            <Button>
+                            user profile
+                            </Button>
+                        </Link>
+                        <Link href="/companies/">
+                            <Button>
+                            company profile
+                            </Button>
+                        </Link>
+
                     </Card>
                 </Grid>
+
                 <Grid item className={classes.gridItem}>
                     <Card className={classes.cardContainer}>
-                        <Grid
-                        container
-                        direction='column'
-                        alignItems="center"
-                        wrap="nowrap"
-                        className={classes.cardContent}
-                        >
+                        
+                        <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.cardContent}>
+
                             <Grid item>
                                 <Typography variant='h4'>
                                     Top Rated Companies
                                 </Typography>
                             </Grid>
+
                             <Grid item className={classes.cardItem}>
-                                <ButtonGroup variant="text" fullWidth={true}>
-                                    <Grid item className={classes.accountIcon}>
-                                        <Button>
-                                            <AccountCircleIcon fontSize="large"/>
-                                        </Button>
-                                    </Grid>
-                                    <Grid item xs={9} className={classes.cardSub}>
-                                        <Button>
-                                            <Link href="/">
-                                                <Typography>
-                                                    Company X
-                                                </Typography>
-                                            </Link>
-                                        </Button>
-                                    </Grid>
-                                    <Grid item>
-                                        <Grid
-                                        container
-                                        direction='row'
-                                        alignItems="center"
-                                        wrap="nowrap"
-                                        className={classes.rating}
-                                        >
-                                            <Grid item>
-                                                <GradeIcon fontSize="large"/>
-                                            </Grid>
-                                            <Grid item>
-                                                <Typography className={classes.ratingText}>5/5</Typography>
-                                            </Grid>
-                                        </Grid>
-                                    </Grid>
-                                </ButtonGroup>
+                                {/* v Top Companies Here v */}
+
+                                <TopCompany/>
+                                <TopCompany/>
+                                <TopCompany/>
+
+                                {/* ^ Top Companies Here ^ */}
                             </Grid>
+                            
                         </Grid>
+
                     </Card>
                 </Grid>
+
             </Grid>
         </Grid>
         </>
@@ -174,14 +127,23 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         cardItem: {
             marginTop: 30,
-            width: '90%',
+            width: '95%',
         },
         cardSub: {
-            wrap: 'wrap',
-            alignItems: 'center',
-            justifyContent: 'center',
-            maxWidth: '80%',
+            // width: '80%',
         },
+        buttonReview: {
+            width: '100%' 
+        },
+        reviewSummary: {
+            width: '95%',
+        },
+        inputRoot: {
+            "&$disabled": {
+              color: theme.palette.info.contrastText
+            }
+        },
+        disabled: {},
         accountIcon: {
             height: '100%',
             alignItems: 'center',

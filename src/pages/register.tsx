@@ -6,9 +6,8 @@ import Link from "next/link";
 import React from "react";
 import backend_container from "../lib/container";
 import { IStudyProgram, IStudyProgramRepository, IUniversity, IUniversityRepository, S_TYPES } from "../lib/domain/student";
-import {container, UI_TYPES} from '../lib/ui/client_container'
-import { IRequestService } from "../lib/ui/interfaces";
 import { useRouter } from 'next/router'
+import { useRequestService } from '../lib/ui/hooks'
 
 interface State {
     name: string;
@@ -26,7 +25,7 @@ interface RegisterProps {
 
 export default function RegisterPage(props:RegisterProps) {
     const classes = useStyles();
-
+    const request_service = useRequestService();
     const router = useRouter()
 
     const [loading, setLoading] = React.useState<boolean>(false);
@@ -56,9 +55,7 @@ export default function RegisterPage(props:RegisterProps) {
         
         setLoading(true)
 
-        const req = container.get<IRequestService>(UI_TYPES.IRequestService)
-
-        const result = await req.register({
+        const result = await request_service.register({
             email:values.email,
             name: values.name,
             password:values.password,

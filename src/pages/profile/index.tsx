@@ -1,9 +1,9 @@
-import { Box, Button, Card, createStyles, fade, Grid, InputBase, makeStyles, Theme, Typography} from "@material-ui/core";
+import { Box, Button, Card, createStyles, fade, Grid, InputBase, makeStyles, Theme, Typography } from "@material-ui/core";
 import { ArrowDownward, ArrowUpward, AccountCircle, Grade, AddCircle } from '@material-ui/icons';
 import React from "react";
 import ReviewSummary from "../../lib/ui/components/reviewSummary";
 
-export default function Company() {
+export default function Profile() {
     const classes = useStyles();
 
     return(
@@ -17,7 +17,7 @@ export default function Company() {
                     </Grid>
 
                     <Grid item>
-                        <Typography className={classes.accName}>Company X</Typography>
+                        <Typography className={classes.accName}>Student Name</Typography>
                     </Grid>
 
                     <Grid item className={classes.accRatingContainer}>
@@ -49,12 +49,14 @@ export default function Company() {
 
                         </Grid>
 
-                        <Grid container direction='row' alignItems="center" wrap="nowrap" justify='center' className={classes.accAvgSalaryContainer}>
-                            <Typography className={classes.avgSalaryText}>Avg. Salary: $69,420</Typography>
-                        </Grid>
-
                     </Grid>
 
+                    <Grid container direction='row' alignItems="center" wrap="nowrap">
+                        <Typography className={classes.textWhite}>Joined on: Date</Typography>
+                    </Grid>
+                    <Grid container direction='row' alignItems="center" wrap="nowrap">
+                        <Typography className={classes.textWhite}>Study Program: X</Typography>
+                    </Grid>
                     <Grid container direction='row' alignItems="center" wrap="nowrap" className={classes.spacer}>
                         <Typography className={classes.textWhite}>Reviews: #Reviews</Typography>
                     </Grid>
@@ -122,6 +124,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         accRatingContainer: {
             minWidth: '32%',
+            paddingBottom: theme.spacing(2),
         },
         accRatingPts: {
             width: '100%',
@@ -134,13 +137,6 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         accDownvotes: {
             color: theme.palette.info.main,
-        },
-        accAvgSalaryContainer: {
-            paddingBottom: theme.spacing(2),
-        },
-        avgSalaryText: {
-            fontSize: 30,
-            color: theme.palette.primary.contrastText,
         },
         spacer: {
             paddingBottom: theme.spacing(1)
@@ -191,4 +187,3 @@ const useStyles = makeStyles((theme: Theme) =>
             color: theme.palette.primary.contrastText,
         },
     }))
-    

@@ -5,9 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { OK_MESSAGE } from "../lib/application/constants";
-import {container, UI_TYPES} from '../lib/ui/client_container'
-import { IRequestService } from "../lib/ui/interfaces";
 import { mutate } from 'swr';
+import { useRequestService } from '../lib/ui/hooks'
 
 interface State {
     email: string;
@@ -18,7 +17,7 @@ interface State {
 export default function LoginPage() {
     
     const classes = useStyles();
-
+    const request_service = useRequestService();
     const router = useRouter();
 
     const [values, setValues] = React.useState<State>({
@@ -43,10 +42,8 @@ export default function LoginPage() {
     };
 
     const onSubmit = async () => {
-        
-        const ser = container.get<IRequestService>(UI_TYPES.IRequestService)
 
-        const result = await ser.login({email: values.email, password:values.password})
+        const result = await request_service.login({email: values.email, password:values.password})
 
         setLoading(true)
 
