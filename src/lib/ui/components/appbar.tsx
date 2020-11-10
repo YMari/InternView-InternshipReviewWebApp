@@ -6,6 +6,7 @@ import React from "react";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import {useUser, useRequestService} from '../hooks'
 import {mutate} from 'swr'
+import  Search from './appbar/search'
 
 export default function NavBar() {
     
@@ -34,12 +35,8 @@ export default function NavBar() {
 
     return(
         <AppBar position='relative' style={{ zIndex:10, background: 'transparent', boxShadow: 'none', color:'transparent', padding:5, paddingTop:10}}>
-            <Grid 
-                container
-                direction='row'
-                justify="space-between"
-                wrap="nowrap"
-            >
+            <Grid container direction='row' wrap="nowrap" justify="space-between">
+
                 <Grid item className={classes.iconContainer}>
                     <Link href="/">
                         <Button>
@@ -47,44 +44,41 @@ export default function NavBar() {
                         </Button>
                     </Link>
                 </Grid>
+
                 <Grid item className={classes.search}>
-                    <Box className={classes.searchIcon}>
-                        <SearchIcon color='primary'/>
-                    </Box>
-                    <InputBase
-                    placeholder="Search…"
-                    inputProps={{ 'aria-label': 'search' }}
-                    fullWidth={true}
-                    classes={{
-                        root: classes.inputRoot,
-                        input: classes.inputInput,
-                    }}
-                    />  
+                    <Search />
                 </Grid>
+
                 <Grid item >
-                    <Grid container justify="flex-end">
+                    <Grid container>
                     {!user?
-                        <ButtonGroup variant="text">
-                            <Button className={classes.buttons}>
-                                <Link href="/login">        
-                                    <Typography variant="h6" noWrap>
-                                        Log in
-                                    </Typography>
-                                </Link>
+                        <Grid item>
+                            <ButtonGroup variant="text">
+                                <Button className={classes.buttons}>
+                                    <Link href="/login">        
+                                        <Typography variant="h6" noWrap>
+                                            Log in
+                                        </Typography>
+                                    </Link>
+                                </Button>
+                                <Button className={classes.buttons}>
+                                    <Link href="/register">            
+                                        <Typography variant="h6" noWrap>
+                                            Register
+                                        </Typography>
+                                    </Link> 
+                                </Button>
+                            </ButtonGroup>
+                        </Grid>   
+                    :   
+                        <Grid item>
+                            <Button className={classes.buttons} onClick={handleUserMenu}>
+                                <Typography variant="h6" noWrap>
+                                    {user?.email}
+                                </Typography>
                             </Button>
-                            <Button className={classes.buttons}>
-                                <Link href="/register">            
-                                    <Typography variant="h6" noWrap>
-                                        Register
-                                    </Typography>
-                                </Link> 
-                            </Button>
-                        </ButtonGroup>   
-                    :   <Button className={classes.buttons} onClick={handleUserMenu}>
-                            <Typography variant="h6" noWrap>
-                                {user?.email}
-                            </Typography>
-                        </Button>}
+                        </Grid>
+                        }
                         <Menu
                         anchorEl={anchorEl}
                         open={open}
@@ -93,10 +87,12 @@ export default function NavBar() {
                             <Link href="/profile/">
                                 <MenuItem onClick={handleUserMenuClose}>Profile</MenuItem>
                             </Link>
-                                <MenuItem onClick={() => {handleUserMenuClose();logout()}}>Log Out</MenuItem>
+                            <MenuItem onClick={() => {handleUserMenuClose();logout()}}>Log Out</MenuItem>
                             </Menu>
+                        
                     </Grid>
                 </Grid>
+
             </Grid>
         </AppBar>
     )
@@ -114,39 +110,22 @@ const useStyles = makeStyles((theme: Theme) =>
             '&:hover': {
                 backgroundColor: fade(theme.palette.common.white, 0.40),
             },
-            // marginRight: theme.spacing(2),
-            // margin:'auto',
             width: '100%',
+            marginLeft: '6.5%',
             [theme.breakpoints.up('sm')]: {
-                marginLeft: 120,
                 width: 450,
-            },
-        },
-        searchIcon: {
-            padding: theme.spacing(0, 2),
-            height: '100%',
-            position: 'absolute',
-            pointerEvents: 'none',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-        },
-        inputRoot: {
-            color: theme.palette.secondary.contrastText,
-        },
-        inputInput: {
-            padding: theme.spacing(2, 1, 1, 0),
-            // vertical padding + font size from searchIcon
-            paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-            transition: theme.transitions.create('width'),
-            width: '100%',
-            [theme.breakpoints.up('md')]: {
-                width: '20ch',
             },
         },
         buttons: {
             color: theme.palette.primary.contrastText,
             wrap: 'noWrap'
-        }
+        },
+        accountContainer: {
+            width: 190,
+        },
+        accountEmail: {
+            width: 185,
+            paddingRight: theme.spacing(1),
+        },
     }),
 );
