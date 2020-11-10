@@ -59,7 +59,8 @@ class StudentService implements i.IStudentService {
                     }
                 };
              }
-            this._emailService.sendNotificationEmail(st.email,status,message)
+             
+            this._emailService.sendNotificationEmail(st.email, status, message)
             return output
         };
     }
