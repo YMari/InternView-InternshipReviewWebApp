@@ -286,7 +286,7 @@ export default function ReviewMake() {
                                         <FormControl fullWidth>
                                             <TextField
                                                 required
-                                                label="Recommendations, Tips, Experience,..."
+                                                label="Recommendations, Tips, Experience, etc..."
                                                 defaultValue={''}
                                                 variant="outlined"
                                                 value={values.tips}
