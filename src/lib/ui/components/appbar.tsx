@@ -1,12 +1,14 @@
-import { AppBar, Box, Button, ButtonGroup, createStyles, fade, Grid, InputBase, makeStyles, Menu, MenuItem, Theme, Typography} from "@material-ui/core";
-import SearchIcon from '@material-ui/icons/Search';
+import { AppBar, Badge, Box, Button, ButtonGroup, createStyles, fade, Grid, IconButton, InputBase, makeStyles, Menu, MenuItem, Theme, Typography} from "@material-ui/core";
 import PanoramaFishEyeIcon from '@material-ui/icons/PanoramaFishEye';
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import {useUser, useRequestService} from '../hooks'
 import {mutate} from 'swr'
 import  Search from './appbar/search'
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 
 export default function NavBar() {
     
@@ -14,16 +16,23 @@ export default function NavBar() {
     const classes = useStyles();
     const user = useUser();
     const request_service = useRequestService();
+    const theme = useTheme();
+    const matches = useMediaQuery(theme.breakpoints.down('sm'))
 
     // States
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
     const open = Boolean(anchorEl);
+
+    useEffect(()=>{
+        handleUserMenuClose()
+    }, [matches])
 
     // Functions
     const handleUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
-    
+
     const handleUserMenuClose = () => {
         setAnchorEl(null);
     };
@@ -33,11 +42,104 @@ export default function NavBar() {
         mutate('/api/account/user', null)
     }
 
+    const renderAccountSection = () => {
+        if (matches) {
+            return <Grid container justify="flex-end">
+                {!user?
+                    <>
+                    <IconButton onClick={handleUserMenu} className={[classes.buttons, classes.accountCircle]}>
+                        <MoreVertIcon />
+                    </IconButton>
+                        <Menu
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleUserMenuClose}
+                        >
+                            <Link href="/login">
+                                <MenuItem onClick={handleUserMenuClose}>
+                                    Login
+                                </MenuItem>
+                            </Link>
+                            <Link href="/register">
+                                <MenuItem onClick={handleUserMenuClose}>
+                                    Register
+                                </MenuItem>
+                            </Link>
+                        </Menu>
+                    </>
+                    :
+                    <>
+                        <IconButton onClick={handleUserMenu} className={[classes.buttons, classes.accountCircle]}>
+                            <AccountCircleIcon />
+                        </IconButton>
+                        <Menu
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleUserMenuClose}
+                        >
+                            <Link href="/profile">
+                                <MenuItem onClick={handleUserMenuClose}>
+                                    {user.email}
+                                </MenuItem>
+                            </Link>
+                            
+                            <MenuItem onClick={()=>{handleUserMenuClose();logout();}}>
+                                Log out
+                            </MenuItem>
+                            
+                        </Menu>
+                    </>
+                }
+            </Grid>
+        }else{
+            return <Grid container justify="flex-end">
+            {!user?
+                <Grid item>
+                    <ButtonGroup variant="text">
+                        <Button className={classes.buttons}>
+                            <Link href="/login">        
+                                <Typography variant="h6" noWrap>
+                                    Log in
+                                </Typography>
+                            </Link>
+                        </Button>
+                        <Button className={classes.buttons}>
+                            <Link href="/register">            
+                                <Typography variant="h6" noWrap>
+                                    Register
+                                </Typography>
+                            </Link> 
+                        </Button>
+                    </ButtonGroup>
+                </Grid>   
+            :   
+                <Grid item>
+                    <Button className={classes.buttons} onClick={handleUserMenu}>
+                        <Typography variant="h6" noWrap>
+                            {user?.email}
+                        </Typography>
+                    </Button>
+                    <Menu
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleUserMenuClose}
+                    >
+                    <Link href="/profile/">
+                        <MenuItem onClick={handleUserMenuClose}>Profile</MenuItem>
+                    </Link>
+                    <MenuItem onClick={() => {handleUserMenuClose();logout()}}>Log Out</MenuItem>
+                    </Menu>
+                </Grid>
+            }
+            </Grid>
+        }
+    }
+
     return(
         <AppBar position='relative' style={{ zIndex:10, background: 'transparent', boxShadow: 'none', color:'transparent', padding:5, paddingTop:10}}>
-            <Grid container direction='row' wrap="nowrap" justify="space-between">
-
-                <Grid item className={classes.iconContainer}>
+            <Grid container direction='row' wrap="nowrap" >
+                {/*justify="space-between"*/} 
+                <Grid item md={4} sm={3} xs={3} className={classes.iconContainer}>
                     <Link href="/">
                         <Button>
                             <PanoramaFishEyeIcon fontSize="large"/>
@@ -45,52 +147,16 @@ export default function NavBar() {
                     </Link>
                 </Grid>
 
-                <Grid item className={classes.search}>
-                    <Search />
+                <Grid item md={4} sm={6} xs={6}>
+                    <Grid  container justify="center" >
+                        <Box className={classes.search}>
+                            <Search />
+                        </Box>
+                    </Grid>      
                 </Grid>
 
-                <Grid item >
-                    <Grid container>
-                    {!user?
-                        <Grid item>
-                            <ButtonGroup variant="text">
-                                <Button className={classes.buttons}>
-                                    <Link href="/login">        
-                                        <Typography variant="h6" noWrap>
-                                            Log in
-                                        </Typography>
-                                    </Link>
-                                </Button>
-                                <Button className={classes.buttons}>
-                                    <Link href="/register">            
-                                        <Typography variant="h6" noWrap>
-                                            Register
-                                        </Typography>
-                                    </Link> 
-                                </Button>
-                            </ButtonGroup>
-                        </Grid>   
-                    :   
-                        <Grid item>
-                            <Button className={classes.buttons} onClick={handleUserMenu}>
-                                <Typography variant="h6" noWrap>
-                                    {user?.email}
-                                </Typography>
-                            </Button>
-                        </Grid>
-                        }
-                        <Menu
-                        anchorEl={anchorEl}
-                        open={open}
-                        onClose={handleUserMenuClose}
-                        >
-                            <Link href="/profile/">
-                                <MenuItem onClick={handleUserMenuClose}>Profile</MenuItem>
-                            </Link>
-                            <MenuItem onClick={() => {handleUserMenuClose();logout()}}>Log Out</MenuItem>
-                            </Menu>
-                        
-                    </Grid>
+                <Grid item md={4} sm={3} xs={3}>
+                    {renderAccountSection()}
                 </Grid>
 
             </Grid>
@@ -111,7 +177,7 @@ const useStyles = makeStyles((theme: Theme) =>
                 backgroundColor: fade(theme.palette.common.white, 0.40),
             },
             width: '100%',
-            marginLeft: '6.5%',
+            // marginLeft: '6.5%',
             [theme.breakpoints.up('sm')]: {
                 width: 450,
             },
@@ -127,5 +193,8 @@ const useStyles = makeStyles((theme: Theme) =>
             width: 185,
             paddingRight: theme.spacing(1),
         },
+        accountCircle: {
+            marginTop:theme.spacing(0.5),
+        }
     }),
 );
