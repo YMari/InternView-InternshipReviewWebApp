@@ -36,9 +36,9 @@ export default function Home() {
             {/* justify="space-around" */}      
             
         </Grid>
-        <Grid container direction='row' justify="center" alignContent="center" className={classes.gridCards}>
+        <Grid container direction='row' justify="space-around" alignContent="center" className={classes.gridCards}>
                    
-                    <Grid item md={5} xs={12}>
+                    <Grid item md={6} xs={12}>
                             <Grid container justify="center" style={{padding:4}}>
                                 <Card className={classes.cardContainer}>
 
@@ -77,7 +77,7 @@ export default function Home() {
                             </Grid>
                     </Grid>
 
-                    <Grid md={5} xs={12} item >
+                    <Grid md={6} xs={12} item >
                             <Grid container justify="center" style={{padding:4}}>
                                 <Card className={classes.cardContainer}>
                                     
@@ -116,15 +116,17 @@ const useStyles = makeStyles((theme: Theme) =>
             marginTop: 40
         },
         gridCards: {
-            paddingTop: theme.spacing(8)
+            paddingTop: theme.spacing(8),
+            paddingRight: theme.spacing(2),
+            paddingLeft: theme.spacing(2),
         },
         
         cardContainer: {
             minHeight: 600,
             maxHeight: 600,
-            maxWidth:700,
+            maxWidth:800,
             width:"100%",
-            marginBottom:30
+            marginBottom:30,
         },
         
         cardContent: {
