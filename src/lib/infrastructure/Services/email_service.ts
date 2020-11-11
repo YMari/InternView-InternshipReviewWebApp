@@ -37,11 +37,11 @@ export default class EmailService implements i.IEmailService {
     async sendVerificationEmail(recipient:string, subject:string, text:string):Promise<Object>{
         return sendEmail(recipient, subject, text);
     }
-    async resetPasswordEmail(recipient:String, subject:String, text:String):Promise<Object>{
-    return null
+    async resetPasswordEmail(recipient:string, subject:string, text:string):Promise<Object>{
+        return sendEmail(recipient, subject, text);
     }
-    async sendNotificationEmail(recipient:String, subject:String, text:String):Promise<Object>{
-        return null
+    async sendNotificationEmail(recipient:string, subject:string, text:string):Promise<Object>{
+        return sendEmail(recipient, subject, text);
     }
 }
    
