@@ -223,8 +223,18 @@ const useStyles = makeStyles((theme: Theme) =>
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            // width: '60%',
-            // height: '90%',
+            overflow:'scroll',
+            width: '100%',
         },
+
+        // // modalGrid: {
+        // //     width: '100%',
+        // //     height: '60%'
+        // // },
+        // cardMainModal: {
+        //     padding: theme.spacing(2),
+        //     width: '60%',
+        //     height: '100%'
+        // },
     }))
     

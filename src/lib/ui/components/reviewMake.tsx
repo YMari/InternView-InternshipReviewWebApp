@@ -76,8 +76,10 @@ export default function ReviewMake() {
     // };
 
     return (
+        <>
         <Box className={classes.main}>
             <Card className={classes.cardMain}>
+        
                 
                 <Grid container direction='column' alignItems="center">
                     <Typography className={classes.cardTitle}>Review Creator</Typography>
@@ -170,7 +172,7 @@ export default function ReviewMake() {
 
                                     <Grid item>
                                         <FormControl required className={classes.textField2}>
-                                            <TextField variant="outlined" label="Location" required/>
+                                            <TextField variant="outlined" label="Location" required className={classes.textFieldInner}/>
                                         </FormControl>
                                     </Grid>
 
@@ -186,6 +188,7 @@ export default function ReviewMake() {
                                             InputProps={{
                                                 endAdornment: <InputAdornment position="end">Months</InputAdornment>
                                             }}
+                                            className={classes.textFieldInner}
                                             />
                                         </FormControl>
                                     </Grid>
@@ -213,6 +216,7 @@ export default function ReviewMake() {
                                             //         endAdornment: <InputAdornment position="end">USD</InputAdornment>,
                                             //     }}
                                             // }
+                                            className={classes.textFieldInner}
                                             />
                                         </FormControl>
                                     </Grid>
@@ -229,6 +233,7 @@ export default function ReviewMake() {
                                                 required
                                                 value={values.degree}
                                                 onChange={handleChange('degree')}
+                                                className={classes.textFieldInner}
                                             />
                                         </FormControl>
                                     </Grid>
@@ -241,6 +246,7 @@ export default function ReviewMake() {
                                                 required
                                                 value={values.work}
                                                 onChange={handleChange('work')}
+                                                className={classes.textFieldInner}
                                             />
                                         </FormControl>
                                     </Grid>
@@ -260,7 +266,7 @@ export default function ReviewMake() {
                                         <FormControl fullWidth>
                                             <ChipInput
                                                 variant="outlined"
-                                                placeholder="Add Interview Questions..."
+                                                placeholder="Add Interview Questions... (WIP)"
                                                 value={chipData}
                                                 onAdd={(chip) => handleAddChip(chip)}
                                                 onDelete={(chip) => handleDeleteChip(chip)}
@@ -304,23 +310,24 @@ export default function ReviewMake() {
                     </Grid>
 
                 </Grid>
+            
             </Card>
         </Box>
+        </>
     )  
 }
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         main: {
-            // marginTop: 10,
-            // padding: theme.spacing(1),
-            // display: 'flex',
-            // justifyContent: 'center',
+            minWidth: '60%',
+            maxWidth: '90%',
+            height: '100%',
+            paddingTop: theme.spacing(4),
+            paddingBottom: theme.spacing(4),
         },
         cardMain: {
             padding: theme.spacing(2),
-            // maxWidth: '90%',
-            // minWidth: '50%',
         },
         gridMain: {
             
@@ -403,10 +410,13 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingBottom: theme.spacing(1.5),
             width: '100%',
         },
+        textFieldInner: {
+            backgroundColor: theme.palette.common.white,
+        },
         interviewInputs: {
             paddingLeft: theme.spacing(1),
             paddingRight: theme.spacing(1),
-            paddingBottom: theme.spacing(1),
+            paddingBottom: theme.spacing(1.5),
         },
         intInfo: {
             fontSize: 20
