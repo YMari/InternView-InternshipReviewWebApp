@@ -1,6 +1,5 @@
-import { Backdrop, Button, Card, createStyles, Fade, Grid, makeStyles, Modal, Theme, Typography } from "@material-ui/core";
-import { Grade } from "@material-ui/icons";
-import Link from "next/link";
+import { Backdrop, Box, Button, Card, createStyles, Fade, Grid, makeStyles, Modal, Theme, Typography } from "@material-ui/core";
+import { ClearRounded, Grade } from "@material-ui/icons";
 import React from "react";
 import Review from "../../../pages/reviews";
 
@@ -55,7 +54,14 @@ export default function ReviewSummary() {
                 className={classes.modal}
                 >
                     <Fade in={open}>
+                        <>
+                        <Box className={classes.closeModalBox}>
+                            <Button onClick={handleCloseModal} size="small" className={classes.closeModalButton}>
+                                <ClearRounded fontSize='large' className={classes.closeModalIcon}/>
+                            </Button>
+                        </Box>
                         <Review/>
+                        </>
                     </Fade>
                 </Modal>
 
@@ -101,9 +107,22 @@ const useStyles = makeStyles((theme: Theme) =>
             color: theme.palette.primary.contrastText,
             fontSize: 22,
         },
+
         modal: {
             width: '100%',
             height: '100%',
             overflow:'scroll',
+        },
+        closeModalBox: {
+            display: 'flex',
+            justifyContent: 'flex-end',
+            paddingTop: theme.spacing(2),
+            paddingRight: theme.spacing(2),
+        },
+        closeModalButton: {
+            backgroundColor: theme.palette.secondary.main,
+        },
+        closeModalIcon: {
+            color: theme.palette.primary.contrastText,
         },
 }))

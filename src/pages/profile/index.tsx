@@ -1,5 +1,5 @@
 import { Backdrop, Box, Button, Card, createStyles, Fade, fade, Grid, InputBase, makeStyles, Modal, Theme, Typography } from "@material-ui/core";
-import { ArrowDownward, ArrowUpward, AccountCircle, Grade, AddCircle } from '@material-ui/icons';
+import { ArrowDownward, ArrowUpward, AccountCircle, Grade, AddCircle, ClearRounded } from '@material-ui/icons';
 import React from "react";
 import ReviewMake from "../../lib/ui/components/reviewMake";
 import ReviewSummary from "../../lib/ui/components/reviewSummary";
@@ -105,7 +105,14 @@ export default function Profile() {
                                         className={classes.modal}
                                         >
                                             <Fade in={open}>
-                                                <ReviewMake/>
+                                                <Grid container direction='column' alignItems="center" justify='center' wrap="nowrap">
+                                                    <Grid container direction='row' justify='flex-end' className={classes.closeModalBox}>
+                                                        <Button onClick={handleCloseModal} size="small" className={classes.closeModalButton}>
+                                                            <ClearRounded fontSize='large' className={classes.closeModalIcon}/>
+                                                        </Button>
+                                                    </Grid>
+                                                    <ReviewMake/>
+                                                </Grid>
                                             </Fade>
                                         </Modal>
 
@@ -216,10 +223,18 @@ const useStyles = makeStyles((theme: Theme) =>
         },
 
         modal:{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
             overflow:'scroll',
             width: '100%',
+            height: '100%'
+        },
+        closeModalBox: {
+            paddingTop: theme.spacing(2),
+            paddingRight: theme.spacing(2),
+        },
+        closeModalButton: {
+            backgroundColor: theme.palette.secondary.main,
+        },
+        closeModalIcon: {
+            color: theme.palette.primary.contrastText,
         },
     }))

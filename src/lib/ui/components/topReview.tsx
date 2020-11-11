@@ -1,5 +1,5 @@
-import { Backdrop, Button, Card, createStyles, Fade, Grid, makeStyles, Modal, Theme, Typography } from "@material-ui/core";
-import { AccountCircle, Grade } from "@material-ui/icons";
+import { Backdrop, Box, Button, Card, createStyles, Fade, Grid, makeStyles, Modal, Theme, Typography } from "@material-ui/core";
+import { AccountCircle, ClearRounded, Grade } from "@material-ui/icons";
 import Link from "next/link";
 import React from "react";
 import Review from "../../../pages/reviews";
@@ -49,7 +49,14 @@ export default function TopReview() {
                 className={classes.modal}
                 >
                     <Fade in={open}>
+                        <>
+                        <Box className={classes.closeModalBox}>
+                            <Button onClick={handleCloseModal} size="small" className={classes.closeModalButton}>
+                                <ClearRounded fontSize='large' className={classes.closeModalIcon}/>
+                            </Button>
+                        </Box>
                         <Review/>
+                        </>
                     </Fade>
                 </Modal>
             </Grid>
@@ -96,11 +103,25 @@ const useStyles = makeStyles((theme: Theme) =>
         reviewText: {
             color: theme.palette.secondary.contrastText,
         },
+        
         modal: {
             width: '100%',
             height: '100%',
             overflow:'scroll',
         },
+        closeModalBox: {
+            display: 'flex',
+            justifyContent: 'flex-end',
+            paddingTop: theme.spacing(2),
+            paddingRight: theme.spacing(2),
+        },
+        closeModalButton: {
+            backgroundColor: theme.palette.secondary.main,
+        },
+        closeModalIcon: {
+            color: theme.palette.primary.contrastText,
+        },
+
         ratingItem: {
             height: '100%',
             paddingRight: theme.spacing(1),
