@@ -1,5 +1,6 @@
-import { Card, createStyles, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
+import { Button, Card, createStyles, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
 import { Grade } from "@material-ui/icons";
+import Link from "next/link";
 import React from "react";
 
 export default function ReviewSummary() {
@@ -8,32 +9,38 @@ export default function ReviewSummary() {
     return(
         <Grid item className={classes.cardItem}>
             <Card className={classes.cardItemCard}>
-                <Grid container direction='column' alignItems="center" wrap="nowrap">
+                <Link href="/reviews/">
+                    <Button className={classes.reviewButton}>
+                        
+                        <Grid container direction='column' alignItems="center" wrap="nowrap">
 
-                    <Grid container direction='row' alignItems="center" wrap="nowrap">
-                        <Grid container direction='row' alignItems="center" wrap="nowrap">
-                            <Typography className={classes.reviewTitle}>Review Title</Typography>
+                            <Grid container direction='row' alignItems="center" wrap="nowrap">
+                                <Grid container direction='row' alignItems="center" wrap="nowrap">
+                                    <Typography className={classes.reviewTitle}>Review Title</Typography>
+                                </Grid>
+                                <Grid container direction='row' wrap="nowrap" justify='flex-end' className={classes.reviewGradeRow}>
+                                    <Grade fontSize="small" className={classes.reviewGrade}/>
+                                    <Grade fontSize="small" className={classes.reviewGrade}/>
+                                    <Grade fontSize="small" className={classes.reviewGrade}/>
+                                    <Grade fontSize="small" className={classes.reviewGrade}/>
+                                    <Grade fontSize="small" className={classes.reviewGrade}/>
+                                </Grid>
+                            </Grid>
+
+                            <Grid container direction='row' alignItems="center" wrap="nowrap">
+                                <Typography className={classes.reviewCompany}>Company X</Typography>
+                            </Grid>
+                            <Grid container direction='row' alignItems="center" wrap="nowrap">
+                                <Typography className={classes.reviewDate}>Posted on: Date</Typography>
+                            </Grid>
+                            <Grid container direction='row' alignItems="center" wrap="nowrap" zeroMinWidth>
+                                <Typography noWrap className={classes.reviewSummary}>Review Summary (limit characters i.e. 150)</Typography>
+                            </Grid>
+
                         </Grid>
-                        <Grid container direction='row' wrap="nowrap" justify='flex-end' className={classes.reviewGradeRow}>
-                            <Grade fontSize="small" className={classes.reviewGrade}/>
-                            <Grade fontSize="small" className={classes.reviewGrade}/>
-                            <Grade fontSize="small" className={classes.reviewGrade}/>
-                            <Grade fontSize="small" className={classes.reviewGrade}/>
-                            <Grade fontSize="small" className={classes.reviewGrade}/>
-                        </Grid>
-                    </Grid>
 
-                    <Grid container direction='row' alignItems="center" wrap="nowrap">
-                        <Typography className={classes.reviewCompany}>Company X</Typography>
-                    </Grid>
-                    <Grid container direction='row' alignItems="center" wrap="nowrap">
-                        <Typography className={classes.reviewDate}>Posted on: Date</Typography>
-                    </Grid>
-                    <Grid container direction='row' alignItems="center" wrap="nowrap" zeroMinWidth>
-                        <Typography noWrap className={classes.reviewSummary}>Review Summary (limit characters i.e. 150)</Typography>
-                    </Grid>
-
-                </Grid>
+                    </Button>
+                </Link>
             </Card>
         </Grid>
     )
@@ -49,6 +56,10 @@ const useStyles = makeStyles((theme: Theme) =>
         cardItemCard: {
             backgroundColor: theme.palette.info.main,
             padding: theme.spacing(1),
+        },
+        reviewButton: {
+            width: '100%',
+            height: '100%'
         },
         reviewTitle: {
             color: theme.palette.primary.contrastText,
