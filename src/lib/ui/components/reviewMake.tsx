@@ -75,6 +75,12 @@ export default function ReviewMake() {
     //     setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key))
     // };
 
+    const [anonCheck, setAnonCheck] = React.useState(true);
+
+    const handleAnonCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setAnonCheck(event.target.checked);
+    };
+
     return (
         <>
         <Box className={classes.main}>
@@ -300,6 +306,20 @@ export default function ReviewMake() {
                                 </Card>
                             </Grid>
                             <Grid container direction='row' alignItems="center" wrap="nowrap" justify='flex-end' className={classes.ratingRow}>
+                                <Grid item className={classes.anonGrid}>
+                                    <Grid container direction='row' alignItems="center" wrap="nowrap" justify='center'>
+                                        <Grid item>
+                                            <Checkbox
+                                                checked={anonCheck}
+                                                onChange={handleAnonCheck}
+                                                color='default'
+                                            />
+                                        </Grid>
+                                        <Grid item>
+                                            <Typography>Post Anonymously</Typography>
+                                        </Grid>
+                                    </Grid>         
+                                </Grid>
                                 <Grid item >
                                     <Button className={classes.buttonSubmit}>
                                         <Typography>Submit</Typography>
@@ -376,6 +396,9 @@ const useStyles = makeStyles((theme: Theme) =>
         ratingRow: {
             paddingLeft: theme.spacing(2),
             paddingRight: theme.spacing(2),
+        },
+        anonGrid: {
+            paddingRight: theme.spacing(5),
         },
         buttonSubmit: {
             backgroundColor: theme.palette.primary.main,
