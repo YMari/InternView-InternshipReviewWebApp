@@ -3,11 +3,15 @@ import { ArrowDownward, ArrowUpward, AccountCircle, Grade, AddCircle, ClearRound
 import React from "react";
 import ReviewMake from "../../lib/ui/components/reviewMake";
 import ReviewSummary from "../../lib/ui/components/reviewSummary";
+import {useUser} from '../../lib/ui/hooks'
 
 export default function Profile() {
     const classes = useStyles();
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+    const user = useUser()
+
     const [open, setOpen] = React.useState(false);
 
     const handleOpenModal = () => {
@@ -29,7 +33,7 @@ export default function Profile() {
                     </Grid>
 
                     <Grid item>
-                        <Typography className={classes.accName}>Student Name</Typography>
+    <Typography className={classes.accName}>{user?<>{user.name}</>:<>Loading ...</>}</Typography>
                     </Grid>
 
                     <Grid item className={classes.accRatingContainer}>

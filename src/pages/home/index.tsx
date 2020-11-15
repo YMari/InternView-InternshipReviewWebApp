@@ -67,7 +67,7 @@ export default function Home() {
                                         user profile
                                         </Button>
                                     </Link>
-                                    <Link href="/companies/">
+                                    <Link href="/company/Test">
                                         <Button>
                                         company profile
                                         </Button>
