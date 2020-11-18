@@ -1,9 +1,11 @@
 import { Backdrop, Box, Button, Card, CardHeader, Checkbox, Chip, createStyles, Fade, FormControl, Grid, InputAdornment, InputLabel, makeStyles, Menu, MenuItem, Modal, OutlinedInput, Select, TextField, Theme, Typography } from '@material-ui/core';
 import Link from 'next/link';
-import React, { constructor, useState } from 'react';
+import React, { constructor, useEffect, useState } from 'react';
 import { ArrowDownward, ArrowUpward, AccountCircle, Grade, ArrowDropDown } from '@material-ui/icons';
 import theme from '../theme';
 import ChipInput from 'material-ui-chip-input';
+import {useUser} from '../hooks'
+import { useRouter } from 'next/router';
 
 interface State {
     title: string;
@@ -15,7 +17,6 @@ interface State {
     degree: string;
     work: string;
     tips: string;
-    // chips: [];
 }
 
 interface ChipData {
@@ -24,7 +25,10 @@ interface ChipData {
 }
 
 export default function ReviewMake() {
+
     const classes = useStyles();
+    const user = useUser();
+    const router = useRouter();
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -46,40 +50,34 @@ export default function ReviewMake() {
         degree: '',
         work: '',
         tips: '',
-        // chips: [],
     });
 
     const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
         setValues({ ...values, [prop]: event.target.value });  
     };
 
-    const [chipData, setChipData] = useState([
+    const [chipData, setChipData] = useState<string[]>([])
 
-    ])
-
-    const handleAddChip = (chips: any) => () => {
-        setChipData([...chips, chips])
+    const handleAddChip = (chip: string) => {
+        console.log(chip)
+        setChipData([...chipData, chip])
     };
 
-    const handleDeleteChip = (chipToDelete: ChipData) => () => {
-        this.setState({
-            chips: this.state.chips.filter((c: ChipData) => c !== chipToDelete)
-        })
+    const handleDeleteChip = (chipToDelete: string) => {
+        setChipData(chipData.filter((c: string) => c !== chipToDelete))
     };
-
-    // const handleAddChip = (chips: any) => () => {
-    //     setChipData({ ...this.state.chips, chips})
-    // };
-
-    // const handleDeleteChip = (chipToDelete: ChipData) => () => {
-    //     setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key))
-    // };
 
     const [anonCheck, setAnonCheck] = React.useState(true);
 
     const handleAnonCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
         setAnonCheck(event.target.checked);
     };
+
+    useEffect(()=>{
+        if (!user) {
+            router.push('/login')
+        }
+    }, [user])
 
     return (
         <>
@@ -111,7 +109,7 @@ export default function ReviewMake() {
                                 <TextField
                                     disabled
                                     label="Student Name"
-                                    value={'Student Name'}
+                                    value={user?.email}
                                     variant="outlined"
                                     InputProps={{
                                         classes: {
@@ -154,9 +152,7 @@ export default function ReviewMake() {
 
                         <Grid item>
                             <FormControl variant="outlined" required className={classes.textField1}>
-                                {/* <InputLabel>Offer</InputLabel> */}
                                 <Select
-                                // label="Offer Type"
                                 value={values.offer}
                                 onChange={handleChange('offer')}
                                 defaultValue={"No Offer"}
@@ -274,17 +270,9 @@ export default function ReviewMake() {
                                                 variant="outlined"
                                                 placeholder="Add Interview Questions... (WIP)"
                                                 value={chipData}
-                                                onAdd={(chip) => handleAddChip(chip)}
-                                                onDelete={(chip) => handleDeleteChip(chip)}
+                                                onAdd={handleAddChip}
+                                                onDelete={(chip, _) => {handleDeleteChip(chip)}}
                                             />
-                                            {/* {chipData.map((data) => {
-                                                return (
-                                                    <Chip
-                                                    label={data.label}
-                                                    onDelete={data.label === 'React' ? undefined : handleDelete(data)}
-                                                    />
-                                                );
-                                            })} */}
                                         </FormControl>
                                     </Grid>
 
