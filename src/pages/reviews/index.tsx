@@ -7,26 +7,13 @@ import theme from '../../lib/ui/theme';
 export default function Review() {
     const classes = useStyles();
 
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const [open, setOpen] = React.useState(false);
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => {setAnchorEl(event.currentTarget)}
+    const handleCloseMenu = () => {setAnchorEl(null)}
 
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-      setAnchorEl(event.currentTarget);
-    };
-  
-    const handleCloseMenu = () => {
-      setAnchorEl(null);
-    };
-
-    const handleOpenModal = () => {
-        setOpen(true);
-      };
-
-    const handleCloseModal = () => {
-        setOpen(false);
-      };
-      
-    
+    const [open, setOpen] = React.useState(false)
+    const handleOpenModal = () => {setOpen(true)}
+    const handleCloseModal = () => {setOpen(false)}
 
     return (
         <Box className={classes.main}>
@@ -193,7 +180,6 @@ export default function Review() {
                                         <Typography>Report</Typography>
                                     </Button>
                                     <Modal
-                                    className={classes.modal}
                                     open={open}
                                     onClose={handleCloseModal}
                                     closeAfterTransition
@@ -201,6 +187,7 @@ export default function Review() {
                                     BackdropProps={{
                                         timeout: 500,
                                     }}
+                                    className={classes.modal}
                                     >
                                         <Fade in={open}>
                                             <Card className={classes.modalCard}>

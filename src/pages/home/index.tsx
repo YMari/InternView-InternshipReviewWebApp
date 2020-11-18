@@ -10,8 +10,8 @@ export default function Home() {
     const classes = useStyles();
     return(
         <>
-        <Box width="100%" maxHeight="500" position="absolute" top={0} >
-            <img src="/backgroundImage.png" style={{width:"100%",maxHeight:750, opacity:0.5, objectFit:'cover', position:"relative", zIndex:-1000}}/>
+        <Box width="100%" maxHeight="750" position="absolute" top={0} >
+            <img src="/backgroundImage.png" style={{width:"100%",maxHeight:750, minHeight:600, opacity:0.5, objectFit:'cover', position:"relative", zIndex:-1000}}/>
         </Box>
 
         <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.gridFull}>
@@ -33,72 +33,79 @@ export default function Home() {
                 </Button>
             </Grid>
 
-            <Grid container direction='row' justify="space-around" alignItems="center" wrap="nowrap" className={classes.gridCards}>
-                <Grid item className={classes.gridItem}>
-                    <Card className={classes.cardContainer}>
-
-                        <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.cardContent}>
-
-                            <Grid item>
-                                <Typography variant='h4'>
-                                    Most Helpful Reviews
-                                </Typography>
-                            </Grid>
-
-                            <Grid item className={classes.cardItem}>
-                                {/* v Top Reviews Here v */}
-                                
-                                <TopReview/>
-                                <TopReview/>
-                                <TopReview/>
-
-                                {/* ^ Top Reviews Here ^ */}
-                            </Grid>
-                            
-                        </Grid>
-
-                        <Link href="/profile/">
-                            <Button>
-                            user profile
-                            </Button>
-                        </Link>
-                        <Link href="/companies/">
-                            <Button>
-                            company profile
-                            </Button>
-                        </Link>
-
-                    </Card>
-                </Grid>
-
-                <Grid item className={classes.gridItem}>
-                    <Card className={classes.cardContainer}>
-                        
-                        <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.cardContent}>
-
-                            <Grid item>
-                                <Typography variant='h4'>
-                                    Top Rated Companies
-                                </Typography>
-                            </Grid>
-
-                            <Grid item className={classes.cardItem}>
-                                {/* v Top Companies Here v */}
-
-                                <TopCompany/>
-                                <TopCompany/>
-                                <TopCompany/>
-
-                                {/* ^ Top Companies Here ^ */}
-                            </Grid>
-                            
-                        </Grid>
-
-                    </Card>
-                </Grid>
-
-            </Grid>
+            {/* justify="space-around" */}      
+            
         </Grid>
+        <Grid container direction='row' justify="space-around" alignContent="center" className={classes.gridCards}>
+                   
+                    <Grid item md={6} xs={12}>
+                            <Grid container justify="center" style={{padding:4}}>
+                                <Card className={classes.cardContainer}>
+
+                                    <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.cardContent}>
+
+                                        <Grid item>
+                                            <Typography variant='h4'>
+                                                Most Helpful Reviews
+                                            </Typography>
+                                        </Grid>
+
+                                        <Grid item className={classes.cardItem}>
+                                            {/* v Top Reviews Here v */}
+                                            
+                                            <TopReview/>
+                                            <TopReview/>
+                                            <TopReview/>
+
+                                            {/* ^ Top Reviews Here ^ */}
+                                        </Grid>
+                                        
+                                    </Grid>
+
+                                    <Link href="/profile/">
+                                        <Button>
+                                        user profile
+                                        </Button>
+                                    </Link>
+                                    <Link href="/company/Test">
+                                        <Button>
+                                        company profile
+                                        </Button>
+                                    </Link>
+
+                                </Card>
+                            </Grid>
+                    </Grid>
+
+                    <Grid md={6} xs={12} item >
+                            <Grid container justify="center" style={{padding:4}}>
+                                <Card className={classes.cardContainer}>
+                                    
+                                    <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.cardContent}>
+
+                                        <Grid item>
+                                            <Typography variant='h4'>
+                                                Top Rated Companies
+                                            </Typography>
+                                        </Grid>
+
+                                        <Grid item className={classes.cardItem}>
+                                            {/* v Top Companies Here v */}
+
+                                            <TopCompany/>
+                                            <TopCompany/>
+                                            <TopCompany/>
+
+                                            {/* ^ Top Companies Here ^ */}
+                                        </Grid>
+                                        
+                                    </Grid>
+
+                                </Card>
+                            
+                        </Grid>
+                    </Grid>
+                </Grid>
         </>
     )
 }
@@ -109,18 +116,19 @@ const useStyles = makeStyles((theme: Theme) =>
             marginTop: 40
         },
         gridCards: {
-            paddingTop: theme.spacing(8)
+            paddingTop: theme.spacing(8),
+            paddingRight: theme.spacing(2),
+            paddingLeft: theme.spacing(2),
         },
-        gridItem: {
-            minWidth: '42%',
-            maxWidth: '42%',
-            alignItems: "center",
-            paddingBottom: theme.spacing(2)
-        },
+        
         cardContainer: {
             minHeight: 600,
-            maxHeight: 600
+            maxHeight: 600,
+            maxWidth:800,
+            width:"100%",
+            marginBottom:30,
         },
+        
         cardContent: {
             padding: theme.spacing(4),
             width: '100%',  
@@ -152,7 +160,9 @@ const useStyles = makeStyles((theme: Theme) =>
         title: {
             color: theme.palette.primary.contrastText,
             fontSize: 80,
-
+            [theme.breakpoints.down('sm')]:{
+                fontSize: 70
+            }
         },
         subtitle: {
             color: theme.palette.primary.contrastText,

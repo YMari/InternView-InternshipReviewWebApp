@@ -1,10 +1,32 @@
-import { Box, Button, Card, createStyles, fade, Grid, InputBase, makeStyles, Theme, Typography } from "@material-ui/core";
-import { ArrowDownward, ArrowUpward, AccountCircle, Grade, AddCircle } from '@material-ui/icons';
-import React from "react";
+import { Backdrop, Box, Button, Card, createStyles, Fade, fade, Grid, InputBase, makeStyles, Modal, Theme, Typography } from "@material-ui/core";
+import { ArrowDownward, ArrowUpward, AccountCircle, Grade, AddCircle, ClearRounded } from '@material-ui/icons';
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
+import ReviewMake from "../../lib/ui/components/reviewMake";
 import ReviewSummary from "../../lib/ui/components/reviewSummary";
+import {useUser} from '../../lib/ui/hooks'
 
 export default function Profile() {
     const classes = useStyles();
+
+    const router = useRouter();
+    const user = useUser();
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleOpenModal = () => {
+        setOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setOpen(false);
+    };
+
+    useEffect(() => {
+        if (!user) {
+            router.push('/')
+        }
+    }, [user])
 
     return(
         <Box className={classes.main}>
@@ -17,7 +39,7 @@ export default function Profile() {
                     </Grid>
 
                     <Grid item>
-                        <Typography className={classes.accName}>Student Name</Typography>
+    <Typography className={classes.accName}>{user?<>{user.name}</>:<>Loading ...</>}</Typography>
                     </Grid>
 
                     <Grid item className={classes.accRatingContainer}>
@@ -78,9 +100,32 @@ export default function Profile() {
                                 <Grid item justify='flex-end'>
                                     <Grid container direction='row' alignItems="center" wrap="nowrap">
                                         <Button>
-                                            <Typography className={classes.addReview}>Add Review</Typography>
+                                            <Typography className={classes.addReview} onClick={handleOpenModal}>Add Review</Typography>
                                             <AddCircle fontSize="large" className={classes.addReviewIcon}/>
                                         </Button>
+
+                                        <Modal
+                                        open={open}
+                                        onClose={handleCloseModal}
+                                        closeAfterTransition
+                                        BackdropComponent={Backdrop}
+                                        BackdropProps={{
+                                            timeout: 500,
+                                        }}
+                                        className={classes.modal}
+                                        >
+                                            <Fade in={open}>
+                                                <Grid container direction='column' alignItems="center" justify='center' wrap="nowrap">
+                                                    <Grid container direction='row' justify='flex-end' className={classes.closeModalBox}>
+                                                        <Button onClick={handleCloseModal} size="small" className={classes.closeModalButton}>
+                                                            <ClearRounded fontSize='large' className={classes.closeModalIcon}/>
+                                                        </Button>
+                                                    </Grid>
+                                                    <ReviewMake/>
+                                                </Grid>
+                                            </Fade>
+                                        </Modal>
+
                                     </Grid>
                                 </Grid>
                             </Grid>
@@ -184,6 +229,22 @@ const useStyles = makeStyles((theme: Theme) =>
             color: theme.palette.primary.main,
         },
         textWhite: {
+            color: theme.palette.primary.contrastText,
+        },
+
+        modal:{
+            overflow:'scroll',
+            width: '100%',
+            height: '100%'
+        },
+        closeModalBox: {
+            paddingTop: theme.spacing(2),
+            paddingRight: theme.spacing(2),
+        },
+        closeModalButton: {
+            backgroundColor: theme.palette.secondary.main,
+        },
+        closeModalIcon: {
             color: theme.palette.primary.contrastText,
         },
     }))
