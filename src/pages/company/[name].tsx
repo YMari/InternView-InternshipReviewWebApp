@@ -3,13 +3,27 @@ import { ArrowDownward, ArrowUpward, AccountCircle, Grade, AddCircle, ClearRound
 import React from "react";
 import ReviewMake from "../../lib/ui/components/reviewMake";
 import ReviewSummary from "../../lib/ui/components/reviewSummary";
+import  useSWR from 'swr'
+import { useRouter } from 'next/router'
+import axios from 'axios'
 
 export default function Company() {
     const classes = useStyles();
+    const router = useRouter()
+    const { data } = useSWR(`/api/company?search=${router.query.name}`, async (url:string) => {
+
+        const result = await axios.get(url)
+        console.log(result.data)
+        if (result.data?.data?.length > 0) {
+            return result.data.data[0]
+        } 
+        router.push("/")
+
+    })
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [open, setOpen] = React.useState(false);
-
+    
     const handleOpenModal = () => {
         setOpen(true);
     };
@@ -25,11 +39,11 @@ export default function Company() {
                 <Grid container direction='column' alignItems="center" wrap="nowrap" justify='center' >
 
                     <Grid item>
-                        <AccountCircle className={classes.accIcon}/>
+                        {!data?<AccountCircle className={classes.accIcon}/>:<img className={classes.accImage} src={data.imageUrl} />}
                     </Grid>
 
-                    <Grid item>
-                        <Typography className={classes.accName}>Company X</Typography>
+                    <Grid item style={{textAlign:"center"}}>
+                        <Typography className={classes.accName}>{!data?<>Loading ...</>:<>{data.name}</>}</Typography>
                     </Grid>
 
                     <Grid item className={classes.accRatingContainer}>
@@ -154,12 +168,17 @@ const useStyles = makeStyles((theme: Theme) =>
         accName: {
             fontSize: 50,
             color: theme.palette.primary.contrastText,
+            textAlign: "center"
         },
         accRatingContainer: {
             minWidth: '32%',
         },
         accRatingPts: {
             width: '100%',
+        },
+        accImage : {
+            maxWidth: 100,
+            maxHeight:100
         },
         ratingIcon: {
             color: theme.palette.secondary.main,

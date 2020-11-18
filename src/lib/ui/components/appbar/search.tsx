@@ -18,7 +18,7 @@ export default function Search() {
     const changeSearch = (val:string) => {
         setSearch(val)
         if (val) {
-            router.push('/companies/'+val)
+            router.push('/company/'+val)
         }
     }
 
