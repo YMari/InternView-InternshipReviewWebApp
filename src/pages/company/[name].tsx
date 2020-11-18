@@ -21,7 +21,6 @@ export default function Company() {
 
     })
 
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [open, setOpen] = React.useState(false);
     
     const handleOpenModal = () => {
