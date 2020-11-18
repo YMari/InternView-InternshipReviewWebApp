@@ -1,6 +1,7 @@
 import { Backdrop, Box, Button, Card, createStyles, Fade, fade, Grid, InputBase, makeStyles, Modal, Theme, Typography } from "@material-ui/core";
 import { ArrowDownward, ArrowUpward, AccountCircle, Grade, AddCircle, ClearRounded } from '@material-ui/icons';
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
 import ReviewMake from "../../lib/ui/components/reviewMake";
 import ReviewSummary from "../../lib/ui/components/reviewSummary";
 import {useUser} from '../../lib/ui/hooks'
@@ -8,9 +9,8 @@ import {useUser} from '../../lib/ui/hooks'
 export default function Profile() {
     const classes = useStyles();
 
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
-    const user = useUser()
+    const router = useRouter();
+    const user = useUser();
 
     const [open, setOpen] = React.useState(false);
 
@@ -21,6 +21,12 @@ export default function Profile() {
     const handleCloseModal = () => {
         setOpen(false);
     };
+
+    useEffect(() => {
+        if (!user) {
+            router.push('/')
+        }
+    }, [user])
 
     return(
         <Box className={classes.main}>
