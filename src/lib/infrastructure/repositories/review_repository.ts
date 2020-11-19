@@ -13,20 +13,33 @@ class ReviewRepository implements re.IReviewRepository {
 
             const res = await db.review.create({
                 data: {
-                    content: re.content,
-                    date: re.date,
+                    recommendation: re.recommendation,
+                    interviewQuestions: {
+                        set: re.interviewQuestions,
+                    },
+                    dateCreated: re.date,
                     anonymous: re.anonymous,
-                    email: re.email,
                     experienceType: re.experienceType,
-                    degreeType: re.degreeType,
-                    helpfulScore: re.score,
+                    seekingDegree: re.seekingDegree,
                     location: re.location,
                     salary: re.salary,
-                    duration: re.duration, // in weeks? idk
-                    interviewDifficulty: re.interviewDifficulty,
+                    duration: re.duration,
+                    interviewDifficultyRating: re.interviewDifficultyRating,
+                    acceptedStatus: re.acceptedStatus,
+                    experienceRating: re.experienceRating,
                     reviewTitle: re.reviewTitle,
-                    company: re.company, // Might be company interface?
-                    interviewQuestions: re.interviewQuestions
+                    studyProgram: {
+                        connect: { id:re.studyProgram.id}
+                    },
+                    university: {
+                        connect: { id:re.university.id}
+                    },
+                    company: {
+                        connect: { id:re.company.id}
+                    },
+                    Student: {
+                        connect: { email:re.author.email}
+                    },
                 },
             })
 
@@ -34,7 +47,6 @@ class ReviewRepository implements re.IReviewRepository {
             return res
 
         } catch ( e ) {
-            
             await db.$disconnect()
             return null
 

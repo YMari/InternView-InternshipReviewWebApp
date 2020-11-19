@@ -1,17 +1,22 @@
+import { ICompany } from "../company";
+import { IStudent, IStudyProgram, IUniversity } from "../student";
+
 export interface IReview {
-    content: string;
-    date: Date;
+    recommendation: string; 
+    interviewQuestions?: string[];
+    date?: Date;
     anonymous: boolean;
-    email: string;
     experienceType: string;
-    degreeType: string;
-    score: number; // Helpful or not helpful
+    seekingDegree: string;
     location: string;
     salary: number;
     duration: number; // in weeks? idk
-    interviewDifficulty: number;
+    interviewDifficultyRating: number; // 0 to 5
+    acceptedStatus: string;
+    experienceRating: number, // 0 to 5
     reviewTitle: string;
-    company: string; // Might be company interface?
-    interviewQuestions?: string[];
-
+    studyProgram?: IStudyProgram;
+    university?: IUniversity;
+    company: ICompany;
+    author: IStudent;
 }
