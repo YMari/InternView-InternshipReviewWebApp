@@ -113,7 +113,7 @@ export default function NavBar() {
                         </Button>
                     </ButtonGroup>
                 </Grid>   
-            :   
+                :   
                 <Grid item>
                     <Button className={classes.buttons} onClick={handleUserMenu}>
                         <Typography variant="h6" noWrap>
@@ -138,8 +138,7 @@ export default function NavBar() {
 
     return(
         <AppBar position='relative' style={{ zIndex:10, background: 'transparent', boxShadow: 'none', color:'transparent', padding:5, paddingTop:10}}>
-            <Grid container direction='row' wrap="nowrap" >
-                {/*justify="space-between"*/} 
+            <Grid container direction='row' wrap="nowrap">
                 <Grid item md={4} sm={3} xs={3} className={classes.iconContainer}>
                     <Link href="/">
                         <Button className={classes.iconButton}>

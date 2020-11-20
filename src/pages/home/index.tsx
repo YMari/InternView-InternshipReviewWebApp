@@ -23,26 +23,19 @@ export default function Home() {
                     InternView
                 </Typography>
             </Grid>
+
             <Grid item className={classes.subtitle} style={{textAlign:"center"}} >
                 <Typography variant="h5" style={{textAlign:"center"}}>
                     The best platform to research companies for students.<br />
                     Made by students for students.
                 </Typography>
             </Grid>
+            
             <Grid item className={classes.buttonSearch}>
                 <Button variant="contained" color="primary">
                     Start Searching
                 </Button>
-
-                {/* <button onClick={() => this.myTextField.focus()}></button>
-                <TextField
-                    label="My Textfield"
-                    id="mui-theme-provider-input"
-                    inputRef={(el) => (this.myTextField = el)} /> */}
-
-            </Grid>
-
-            {/* justify="space-around" */}      
+            </Grid>   
             
         </Grid>
         <Grid container direction='row' justify="space-around" alignContent="center" className={classes.gridCards}>
