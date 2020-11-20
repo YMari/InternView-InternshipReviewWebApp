@@ -5,6 +5,8 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import GradeIcon from '@material-ui/icons/Grade';
 import TopReview from '../../lib/ui/components/topReview';
 import TopCompany from '../../lib/ui/components/topCompany';
+import NavBar from '../../lib/ui/components/appbar';
+import Search from '../../lib/ui/components/appbar/search';
 
 export default function Home() {
     const classes = useStyles();
@@ -31,6 +33,13 @@ export default function Home() {
                 <Button variant="contained" color="primary">
                     Start Searching
                 </Button>
+
+                {/* <button onClick={() => this.myTextField.focus()}></button>
+                <TextField
+                    label="My Textfield"
+                    id="mui-theme-provider-input"
+                    inputRef={(el) => (this.myTextField = el)} /> */}
+
             </Grid>
 
             {/* justify="space-around" */}      

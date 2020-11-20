@@ -30,7 +30,6 @@ export default function LoginPage() {
 
     const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
         setValues({ ...values, [prop]: event.target.value });
-        
     };
     
     const handleClickShowPassword = () => {
@@ -69,80 +68,81 @@ export default function LoginPage() {
 
     return(
         <Box className={(classes.main)}>
-            <Grid
-            container
-            direction="column"
-            alignContent="center"
-            justify="center"
-            wrap='wrap'
-            spacing={4}
-            >
+            <Grid container direction="column" justify="flex-start" alignItems="center">
+                
                 <Grid item className={classes.gridItem}>
                     <Typography className={(classes.titlePage)}>InternView</Typography>
                 </Grid>
-                {!loading?<Card className={classes.card}>
-                    <CardHeader className={(classes.titleCard)} title="Sign In"/>
-                    <Grid item className={classes.gridItem}>
-                        <FormControl className={(classes.input)} variant="outlined" fullWidth={true} required={true}>
-                            <InputLabel htmlFor="outlined-email">Email</InputLabel>
-                            <OutlinedInput
-                                id="email-input"
-                                label="Email"
-                                value={values.email}
-                                onChange={handleChange('email')}
 
-                            />
-                        </FormControl>
-                    </Grid>
-                    <Grid item className={classes.gridItem}>
-                        <FormControl className={(classes.input)} variant="outlined" fullWidth={true} required={true}>
-                            <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-                                <OutlinedInput
-                                    id="outlined-adornment-password"
-                                    label="Password"
-                                    type={values.showPassword ? 'text' : 'password'}
-                                    value={values.password}
-                                    onChange={handleChange('password')}
-                                    endAdornment={
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                        aria-label="toggle password visibility"
-                                        onClick={handleClickShowPassword}
-                                        onMouseDown={handleMouseDownPassword}
-                                        edge="end"
-                                        >
-                                        {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                    }
-                                />
-                        </FormControl>
-                    </Grid>
-                    <Grid item className={classes.gridItem}>
-                        <Button onClick={onSubmit} variant="contained" color="secondary">
-                            <Typography>Log In</Typography>
-                        </Button>
-                    </Grid>
-                    <Grid item className={classes.gridItem}>
-                        <Button color="primary">
-                            <Typography>Forgot Password?</Typography>
-                        </Button>
-                    </Grid>
-                    <Divider/>
-                    <br/>
-                    <Grid item className={classes.gridItem}>
-                        <Typography>Don't have an account?</Typography>
-                        <Link  href="/register">
-                            <Button variant="contained" color="primary">
-                                <Typography>Create New Account</Typography>
-                            </Button>
-                        </Link>
-                    </Grid>
-                </Card>:<Grid item>
-                    <Grid container justify="center" alignItems="center">
-                    <CircularProgress />
-                    </Grid>
-                    </Grid>}
+                <Grid item>
+                    {!loading?
+                        <Card className={classes.card}>
+                            <CardHeader className={(classes.titleCard)} title="Sign In"/>
+                            <Grid item className={classes.gridItem}>
+                                <FormControl className={(classes.input)} variant="outlined" fullWidth={true} required={true}>
+                                    <InputLabel htmlFor="outlined-email">Email</InputLabel>
+                                    <OutlinedInput
+                                        id="email-input"
+                                        label="Email"
+                                        value={values.email}
+                                        onChange={handleChange('email')}
+                                    />
+                                </FormControl>
+                            </Grid>
+                            <Grid item className={classes.gridItem}>
+                                <FormControl className={(classes.input)} variant="outlined" fullWidth={true} required={true}>
+                                    <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                                        <OutlinedInput
+                                            id="outlined-adornment-password"
+                                            label="Password"
+                                            type={values.showPassword ? 'text' : 'password'}
+                                            value={values.password}
+                                            onChange={handleChange('password')}
+                                            endAdornment={
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPassword}
+                                                onMouseDown={handleMouseDownPassword}
+                                                edge="end"
+                                                >
+                                                {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                            }
+                                        />
+                                </FormControl>
+                            </Grid>
+                            <Grid item className={classes.gridItem}>
+                                <Button onClick={onSubmit} variant="contained" color="secondary">
+                                    <Typography>Log In</Typography>
+                                </Button>
+                            </Grid>
+                            <Grid item className={classes.gridItem}>
+                                <Button color="primary">
+                                    <Typography>Forgot Password?</Typography>
+                                </Button>
+                            </Grid>
+                            <Divider/>
+                            <br/>
+                            <Grid item className={classes.gridItem}>
+                                <Typography>Don't have an account?</Typography>
+                                <Link  href="/register">
+                                    <Button variant="contained" color="primary">
+                                        <Typography>Create New Account</Typography>
+                                    </Button>
+                                </Link>
+                            </Grid>
+                        </Card>
+                        :
+                        <Grid item>
+                            <Grid container justify="center" alignItems="center">
+                                <CircularProgress />
+                            </Grid>
+                        </Grid>
+                    }
+                </Grid>
+
             </Grid>
         </Box>     
     )   
@@ -152,7 +152,6 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
     main: {
         margin: theme.spacing(1),
-        
     },
     card: {
         padding: theme.spacing(4, 12),
@@ -168,8 +167,7 @@ const useStyles = makeStyles((theme: Theme) =>
     titlePage: {
         textAlign: "center",
         padding: theme.spacing(1),
-        paddingBottom: theme.spacing(4),
-        paddingTop: theme.spacing(6),
+        paddingBottom: theme.spacing(2),
         color: "white",
         fontSize: 40,
         fontWeight: 500,
