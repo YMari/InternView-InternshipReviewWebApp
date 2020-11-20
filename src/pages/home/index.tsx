@@ -13,7 +13,7 @@ export default function Home() {
     return(
         <>
         <Box width="100%" maxHeight="750" position="absolute" top={0} >
-            <img src="/backgroundImage.png" style={{width:"100%",maxHeight:750, minHeight:600, opacity:0.5, objectFit:'cover', position:"relative", zIndex:-1000}}/>
+            <img src="/backgroundImage.png" className={classes.backImage}/>
         </Box>
 
         <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.gridFull}>
@@ -121,6 +121,15 @@ export default function Home() {
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
+        backImage: {
+            width:"100%",
+            maxHeight:750, 
+            minHeight:600, 
+            opacity:0.5,
+            objectFit:'cover', 
+            position:"relative", 
+            zIndex:-1000,
+        },
         gridFull: {
             marginTop: 40
         },
