@@ -4,7 +4,7 @@ import { IStudent, IStudyProgram, IUniversity } from "../student";
 export interface IReview {
     recommendation: string; 
     interviewQuestions?: string[];
-    date?: Date;
+    dateCreated?: Date;
     anonymous: boolean;
     experienceType: string;
     seekingDegree: string;

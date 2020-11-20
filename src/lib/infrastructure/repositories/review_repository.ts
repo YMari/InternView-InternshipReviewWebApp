@@ -17,7 +17,7 @@ class ReviewRepository implements re.IReviewRepository {
                     interviewQuestions: {
                         set: re.interviewQuestions,
                     },
-                    dateCreated: re.date,
+                    dateCreated: re.dateCreated,
                     anonymous: re.anonymous,
                     experienceType: re.experienceType,
                     seekingDegree: re.seekingDegree,
@@ -74,6 +74,10 @@ class ReviewRepository implements re.IReviewRepository {
                     studyProgram: true,
                     university: true,
                     company: true,
+                },
+                orderBy: 
+                {
+                    dateCreated: 'desc',
                 }
             })
     
@@ -127,7 +131,7 @@ class ReviewRepository implements re.IReviewRepository {
             return result
 
         } catch ( e ){
-
+            console.log(e)
             await db.$disconnect()
 
             return null
@@ -156,34 +160,11 @@ class ReviewRepository implements re.IReviewRepository {
                     studyProgram: true,
                     university: true,
                     company: true,
-                }
-            })
-    
-            if (result == null) {
-                await db.$disconnect()
-                return null
-            }
-
-            await db.$disconnect()
-            return result
-
-        } catch ( e ){
-
-            await db.$disconnect()
-
-            return null
-
-        }
-    }
-
-    async getReviewSortedByDate (): Promise<re.IReview[]>{
-        try{
-            let result = await db.review.findMany({
+                },
                 orderBy: 
-                    {
-                        dateCreated: 'asc',
-                    },
-
+                {
+                    dateCreated: 'desc',
+                }
             })
     
             if (result == null) {
@@ -228,8 +209,38 @@ class ReviewRepository implements re.IReviewRepository {
             return null
 
         }
+    }   
+    async updateReview (id: number, re: re.IReview): Promise<re.IReview>{
+
+        try {
+            const res = await db.review.update({
+                where:{ id: id },
+                data: {
+                    recommendation: re.recommendation,
+                    interviewQuestions: {
+                        set: re.interviewQuestions,
+                    },
+                    anonymous: re.anonymous,
+                    experienceType: re.experienceType,
+                    seekingDegree: re.seekingDegree,
+                    location: re.location,
+                    salary: re.salary,
+                    duration: re.duration,
+                    interviewDifficultyRating: re.interviewDifficultyRating,
+                    acceptedStatus: re.acceptedStatus,
+                    experienceRating: re.experienceRating,
+                    reviewTitle: re.reviewTitle,
+                },
+            })
+            await db.$disconnect()
+            return res
+
+        } catch ( e ) {
+            await db.$disconnect()
+            return null
+
+        } 
     }
-    
 }
 
 export default ReviewRepository
