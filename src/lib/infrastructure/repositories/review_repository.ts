@@ -99,6 +99,23 @@ class ReviewRepository implements re.IReviewRepository {
             let result = await db.review.findOne({
 
                 where:{ id: id },
+                select : {
+                    recommendation:true, 
+                    interviewQuestions:true, 
+                    dateCreated:true, 
+                    experienceType:true, 
+                    seekingDegree:true,
+                    location: true,
+                    salary: true,
+                    duration: true,
+                    interviewDifficultyRating: true,
+                    acceptedStatus: true,
+                    experienceRating: true,
+                    reviewTitle: true,
+                    studyProgram: true,
+                    university: true,
+                    company: true,
+                }
             })
     
             if (result == null) {
@@ -120,9 +137,26 @@ class ReviewRepository implements re.IReviewRepository {
 
     async getReviewByCompany (company: string): Promise<re.IReview> {
         try{
-            let result = await db.review.findOne({
+            let result = await db.review.findMany({
 
-                where:{ company: company },
+                where:{ company: {name: company} },
+                select : {
+                    recommendation:true, 
+                    interviewQuestions:true, 
+                    dateCreated:true, 
+                    experienceType:true, 
+                    seekingDegree:true,
+                    location: true,
+                    salary: true,
+                    duration: true,
+                    interviewDifficultyRating: true,
+                    acceptedStatus: true,
+                    experienceRating: true,
+                    reviewTitle: true,
+                    studyProgram: true,
+                    university: true,
+                    company: true,
+                }
             })
     
             if (result == null) {
