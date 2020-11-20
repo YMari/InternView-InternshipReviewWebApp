@@ -53,11 +53,28 @@ class ReviewRepository implements re.IReviewRepository {
         } 
     }
 
-    async getReviewByAuthorId (id: number): Promise<re.IReview>{
+    async getReviewByAuthorEmail (email: string): Promise<re.IReview>{
         try{
             let result = await db.review.findMany({
 
-                where:{ authorId: id },
+                where:{ authorEmail: email },
+                select : {
+                    recommendation:true, 
+                    interviewQuestions:true, 
+                    dateCreated:true, 
+                    experienceType:true, 
+                    seekingDegree:true,
+                    location: true,
+                    salary: true,
+                    duration: true,
+                    interviewDifficultyRating: true,
+                    acceptedStatus: true,
+                    experienceRating: true,
+                    reviewTitle: true,
+                    studyProgram: true,
+                    university: true,
+                    company: true,
+                }
             })
     
             if (result == null) {
