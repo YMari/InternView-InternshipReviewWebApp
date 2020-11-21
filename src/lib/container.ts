@@ -4,6 +4,7 @@ import * as com from './domain/company'
 import * as app from './application'
 import * as infrastruct from './infrastructure';
 import * as md from './middleware'
+import * as re from './domain/review'
 
 interface ILibContainer {
 
@@ -15,6 +16,7 @@ interface ILibContainer {
     getEmailService(): infrastruct.interfaces.IEmailService
     getCompanyRepo(): com.ICompanyRepository
     getAuthenticationService(): app.application_interfaces.IAuthenticationService
+    getReviewRepo(): re.IReviewRepository
 
 }
 
@@ -30,6 +32,7 @@ class LibContainer extends Container implements ILibContainer {
         this.bind<md.IMiddleware>(md.M_TYPES.IMiddleWare).to(md.MiddleWares);
         this.bind<infrastruct.interfaces.IEmailService>(infrastruct.I_TYPES.IEmailService).to(infrastruct.EmailService)
         this.bind<com.ICompanyRepository>(com.C_TYPES.ICompanyRepository).to(infrastruct.repositories.CompanyRepository)
+        this.bind<re.IReviewRepository>(re.R_TYPES.IReviewRepository).to(infrastruct.repositories.ReviewRepository)
     }
 
     getStudentService(): st.IStudentService {
@@ -63,10 +66,14 @@ class LibContainer extends Container implements ILibContainer {
     getAuthenticationService(): app.application_interfaces.IAuthenticationService {
         return this.get<app.application_interfaces.IAuthenticationService>(app.A_TYPES.IAuthenticationService)
     }
+
+    getReviewRepo(): re.IReviewRepository {
+        return this.get<re.IReviewRepository>(re.R_TYPES.IReviewRepository)
+    }
+
 }
 
 const container: ILibContainer = new LibContainer()
 
 export default container
-
 

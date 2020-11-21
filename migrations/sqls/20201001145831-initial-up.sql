@@ -48,18 +48,17 @@ CREATE TABLE "public"."Review" (
 "anonymous" boolean   NOT NULL DEFAULT false,
 "experienceType" text   NOT NULL ,
 "seekingDegree" text   NOT NULL ,
-"helpfulScore" integer   NOT NULL ,
 "location" text   NOT NULL ,
-"salary" integer   NOT NULL ,
+"salary" money   NOT NULL ,
 "duration" integer   NOT NULL ,
 "interviewDifficultyRating" integer   NOT NULL ,
-"acceptedStatus" boolean   NOT NULL DEFAULT false,
+"acceptedStatus" text   NOT NULL DEFAULT false,
 "experienceRating" integer   NOT NULL ,
 "reviewTitle" text   NOT NULL ,
 "studyProgramId" integer   NOT NULL ,
 "universityId" integer   NOT NULL ,
 "companyId" integer   NOT NULL ,
-"authorId" integer   NOT NULL ,
+"authorEmail" text   NOT NULL ,
 PRIMARY KEY ("id")
 );
 
@@ -93,7 +92,7 @@ ALTER TABLE "public"."Review" ADD FOREIGN KEY ("universityId")REFERENCES "public
 
 ALTER TABLE "public"."Review" ADD FOREIGN KEY ("companyId")REFERENCES "public"."Company"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
-ALTER TABLE "public"."Review" ADD FOREIGN KEY ("authorId")REFERENCES "public"."Student"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "public"."Review" ADD FOREIGN KEY ("authorEmail")REFERENCES "public"."Student"("email") ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE "public"."Rating" ADD FOREIGN KEY ("reviewId")REFERENCES "public"."Review"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
