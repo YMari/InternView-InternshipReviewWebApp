@@ -65,7 +65,7 @@ class LibContainer extends Container implements ILibContainer {
     }
 }
 
-const container = new LibContainer()
+const container: ILibContainer = new LibContainer()
 
 export default container
 
