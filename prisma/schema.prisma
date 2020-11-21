@@ -61,19 +61,18 @@ model Review {
   anonymous                 Boolean      @default(false)
   experienceType            String
   seekingDegree             String
-  helpfulScore              Int
   location                  String
-  salary                    Int
+  salary                    Float
   duration                  Int
   interviewDifficultyRating Int
-  acceptedStatus            Boolean      @default(false)
+  acceptedStatus            String       @default(dbgenerated())
   experienceRating          Int
   reviewTitle               String
   studyProgramId            Int
   universityId              Int
   companyId                 Int
-  authorId                  Int
-  author                    Student      @relation(fields: [authorId], references: [id])
+  authorEmail               String
+  Student                   Student      @relation(fields: [authorEmail], references: [email])
   company                   Company      @relation(fields: [companyId], references: [id])
   studyProgram              StudyProgram @relation(fields: [studyProgramId], references: [id])
   university                University   @relation(fields: [universityId], references: [id])
