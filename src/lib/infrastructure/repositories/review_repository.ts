@@ -41,6 +41,23 @@ class ReviewRepository implements re.IReviewRepository {
                         connect: { email:re.author.email}
                     },
                 },
+                select : {
+                    recommendation:true, 
+                    interviewQuestions:true, 
+                    dateCreated:true, 
+                    experienceType:true, 
+                    seekingDegree:true,
+                    location: true,
+                    salary: true,
+                    duration: true,
+                    interviewDifficultyRating: true,
+                    acceptedStatus: true,
+                    experienceRating: true,
+                    reviewTitle: true,
+                    studyProgram: true,
+                    university: true,
+                    company: true,
+                },
             })
 
             await db.$disconnect()
@@ -230,6 +247,23 @@ class ReviewRepository implements re.IReviewRepository {
                     acceptedStatus: re.acceptedStatus,
                     experienceRating: re.experienceRating,
                     reviewTitle: re.reviewTitle,
+                },
+                select : {
+                    recommendation:true, 
+                    interviewQuestions:true, 
+                    dateCreated:true, 
+                    experienceType:true, 
+                    seekingDegree:true,
+                    location: true,
+                    salary: true,
+                    duration: true,
+                    interviewDifficultyRating: true,
+                    acceptedStatus: true,
+                    experienceRating: true,
+                    reviewTitle: true,
+                    studyProgram: true,
+                    university: true,
+                    company: true,
                 },
             })
             await db.$disconnect()
