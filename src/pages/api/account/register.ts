@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import container from '../../../lib/container'
-import * as app from '../../../lib/application'
 import {ERROR_MESSAGE} from '../../../lib/application/constants';
 import { IRegister } from '../../../lib/ui/entities'
 
@@ -13,7 +12,7 @@ export default async function register(
   res: NextApiResponse
 ) {
 
-  const ser = container.get<app.application_interfaces.IAuthenticationService>(app.A_TYPES.IAuthenticationService)
+  const ser = container.getAuthenticationService()
 
   if (req.method === 'POST') {
     const output = await ser.register(

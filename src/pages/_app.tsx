@@ -8,8 +8,13 @@ import { container, UI_TYPES } from '../lib/ui/client_container';
 import { IRequestService } from '../lib/ui/interfaces';
 import { UserProvider } from '../lib/ui/contexts/providers'
 import  useSWR from 'swr'
+import NProgress from 'nprogress'; //nprogress module
+import 'nprogress/nprogress.css'; //styles of nprogress
+import Router from 'next/router';
 
-
+Router.events.on('routeChangeStart', () => NProgress.start())
+Router.events.on('routeChangeComplete', () => NProgress.done())
+Router.events.on('routeChangeError', () => NProgress.done())
 
 export default function MyApp(props) {
 

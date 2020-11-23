@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { ICompanyRepository, C_TYPES } from '../../../lib/domain/company'
 import container  from '../../../lib/container'
 
 
@@ -13,9 +12,7 @@ export default async function searchCompany(req: CompanySearchRequest, res: Next
 
     if (req.method==="GET") {
         
-        const repo = container.get<ICompanyRepository>(C_TYPES.ICompanyRepository)
-        
-        console.log(req.query.search)
+        const repo = container.getCompanyRepo()
         
         if(req.query.search){
             const result = await repo.searchCompany(req.query.search)
@@ -28,4 +25,5 @@ export default async function searchCompany(req: CompanySearchRequest, res: Next
     } else {
         res.status(405).json({data:null, message:"Sorry we only accept GET requests"})
     }
+    
 } 
