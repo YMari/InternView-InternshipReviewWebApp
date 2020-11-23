@@ -1,9 +1,9 @@
 import { NextApiResponse } from 'next'
 import container from '../../../lib/container'
-import { IMiddleware, M_TYPES, IRequestWithIssuer } from '../../../lib/middleware'
+import { IRequestWithIssuer } from '../../../lib/middleware'
 
 
-const midWare = container.get<IMiddleware>(M_TYPES.IMiddleWare)
+const midWare = container.getMiddleWares()
 
 
 export default midWare.withUser(async function register(

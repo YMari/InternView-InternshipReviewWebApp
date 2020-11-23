@@ -7,7 +7,8 @@ export default async function login(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const ser = container.get<app.application_interfaces.IAuthenticationService>(app.A_TYPES.IAuthenticationService)
+  
+  const ser = container.getAuthenticationService()
   
   if (req.method === 'POST') {
     let output = await ser.authenticate(
