@@ -2,14 +2,13 @@ import * as i from '../interfaces'
 import * as e from '../entities'
 import {inject, injectable} from 'inversify'
 import { R_TYPES } from '../types'
-import * as infrastruct from '../../../infrastructure'
 import 'reflect-metadata'
 import { IStudent } from '../../student'
 import { ERROR_MESSAGE, OK_MESSAGE } from '../../../application/constants'
 
 
 @injectable()
-class StudentService implements i.IReviewService {
+class ReviewService implements i.IReviewService {
     
     private readonly _reviewRepo: i.IReviewRepository
     private readonly _reviewFactory: i.IReviewFactory
@@ -53,4 +52,4 @@ class StudentService implements i.IReviewService {
     
 }
 
-export default StudentService
+export default ReviewService
