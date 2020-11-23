@@ -78,6 +78,10 @@ export default function Search() {
                     classes={{
                         root: classes.inputRoot,
                     }}
+                    inputProps={
+                        Object.assign(params.inputProps, {id: "appbar-search"})
+                    }
+                        
                     />
                 }
                 }

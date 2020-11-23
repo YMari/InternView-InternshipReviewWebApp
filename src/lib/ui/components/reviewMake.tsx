@@ -188,7 +188,7 @@ export default function ReviewMake() {
                                             value={values.duration}
                                             onChange={handleChange('duration')}
                                             InputProps={{
-                                                endAdornment: <InputAdornment position="end">Months</InputAdornment>
+                                                endAdornment: <InputAdornment position="end">Weeks</InputAdornment>
                                             }}
                                             className={classes.textFieldInner}
                                             />

@@ -32,7 +32,7 @@ export default function Home() {
             </Grid>
             
             <Grid item className={classes.buttonSearch}>
-                <Button variant="contained" color="primary">
+                <Button variant="contained" color="primary" onClick={() => document.getElementById("appbar-search").focus()}>
                     Start Searching
                 </Button>
             </Grid>   
@@ -63,17 +63,6 @@ export default function Home() {
                                         </Grid>
                                         
                                     </Grid>
-
-                                    <Link href="/profile/">
-                                        <Button>
-                                        user profile
-                                        </Button>
-                                    </Link>
-                                    <Link href="/company/Test">
-                                        <Button>
-                                        company profile
-                                        </Button>
-                                    </Link>
 
                                 </Card>
                             </Grid>
