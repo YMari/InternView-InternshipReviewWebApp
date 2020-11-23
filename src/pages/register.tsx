@@ -217,8 +217,8 @@ interface IServerSideProps {
 
 export async function getServerSideProps(ctx:NextPageContext): Promise<IServerSideProps> {
     
-    const uniRepo = backend_container.get<IUniversityRepository>(S_TYPES.IUniversityRepository) 
-    const spRepo = backend_container.get<IStudyProgramRepository>(S_TYPES.IStudyProgramRepository)
+    const uniRepo = backend_container.getUniversityRepo()
+    const spRepo = backend_container.getStudyProgramRepo()
 
     return {
         props: {
