@@ -5,6 +5,7 @@ import * as app from './application'
 import * as infrastruct from './infrastructure';
 import * as md from './middleware'
 import * as re from './domain/review'
+import { R_OK } from 'constants';
 
 interface ILibContainer {
 
@@ -18,23 +19,24 @@ interface ILibContainer {
     getAuthenticationService(): app.application_interfaces.IAuthenticationService
     getReviewRepo(): re.IReviewRepository
     getReviewFactory(): re.IReviewFactory
-
+    getReviewService(): re.IReviewService
 }
 
 class LibContainer extends Container implements ILibContainer {
 
     constructor() {
         super()
-        this.bind<st.IStudentService>(st.S_TYPES.IStudentService).to(st.StudentService)
-        this.bind<st.IStudyProgramRepository>(st.S_TYPES.IStudyProgramRepository).to(infrastruct.repositories.StudyProgramRepository)
-        this.bind<st.IUniversityRepository>(st.S_TYPES.IUniversityRepository).to(infrastruct.repositories.UniversityRepository)
-        this.bind<st.IStudentRepository>(st.S_TYPES.IStudentRepository).to(st.StudentRepository)
-        this.bind<app.application_interfaces.IAuthenticationService>(app.A_TYPES.IAuthenticationService).to(app.AuthenticationService)
-        this.bind<md.IMiddleware>(md.M_TYPES.IMiddleWare).to(md.MiddleWares);
-        this.bind<infrastruct.interfaces.IEmailService>(infrastruct.I_TYPES.IEmailService).to(infrastruct.EmailService)
-        this.bind<com.ICompanyRepository>(com.C_TYPES.ICompanyRepository).to(infrastruct.repositories.CompanyRepository)
-        this.bind<re.IReviewRepository>(re.R_TYPES.IReviewRepository).to(infrastruct.repositories.ReviewRepository)
-        this.bind<re.IReviewFactory>(re.R_TYPES.IReviewFactory).to(app.ReviewFactory)
+        this.bind<st.IStudentService>(st.S_TYPES.IStudentService).to(st.StudentService).inSingletonScope()
+        this.bind<st.IStudyProgramRepository>(st.S_TYPES.IStudyProgramRepository).to(infrastruct.repositories.StudyProgramRepository).inSingletonScope()
+        this.bind<st.IUniversityRepository>(st.S_TYPES.IUniversityRepository).to(infrastruct.repositories.UniversityRepository).inSingletonScope()
+        this.bind<st.IStudentRepository>(st.S_TYPES.IStudentRepository).to(st.StudentRepository).inSingletonScope()
+        this.bind<app.application_interfaces.IAuthenticationService>(app.A_TYPES.IAuthenticationService).to(app.AuthenticationService).inSingletonScope()
+        this.bind<md.IMiddleware>(md.M_TYPES.IMiddleWare).to(md.MiddleWares).inSingletonScope();
+        this.bind<infrastruct.interfaces.IEmailService>(infrastruct.I_TYPES.IEmailService).to(infrastruct.EmailService).inSingletonScope()
+        this.bind<com.ICompanyRepository>(com.C_TYPES.ICompanyRepository).to(infrastruct.repositories.CompanyRepository).inSingletonScope()
+        this.bind<re.IReviewRepository>(re.R_TYPES.IReviewRepository).to(infrastruct.repositories.ReviewRepository).inSingletonScope()
+        this.bind<re.IReviewFactory>(re.R_TYPES.IReviewFactory).to(app.ReviewFactory).inSingletonScope()
+        this.bind<re.IReviewService>(re.R_TYPES.IReviewService).to(re.ReviewService).inSingletonScope()
     }
 
     getStudentService(): st.IStudentService {
@@ -75,6 +77,10 @@ class LibContainer extends Container implements ILibContainer {
 
     getReviewFactory(): re.IReviewFactory{
         return this.get<re.IReviewFactory>(re.R_TYPES.IReviewFactory)
+    }
+
+    getReviewService(): re.IReviewService {
+        return this.get<re.IReviewService>(re.R_TYPES.IReviewService)
     }
 
 }

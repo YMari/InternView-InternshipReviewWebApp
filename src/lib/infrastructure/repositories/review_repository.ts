@@ -60,17 +60,16 @@ class ReviewRepository implements re.IReviewRepository {
                 },
             })
 
-            await db.$disconnect()
             return res
 
         } catch ( e ) {
+            console.log(e)
             await db.$disconnect()
             return null
-
         } 
     }
 
-    async getReviewByAuthorEmail (email: string): Promise<re.IReview>{
+    async getReviewByAuthorEmail (email: string): Promise<re.IReview[]>{
         try{
             let result = await db.review.findMany({
 
@@ -156,7 +155,7 @@ class ReviewRepository implements re.IReviewRepository {
         }
     }
 
-    async getReviewByCompany (company: string): Promise<re.IReview> {
+    async getReviewByCompany (company: string): Promise<re.IReview[]> {
         try{
             let result = await db.review.findMany({
 
@@ -202,30 +201,31 @@ class ReviewRepository implements re.IReviewRepository {
     }
 
     async getReviewBySortedByScore (): Promise<re.IReview[]> {
-        try{
-            let result = await db.review.findMany({
-                orderBy: 
-                    {
-                        Rating: 'asc',
-                    },
+        // try{
+        //     let result = await db.review.findMany({
+        //         orderBy: 
+        //             {
+        //                 Rating: 'asc',
+        //             },
 
-            })
+        //     })
     
-            if (result == null) {
-                await db.$disconnect()
-                return null
-            }
+        //     if (result == null) {
+        //         await db.$disconnect()
+        //         return null
+        //     }
 
-            await db.$disconnect()
-            return result
+        //     await db.$disconnect()
+        //     return result
 
-        } catch ( e ){
+        // } catch ( e ){
 
-            await db.$disconnect()
+        //     await db.$disconnect()
 
-            return null
+        //     return null
 
-        }
+        // }
+        return null
     }   
     async updateReview (id: number, re: re.IReview): Promise<re.IReview>{
 

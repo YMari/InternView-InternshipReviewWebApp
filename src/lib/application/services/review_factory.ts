@@ -10,8 +10,8 @@ class ReviewFactory implements IReviewFactory {
         if ( data.interviewDifficultyRating < 0 || data.interviewDifficultyRating > 5 ) {
             throw new Error("Invalid Interview Rating Range")
         }
-        if (data.experienceRating < 0 || data.experienceRating > 5){
-            throw new Error("Invalid Experience Rating Range")
+        if (!data.experienceRating || data.experienceRating < 0 || data.experienceRating > 5){
+            throw new Error("Invalid Experience Rating")
         }
         if (!data.interviewQuestions) {
             throw new Error("interviewQuestions cannot be null")
@@ -30,6 +30,9 @@ class ReviewFactory implements IReviewFactory {
         }
         if (!data.company) {
             throw new Error("No company provided")
+        }
+        if (!data.reviewTitle) {
+            throw new Error("No Title provided")
         }
 
         return Object.freeze(Object.assign(data, {}))
