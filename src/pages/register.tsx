@@ -9,7 +9,7 @@ import { IStudyProgram, IStudyProgramRepository, IUniversity, IUniversityReposit
 import { useRouter } from 'next/router'
 import { useRequestService } from '../lib/ui/hooks'
 
-interface State {
+interface RegisterModel {
     name: string;
     email: string;
     password: string;
@@ -30,7 +30,7 @@ export default function RegisterPage(props:RegisterProps) {
 
     const [loading, setLoading] = React.useState<boolean>(false);
 
-    const [values, setValues] = React.useState<State>({
+    const [values, setValues] = React.useState<RegisterModel>({
         name: '',
         email: '',
         password: '',
@@ -39,7 +39,7 @@ export default function RegisterPage(props:RegisterProps) {
         universityId: -1,
     });
 
-    const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (prop: keyof RegisterModel) => (event: React.ChangeEvent<HTMLInputElement>) => {
         setValues({ ...values, [prop]: event.target.value });
     };
     
@@ -76,134 +76,134 @@ export default function RegisterPage(props:RegisterProps) {
 
 
     return(
-        <Box className={(classes.main)}>
-            
-            <Grid
-            container
-            direction="column"
-            alignItems="center"
-            justify="center"
-            wrap='wrap'
-            spacing={4}
-            >
+        <Box className={(classes.main)}>  
+            <Grid container direction="column" justify="flex-start" alignItems="center">
+
                 <Grid item className={classes.gridItem}>
                     <Typography className={(classes.titlePage)}>InternView</Typography>
                 </Grid>
-                {!loading?<Card className={classes.card}>
-                    <CardHeader className={(classes.titleCard)} title="Create Account"/>
-                    <Grid item className={classes.gridItem}>
-                        <FormControl className={(classes.input)} variant="outlined" fullWidth={true} required={true}>
-                            <InputLabel htmlFor="outlined-email">Name</InputLabel>
-                            <OutlinedInput
-                                id="name-input"
-                                label="Name"
-                                value={values.name}
-                                onChange={handleChange('name')}
-                            />
-                        </FormControl>
-                    </Grid>
-                    <Grid item className={classes.gridItem}>
-                        <FormControl className={(classes.input)} variant="outlined" fullWidth={true} required={true}>
-                            <InputLabel htmlFor="outlined-email">Email</InputLabel>
-                            <OutlinedInput
-                                id="email-input"
-                                label="Email"
-                                value={values.email}
-                                onChange={handleChange('email')}
-                            />
-                        </FormControl>
-                    </Grid>
-                    <Grid item className={classes.gridItem}>
-                        <FormControl className={(classes.input)} variant="outlined" fullWidth={true} required={true}>
-                            <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-                                <OutlinedInput
-                                    id="outlined-adornment-password"
-                                    label="Password"
-                                    type={values.showPassword ? 'text' : 'password'}
-                                    value={values.password}
-                                    onChange={handleChange('password')}
-                                    endAdornment={
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                        aria-label="toggle password visibility"
-                                        onClick={handleClickShowPassword}
-                                        onMouseDown={handleMouseDownPassword}
-                                        edge="end"
-                                        >
-                                        {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                    }
-                                />
-                        </FormControl>
-                    </Grid>
-                    <Grid item className={classes.gridItem}>
-                        <FormControl className={(classes.input)} variant="outlined" fullWidth={true} required={true}>
-                            <InputLabel htmlFor="outlined-study-program">Study Program</InputLabel>
-                            <Select 
-                                label="Study Program"
-                                value={values.studyProgramId}
-                                onChange={handleChange('studyProgramId')}
-                                defaultValue={props.studyProgramList[0].id}
-                            >
-                                    {
-                                        props.studyProgramList.map((val, index) => (
-                                            <MenuItem 
-                                                key={index*900}
-                                                value={val.id}
-                                            >
-                                                {val.name}
-                                            </MenuItem>
-                                        ))
-                                    }
-                            </Select>
-                            
-                        </FormControl>     
-                    </Grid>
-                    <Grid item className={classes.gridItem}>
-                        <FormControl className={(classes.input)} variant="outlined" fullWidth={true} required={true}>
-                            <InputLabel htmlFor="outlined-university">University</InputLabel>
-                            <Select
-                                value={values.universityId}
-                                onChange={handleChange('universityId')}
-                                defaultValue={props.universityList[0].id}  
-                                label="University">
-                                    {
-                                        props.universityList.map((val, index) => (
-                                            <MenuItem
-                                                key={index*800}
-                                                value={val.id}
-                                            >
-                                                {val.name}
-                                            </MenuItem>
-                                        ))
-                                    }
-                            </Select>
-                        </FormControl>   
-                    </Grid>
-                    <Grid item className={classes.gridItem}>
-                        <Box id="new-account-box">
-                            <Button 
-                            onClick={onSubmit}
-                            variant="contained" color="secondary">
-                                <Typography>Register</Typography>
-                            </Button>
-                        </Box>
-                        <br/>
-                        <Divider/>
-                        <Box id="login-ref-box">
-                            <Link  href="/login">
-                                <Button color="primary">
-                                    <Typography>Already have an account?</Typography>
-                                </Button>
-                            </Link>
-                        </Box>
-                    </Grid>
-                </Card>: <Grid item>
-                    <Grid container justify="center" direction="column" alignItems="center">
-                        <CircularProgress />
-                    </Grid>
-                    </Grid>}
+
+                <Grid item>
+                    {!loading?
+                        <Card className={classes.card}>
+                            <CardHeader className={(classes.titleCard)} title="Create Account"/>
+                            <Grid item className={classes.gridItem}>
+                                <FormControl className={(classes.input)} variant="outlined" fullWidth={true} required={true}>
+                                    <InputLabel htmlFor="outlined-email">Name</InputLabel>
+                                    <OutlinedInput
+                                        id="name-input"
+                                        label="Name"
+                                        value={values.name}
+                                        onChange={handleChange('name')}
+                                    />
+                                </FormControl>
+                            </Grid>
+                            <Grid item className={classes.gridItem}>
+                                <FormControl className={(classes.input)} variant="outlined" fullWidth={true} required={true}>
+                                    <InputLabel htmlFor="outlined-email">Email</InputLabel>
+                                    <OutlinedInput
+                                        id="email-input"
+                                        label="Email"
+                                        value={values.email}
+                                        onChange={handleChange('email')}
+                                    />
+                                </FormControl>
+                            </Grid>
+                            <Grid item className={classes.gridItem}>
+                                <FormControl className={(classes.input)} variant="outlined" fullWidth={true} required={true}>
+                                    <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                                        <OutlinedInput
+                                            id="outlined-adornment-password"
+                                            label="Password"
+                                            type={values.showPassword ? 'text' : 'password'}
+                                            value={values.password}
+                                            onChange={handleChange('password')}
+                                            endAdornment={
+                                            <InputAdornment position="end">
+                                                <IconButton
+                                                aria-label="toggle password visibility"
+                                                onClick={handleClickShowPassword}
+                                                onMouseDown={handleMouseDownPassword}
+                                                edge="end"
+                                                >
+                                                {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                                                </IconButton>
+                                            </InputAdornment>
+                                            }
+                                        />
+                                </FormControl>
+                            </Grid>
+                            <Grid item className={classes.gridItem}>
+                                <FormControl className={(classes.input)} variant="outlined" fullWidth={true} required={true}>
+                                    <InputLabel htmlFor="outlined-study-program">Study Program</InputLabel>
+                                    <Select 
+                                        label="Study Program"
+                                        value={values.studyProgramId}
+                                        onChange={handleChange('studyProgramId')}
+                                        defaultValue={props.studyProgramList[0].id}
+                                    >
+                                            {
+                                                props.studyProgramList.map((val, index) => (
+                                                    <MenuItem 
+                                                        key={index*900}
+                                                        value={val.id}
+                                                    >
+                                                        {val.name}
+                                                    </MenuItem>
+                                                ))
+                                            }
+                                    </Select>
+                                    
+                                </FormControl>     
+                            </Grid>
+                            <Grid item className={classes.gridItem}>
+                                <FormControl className={(classes.input)} variant="outlined" fullWidth={true} required={true}>
+                                    <InputLabel htmlFor="outlined-university">University</InputLabel>
+                                    <Select
+                                        value={values.universityId}
+                                        onChange={handleChange('universityId')}
+                                        defaultValue={props.universityList[0].id}  
+                                        label="University">
+                                            {
+                                                props.universityList.map((val, index) => (
+                                                    <MenuItem
+                                                        key={index*800}
+                                                        value={val.id}
+                                                    >
+                                                        {val.name}
+                                                    </MenuItem>
+                                                ))
+                                            }
+                                    </Select>
+                                </FormControl>   
+                            </Grid>
+                            <Grid item className={classes.gridItem}>
+                                <Box id="new-account-box">
+                                    <Button 
+                                    onClick={onSubmit}
+                                    variant="contained" color="secondary">
+                                        <Typography>Register</Typography>
+                                    </Button>
+                                </Box>
+                                <br/>
+                                <Divider/>
+                                <Box id="login-ref-box">
+                                    <Link  href="/login">
+                                        <Button color="primary">
+                                            <Typography>Already have an account?</Typography>
+                                        </Button>
+                                    </Link>
+                                </Box>
+                            </Grid>
+                        </Card>
+                        :
+                        <Grid item>
+                            <Grid container justify="center" direction="column" alignItems="center">
+                                <CircularProgress />
+                            </Grid>
+                        </Grid>
+                    }
+                </Grid>
                 
             </Grid>
         </Box>         
@@ -217,8 +217,8 @@ interface IServerSideProps {
 
 export async function getServerSideProps(ctx:NextPageContext): Promise<IServerSideProps> {
     
-    const uniRepo = backend_container.get<IUniversityRepository>(S_TYPES.IUniversityRepository) 
-    const spRepo = backend_container.get<IStudyProgramRepository>(S_TYPES.IStudyProgramRepository)
+    const uniRepo = backend_container.getUniversityRepo()
+    const spRepo = backend_container.getStudyProgramRepo()
 
     return {
         props: {

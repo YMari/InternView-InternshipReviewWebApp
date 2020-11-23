@@ -1,5 +1,4 @@
-import { AppBar, Badge, Box, Button, ButtonGroup, createStyles, fade, Grid, IconButton, InputBase, makeStyles, Menu, MenuItem, Theme, Typography} from "@material-ui/core";
-import PanoramaFishEyeIcon from '@material-ui/icons/PanoramaFishEye';
+import { AppBar, Badge, Box, Button, ButtonGroup, createStyles, fade, Grid, IconButton, InputBase, makeStyles, Menu, MenuItem, Theme, Typography, Icon} from "@material-ui/core";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -9,6 +8,8 @@ import {mutate} from 'swr'
 import  Search from './appbar/search'
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
+import { PanoramaFishEye } from "@material-ui/icons";
+// import {ReactComponent as Logo} from "../../../../logoIcon.svg"
 
 export default function NavBar() {
     
@@ -47,7 +48,7 @@ export default function NavBar() {
             return <Grid container justify="flex-end">
                 {!user?
                     <>
-                    <IconButton onClick={handleUserMenu} className={[classes.buttons, classes.accountCircle]}>
+                    <IconButton onClick={handleUserMenu} className={(classes.buttons, classes.accountCircle)}>
                         <MoreVertIcon />
                     </IconButton>
                         <Menu
@@ -69,7 +70,7 @@ export default function NavBar() {
                     </>
                     :
                     <>
-                        <IconButton onClick={handleUserMenu} className={[classes.buttons, classes.accountCircle]}>
+                        <IconButton onClick={handleUserMenu} className={(classes.buttons, classes.accountCircle)}>
                             <AccountCircleIcon />
                         </IconButton>
                         <Menu
@@ -112,7 +113,7 @@ export default function NavBar() {
                         </Button>
                     </ButtonGroup>
                 </Grid>   
-            :   
+                :   
                 <Grid item>
                     <Button className={classes.buttons} onClick={handleUserMenu}>
                         <Typography variant="h6" noWrap>
@@ -137,12 +138,11 @@ export default function NavBar() {
 
     return(
         <AppBar position='relative' style={{ zIndex:10, background: 'transparent', boxShadow: 'none', color:'transparent', padding:5, paddingTop:10}}>
-            <Grid container direction='row' wrap="nowrap" >
-                {/*justify="space-between"*/} 
+            <Grid container direction='row' wrap="nowrap">
                 <Grid item md={4} sm={3} xs={3} className={classes.iconContainer}>
                     <Link href="/">
-                        <Button>
-                            <PanoramaFishEyeIcon fontSize="large"/>
+                        <Button className={classes.iconButton}>
+                            <img className={classes.icon} src="/logoIcon.png"/>
                         </Button>
                     </Link>
                 </Grid>
@@ -168,6 +168,14 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         iconContainer: {
             alignItems: 'left',
+        },
+        iconButton: {
+            width: 100,
+            height: 50,
+        },
+        icon: {
+            width: '100%',
+            height: '100%',
         },
         search: {
             position: 'relative',
