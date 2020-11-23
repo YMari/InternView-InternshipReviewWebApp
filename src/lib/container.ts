@@ -17,6 +17,7 @@ interface ILibContainer {
     getCompanyRepo(): com.ICompanyRepository
     getAuthenticationService(): app.application_interfaces.IAuthenticationService
     getReviewRepo(): re.IReviewRepository
+    getReviewFactory(): re.IReviewFactory
 
 }
 
@@ -33,6 +34,7 @@ class LibContainer extends Container implements ILibContainer {
         this.bind<infrastruct.interfaces.IEmailService>(infrastruct.I_TYPES.IEmailService).to(infrastruct.EmailService)
         this.bind<com.ICompanyRepository>(com.C_TYPES.ICompanyRepository).to(infrastruct.repositories.CompanyRepository)
         this.bind<re.IReviewRepository>(re.R_TYPES.IReviewRepository).to(infrastruct.repositories.ReviewRepository)
+        this.bind<re.IReviewFactory>(re.R_TYPES.IReviewFactory).to(app.ReviewFactory)
     }
 
     getStudentService(): st.IStudentService {
@@ -69,6 +71,10 @@ class LibContainer extends Container implements ILibContainer {
 
     getReviewRepo(): re.IReviewRepository {
         return this.get<re.IReviewRepository>(re.R_TYPES.IReviewRepository)
+    }
+
+    getReviewFactory(): re.IReviewFactory{
+        return this.get<re.IReviewFactory>(re.R_TYPES.IReviewFactory)
     }
 
 }

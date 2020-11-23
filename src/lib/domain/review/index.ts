@@ -1,4 +1,4 @@
-import {IReviewRepository} from "./interfaces"
+import {IReviewRepository, IReviewFactory} from "./interfaces"
 import {IReview} from "./entities"
 // import * from "./services/review_service"
 import ReviewRepository from '../../infrastructure/repositories/review_repository'
@@ -12,4 +12,5 @@ export {
 export type {
     IReviewRepository, 
     IReview,
+    IReviewFactory
 }

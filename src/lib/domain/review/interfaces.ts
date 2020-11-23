@@ -8,3 +8,8 @@ export interface IReviewRepository {
     // getReviewBySortedByScore: () => Promise<i.IReview[]>;
     updateReview: (id: number, re: i.IReview) => Promise<i.IReview>;
 }
+
+export interface IReviewFactory {
+    makeInstance(data: i.IReview): i.IReview // Validates on object creation
+}
+
