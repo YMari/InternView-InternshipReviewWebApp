@@ -8,7 +8,7 @@ import { OK_MESSAGE } from "../lib/application/constants";
 import { mutate } from 'swr';
 import { useRequestService } from '../lib/ui/hooks'
 
-interface State {
+interface LoginModel {
     email: string;
     password: string;
     showPassword: boolean;
@@ -20,7 +20,7 @@ export default function LoginPage() {
     const request_service = useRequestService();
     const router = useRouter();
 
-    const [values, setValues] = React.useState<State>({
+    const [values, setValues] = React.useState<LoginModel>({
         email: '',
         password: '',
         showPassword: false,
@@ -28,7 +28,7 @@ export default function LoginPage() {
 
     const [loading, setLoading]  = React.useState<boolean>(false)
 
-    const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (prop: keyof LoginModel) => (event: React.ChangeEvent<HTMLInputElement>) => {
         setValues({ ...values, [prop]: event.target.value });
     };
     

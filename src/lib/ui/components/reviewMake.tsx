@@ -7,7 +7,7 @@ import ChipInput from 'material-ui-chip-input';
 import {useUser} from '../hooks'
 import { useRouter } from 'next/router';
 
-interface State {
+interface ReviewMakeModel {
     title: string;
     company: string;
     offer: string;
@@ -40,7 +40,7 @@ export default function ReviewMake() {
       setAnchorEl(null);
     };
 
-    const [values, setValues] = React.useState<State>({
+    const [values, setValues] = React.useState<ReviewMakeModel>({
         title: '',
         company: '',
         offer: 'No Offer',
@@ -52,7 +52,7 @@ export default function ReviewMake() {
         tips: '',
     });
 
-    const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (prop: keyof ReviewMakeModel) => (event: React.ChangeEvent<HTMLInputElement>) => {
         setValues({ ...values, [prop]: event.target.value });  
     };
 

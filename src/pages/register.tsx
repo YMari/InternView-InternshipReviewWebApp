@@ -9,7 +9,7 @@ import { IStudyProgram, IStudyProgramRepository, IUniversity, IUniversityReposit
 import { useRouter } from 'next/router'
 import { useRequestService } from '../lib/ui/hooks'
 
-interface State {
+interface RegisterModel {
     name: string;
     email: string;
     password: string;
@@ -30,7 +30,7 @@ export default function RegisterPage(props:RegisterProps) {
 
     const [loading, setLoading] = React.useState<boolean>(false);
 
-    const [values, setValues] = React.useState<State>({
+    const [values, setValues] = React.useState<RegisterModel>({
         name: '',
         email: '',
         password: '',
@@ -39,7 +39,7 @@ export default function RegisterPage(props:RegisterProps) {
         universityId: -1,
     });
 
-    const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (prop: keyof RegisterModel) => (event: React.ChangeEvent<HTMLInputElement>) => {
         setValues({ ...values, [prop]: event.target.value });
     };
     
