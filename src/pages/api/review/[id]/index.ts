@@ -1,8 +1,7 @@
 import { NextApiResponse } from 'next';
-import review from '..';
 import { ERROR_MESSAGE, OK_MESSAGE } from '../../../../lib/application/constants';
 import container from '../../../../lib/container';
-import { IReview, ReviewService } from '../../../../lib/domain/review';
+import { IReview } from '../../../../lib/domain/review';
 import { IRequestWithIssuer } from '../../../../lib/middleware';
 
 const mid = container.getMiddleWares() 
@@ -30,7 +29,7 @@ mid.withUser(async function reviewByID(req: IRequestWithIssuer, res: NextApiResp
             res.status(400).json(output)
         }
         res.status(200).json(output)
-        
+
         return
     }
 
