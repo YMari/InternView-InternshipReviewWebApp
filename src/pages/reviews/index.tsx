@@ -91,6 +91,9 @@ export default function Review() {
                                     <Grid item>
                                         <Typography>Work Type: [text]</Typography>
                                     </Grid>
+                                    <Grid item>
+                                        <Typography>Experience Rating: 5/5</Typography>
+                                    </Grid>
                                 </Grid>
                             </Grid>
 
@@ -146,12 +149,7 @@ export default function Review() {
                                     </Grid>
 
                                     <Grid container direction='row' alignItems="center" wrap="nowrap" className={classes.inner2Item}>
-                                        <Typography>Interview Difficulty: </Typography>
-                                        <Grade fontSize="small"/>
-                                        <Grade fontSize="small"/>
-                                        <Grade fontSize="small"/>
-                                        <Grade fontSize="small"/>
-                                        <Grade fontSize="small"/>
+                                        <Typography>Interview Difficulty: 5/5</Typography>
                                     </Grid>
 
                                 </Card>

@@ -195,16 +195,6 @@ export default function ReviewMake() {
                                                 startAdornment: <InputAdornment position="start">$</InputAdornment>,
                                                 endAdornment: <InputAdornment position="end">USD</InputAdornment>,
                                             }}
-                                            // {...values.salary === null?
-                                            //     InputProps={{
-                                            //         endAdornment: <InputAdornment position="end">USD</InputAdornment>,
-                                            //     }}
-                                            // :
-                                            //     InputProps={{
-                                            //         startAdornment: <InputAdornment position="start">$</InputAdornment>,
-                                            //         endAdornment: <InputAdornment position="end">USD</InputAdornment>,
-                                            //     }}
-                                            // }
                                             className={classes.textFieldInner}
                                             />
                                         </FormControl>
@@ -237,6 +227,28 @@ export default function ReviewMake() {
                                                 onChange={handleChange('experienceType')}
                                                 className={classes.textFieldInner}
                                             />
+                                        </FormControl>
+                                    </Grid>
+
+                                    <Grid item>
+                                        <FormControl required className={classes.textField2}>
+
+                                            <Select
+                                                variant="outlined"
+
+                                                required
+                                                value={values.experienceRating}
+                                                onChange={handleChange('experienceRating')}
+                                                className={classes.textFieldInner}
+                                            >
+                                                <MenuItem value={0}> 0 </MenuItem>
+                                                <MenuItem value={1}> 1 </MenuItem>
+                                                <MenuItem value={2}> 2 </MenuItem>
+                                                <MenuItem value={3}> 3 </MenuItem>
+                                                <MenuItem value={4}> 4 </MenuItem>
+                                                <MenuItem value={5}> 5 </MenuItem>
+                                            </Select>
+                                            <InputLabel className={classes.labelPadding1}>Experience Rating</InputLabel>
                                         </FormControl>
                                     </Grid>
                                     
@@ -275,6 +287,27 @@ export default function ReviewMake() {
                                                 multiline
                                                 rows={10}
                                             />
+                                        </FormControl>
+                                    </Grid>
+
+                                    <Grid container direction='row' alignItems="center" justify='center' wrap="nowrap" className={classes.interviewInputs}>
+                                        <FormControl fullWidth>
+                                            <Select
+                                                variant="outlined"
+                                                label="Interview Difficulty Rating"
+                                                required
+                                                value={values.interviewDifficultyRating}
+                                                onChange={handleChange('interviewDifficultyRating')}
+                                                className={classes.textFieldInner}
+                                            >
+                                                <MenuItem value={0}> 0 </MenuItem>
+                                                <MenuItem value={1}> 1 </MenuItem>
+                                                <MenuItem value={2}> 2 </MenuItem>
+                                                <MenuItem value={3}> 3 </MenuItem>
+                                                <MenuItem value={4}> 4 </MenuItem>
+                                                <MenuItem value={5}> 5 </MenuItem>
+                                            </Select>
+                                            <InputLabel className={classes.labelPadding2}>Interview Difficulty Rating</InputLabel>
                                         </FormControl>
                                     </Grid>
 
@@ -422,4 +455,10 @@ const useStyles = makeStyles((theme: Theme) =>
         cardSubtitle: {
             padding: theme.spacing(1)
         },
+        labelPadding1: {
+            paddingLeft: theme.spacing(3),
+        },
+        labelPadding2: {
+            paddingLeft: theme.spacing(2),
+        }
     }))
