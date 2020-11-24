@@ -133,9 +133,9 @@ export default function Company() {
 
                             {/* v Reviews Here v */}
 
+                            {/*<Grid item className={classes.cardItem}> <ReviewSummary/></Grid>
                             <Grid item className={classes.cardItem}> <ReviewSummary/></Grid>
-                            <Grid item className={classes.cardItem}> <ReviewSummary/></Grid>
-                            <Grid item className={classes.cardItem}> <ReviewSummary/></Grid>
+                            <Grid item className={classes.cardItem}> <ReviewSummary/></Grid> */}
 
                             {/* ^ Reviews Here ^ */}
                             

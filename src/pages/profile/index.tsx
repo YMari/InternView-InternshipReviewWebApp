@@ -5,6 +5,9 @@ import React, { useEffect } from "react";
 import ReviewMake from "../../lib/ui/components/reviewMake";
 import ReviewSummary from "../../lib/ui/components/reviewSummary";
 import {useUser} from '../../lib/ui/hooks'
+import useSWR from 'swr'
+import axios from 'axios'
+import {ReviewViewModel} from '../../lib/ui/viewModels/reviewViewModels'
 
 export default function Profile() {
     const classes = useStyles();
@@ -21,6 +24,16 @@ export default function Profile() {
     const handleCloseModal = () => {
         setOpen(false);
     };
+
+    // Fetch user reviews
+    const {data} = useSWR('/api/review', async (url)=>{
+        const res = await axios.get(url)
+        if (res.data) {
+            return res.data.data as ReviewViewModel[]
+        }else{
+            router.push('/login')
+        }
+    })
 
     useEffect(() => {
         if (!user) {
@@ -39,7 +52,7 @@ export default function Profile() {
                     </Grid>
 
                     <Grid item>
-    <Typography className={classes.accName}>{user?<>{user.name}</>:<>Loading ...</>}</Typography>
+                        <Typography className={classes.accName}>{user?<>{user.name}</>:<>Loading ...</>}</Typography>
                     </Grid>
 
                     <Grid item className={classes.accRatingContainer}>
@@ -97,7 +110,7 @@ export default function Profile() {
                                     }}
                                     />
                                 </Grid>
-                                <Grid item justify='flex-end'>
+                                {/* <Grid item justify='flex-end'>
                                     <Grid container direction='row' alignItems="center" wrap="nowrap">
                                         <Button>
                                             <Typography className={classes.addReview} onClick={handleOpenModal}>Add Review</Typography>
@@ -127,15 +140,15 @@ export default function Profile() {
                                         </Modal>
 
                                     </Grid>
-                                </Grid>
+                                </Grid> */}
                             </Grid>
 
                             {/* v Reviews Here v */}
-
-                            <Grid item className={classes.cardItem}> <ReviewSummary/></Grid>
-                            <Grid item className={classes.cardItem}> <ReviewSummary/></Grid>
-                            <Grid item className={classes.cardItem}> <ReviewSummary/></Grid>
-
+                            {data?.map((val, index) => (
+                                <Grid item className={classes.cardItem}> <ReviewSummary
+                                    review={val} key={index*8900} 
+                                /></Grid>
+                            ))}
                             {/* ^ Reviews Here ^ */}
                             
                         </Grid>

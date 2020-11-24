@@ -2,8 +2,13 @@ import { Backdrop, Box, Button, Card, createStyles, Fade, Grid, makeStyles, Moda
 import { ClearRounded, Grade } from "@material-ui/icons";
 import React from "react";
 import Review from "../../../pages/reviews";
+import {ReviewViewModel} from '../viewModels/reviewViewModels'
 
-export default function ReviewSummary() {
+interface Props {
+    review: ReviewViewModel
+}
+
+export default function ReviewSummary(props: Props) {
     const classes = useStyles();
 
     const [open, setOpen] = React.useState(false)
@@ -19,7 +24,7 @@ export default function ReviewSummary() {
 
                         <Grid container direction='row' alignItems="center" wrap="nowrap">
                             <Grid container direction='row' alignItems="center" wrap="nowrap">
-                                <Typography className={classes.reviewTitle}>Review Title</Typography>
+                                <Typography className={classes.reviewTitle}>{props.review.reviewTitle}</Typography>
                             </Grid>
                             <Grid container direction='row' wrap="nowrap" justify='flex-end' className={classes.reviewGradeRow}>
                                 <Grade fontSize="small" className={classes.reviewGrade}/>
@@ -31,13 +36,13 @@ export default function ReviewSummary() {
                         </Grid>
 
                         <Grid container direction='row' alignItems="center" wrap="nowrap">
-                            <Typography className={classes.reviewCompany}>Company X</Typography>
+                            <Typography className={classes.reviewCompany}>Company: {props.review.company.imageUrl} {props.review.company.name}</Typography>
                         </Grid>
                         <Grid container direction='row' alignItems="center" wrap="nowrap">
-                            <Typography className={classes.reviewDate}>Posted on: Date</Typography>
+                            <Typography className={classes.reviewDate}>Posted on: {props.review.dateCreated}</Typography>
                         </Grid>
                         <Grid container direction='row' alignItems="center" wrap="nowrap" zeroMinWidth>
-                            <Typography noWrap className={classes.reviewSummary}>Review Summary (limit characters i.e. 150)</Typography>
+                            <Typography noWrap className={classes.reviewSummary}>{props.review.recommendation}</Typography>
                         </Grid>
 
                     </Grid>

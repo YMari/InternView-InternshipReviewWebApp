@@ -4,21 +4,8 @@ import { AccountCircle, Grade} from '@material-ui/icons';
 import ChipInput from 'material-ui-chip-input';
 import {useUser} from '../hooks'
 import { useRouter } from 'next/router';
+import {ReviewMakeModel} from '../viewModels/reviewViewModels';
 
-interface ReviewMakeModel {
-    reviewTitle: string;
-    company: string;
-    acceptedStatus: string;
-    location: string;
-    duration: number;
-    salary: number;
-    seekingDegree: string;
-    experienceType: string;
-    recommendation: string;
-    experienceRating: number;
-    interviewDifficultyRating: number;
-    anonymous: boolean;
-}
 
 export default function ReviewMake() {
 
@@ -28,7 +15,6 @@ export default function ReviewMake() {
 
     const [values, setValues] = React.useState<ReviewMakeModel>({
         reviewTitle: '',
-        company: '',
         acceptedStatus: 'No Offer',
         location: '',
         duration: null,
@@ -111,11 +97,16 @@ export default function ReviewMake() {
 
                         <Grid item>
                             <FormControl variant="outlined" required className={classes.textField1}>
-                                <InputLabel>Company</InputLabel>
-                                <OutlinedInput
+                                <TextField
+                                    disabled
                                     label="Company"
-                                    value={values.company}
-                                    onChange={handleChange('company')}
+                                    value={"Company name"}
+                                    InputProps={{
+                                        classes: {
+                                            root: classes.inputRoot,
+                                            disabled: classes.disabled
+                                        },
+                                    }}
                                 />
                             </FormControl>
                         </Grid>    
