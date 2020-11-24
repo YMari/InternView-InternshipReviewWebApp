@@ -2,6 +2,7 @@ import { ICompany } from "../company";
 import { IStudent, IStudyProgram, IUniversity } from "../student";
 
 export interface IReview {
+    id?: number 
     recommendation: string; 
     interviewQuestions?: string[];
     dateCreated?: Date;

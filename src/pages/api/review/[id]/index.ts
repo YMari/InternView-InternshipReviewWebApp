@@ -1,8 +1,27 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiResponse } from 'next';
+import { ERROR_MESSAGE, OK_MESSAGE } from '../../../../lib/application/constants';
+import container from '../../../../lib/container';
+import { IRequestWithIssuer } from '../../../../lib/middleware';
 
-export default async function reviewByID(req: NextApiRequest, res: NextApiResponse) {
+const mid = container.getMiddleWares() 
 
-    res.json({hello: 'world', id: req.query.id, method: req.method});
-} 
+export default 
+mid.withUser(async function reviewByID(req: IRequestWithIssuer, res: NextApiResponse) {
+
+    if (req.method === 'DELETE' && req.user) {
+        const reviewRepo = container.getReviewRepo()
+        const output = reviewRepo.deleteReview(Number(req.query.id), req.user?.email)
+        if (output) {
+            res.status(200).json({status: OK_MESSAGE, message: "Deletion Successful"})
+        }else {
+            res.status(400).json({status: ERROR_MESSAGE, message:"Unable to delete"})
+        }
+        return
+    }
+
+    res.status(401).json({status:ERROR_MESSAGE, message:"method did not match or user not authenticated"})
+    return 
+
+})
 
 // TODO: add functions for adding, editing, and removing reviews.

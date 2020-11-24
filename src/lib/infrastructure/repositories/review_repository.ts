@@ -1,5 +1,4 @@
 import * as re from '../../domain/review'
-
 import db from '../prisma-cli'
 import { injectable } from 'inversify'
 import 'reflect-metadata'
@@ -7,6 +6,27 @@ import 'reflect-metadata'
 
 @injectable()
 class ReviewRepository implements re.IReviewRepository {
+
+    private selectObject = {
+        id: true,
+        recommendation:true, 
+        interviewQuestions:true, 
+        dateCreated:true, 
+        experienceType:true, 
+        seekingDegree:true,
+        location: true,
+        salary: true,
+        duration: true,
+        interviewDifficultyRating: true,
+        acceptedStatus: true,
+        experienceRating: true,
+        reviewTitle: true,
+        studyProgram: true,
+        university: true,
+        company: true
+    }
+
+
     async createReview(re: re.IReview): Promise<re.IReview> {
 
         try {
@@ -41,23 +61,7 @@ class ReviewRepository implements re.IReviewRepository {
                         connect: { email:re.author.email}
                     },
                 },
-                select : {
-                    recommendation:true, 
-                    interviewQuestions:true, 
-                    dateCreated:true, 
-                    experienceType:true, 
-                    seekingDegree:true,
-                    location: true,
-                    salary: true,
-                    duration: true,
-                    interviewDifficultyRating: true,
-                    acceptedStatus: true,
-                    experienceRating: true,
-                    reviewTitle: true,
-                    studyProgram: true,
-                    university: true,
-                    company: true,
-                },
+                select : this.selectObject
             })
 
             return res
@@ -74,23 +78,7 @@ class ReviewRepository implements re.IReviewRepository {
             let result = await db.review.findMany({
 
                 where:{ authorEmail: email },
-                select : {
-                    recommendation:true, 
-                    interviewQuestions:true, 
-                    dateCreated:true, 
-                    experienceType:true, 
-                    seekingDegree:true,
-                    location: true,
-                    salary: true,
-                    duration: true,
-                    interviewDifficultyRating: true,
-                    acceptedStatus: true,
-                    experienceRating: true,
-                    reviewTitle: true,
-                    studyProgram: true,
-                    university: true,
-                    company: true,
-                },
+                select : this.selectObject,
                 orderBy: 
                 {
                     dateCreated: 'desc',
@@ -119,23 +107,7 @@ class ReviewRepository implements re.IReviewRepository {
             let result = await db.review.findOne({
 
                 where:{ id: id },
-                select : {
-                    recommendation:true, 
-                    interviewQuestions:true, 
-                    dateCreated:true, 
-                    experienceType:true, 
-                    seekingDegree:true,
-                    location: true,
-                    salary: true,
-                    duration: true,
-                    interviewDifficultyRating: true,
-                    acceptedStatus: true,
-                    experienceRating: true,
-                    reviewTitle: true,
-                    studyProgram: true,
-                    university: true,
-                    company: true,
-                }
+                select : this.selectObject
             })
     
             if (result == null) {
@@ -160,23 +132,7 @@ class ReviewRepository implements re.IReviewRepository {
             let result = await db.review.findMany({
 
                 where:{ company: {name: company} },
-                select : {
-                    recommendation:true, 
-                    interviewQuestions:true, 
-                    dateCreated:true, 
-                    experienceType:true, 
-                    seekingDegree:true,
-                    location: true,
-                    salary: true,
-                    duration: true,
-                    interviewDifficultyRating: true,
-                    acceptedStatus: true,
-                    experienceRating: true,
-                    reviewTitle: true,
-                    studyProgram: true,
-                    university: true,
-                    company: true,
-                },
+                select : this.selectObject,
                 orderBy: 
                 {
                     dateCreated: 'desc',
@@ -226,7 +182,25 @@ class ReviewRepository implements re.IReviewRepository {
 
         // }
         return null
-    }   
+    }  
+    
+    async deleteReview(id: number, authorEmail: string): Promise<boolean> {
+
+        const res = await db.review.deleteMany({
+            where: {
+                id: id,
+                AND: {
+                    Student: {
+                        email:authorEmail
+                    }
+                }
+            }
+        })
+
+        return res.count > 0
+        
+    }
+
     async updateReview (id: number, re: re.IReview): Promise<re.IReview>{
 
         try {
@@ -248,23 +222,7 @@ class ReviewRepository implements re.IReviewRepository {
                     experienceRating: re.experienceRating,
                     reviewTitle: re.reviewTitle,
                 },
-                select : {
-                    recommendation:true, 
-                    interviewQuestions:true, 
-                    dateCreated:true, 
-                    experienceType:true, 
-                    seekingDegree:true,
-                    location: true,
-                    salary: true,
-                    duration: true,
-                    interviewDifficultyRating: true,
-                    acceptedStatus: true,
-                    experienceRating: true,
-                    reviewTitle: true,
-                    studyProgram: true,
-                    university: true,
-                    company: true,
-                },
+                select : this.selectObject,
             })
             await db.$disconnect()
             return res

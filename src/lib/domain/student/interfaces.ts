@@ -1,3 +1,4 @@
+import { IReview } from '../review';
 import * as i from './entities'
 
 export interface IStudentRepository {
@@ -34,6 +35,7 @@ export interface IStudentServiceOutput<T> {
 export interface IStudentService {
 
     registerStudent: (st: i.IStudent) => Promise<IStudentServiceOutput<i.IStudent>>;
+    getStudentReviews: (st: i.IStudent) => Promise<IStudentServiceOutput<IReview[]>>
 
 }
 

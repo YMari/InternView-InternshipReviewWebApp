@@ -7,8 +7,8 @@ export interface IReviewRepository {
     getReviewByAuthorEmail: (email: string) => Promise<i.IReview[]>;
     getReviewById: (id: number) => Promise<i.IReview>;
     getReviewByCompany: (company: string) => Promise<i.IReview[]>;   // Change to company interface later
-    // getReviewBySortedByScore: () => Promise<i.IReview[]>;
     updateReview: (id: number, re: i.IReview) => Promise<i.IReview>;
+    deleteReview: (id: number, authorEmail: string) => Promise<boolean>;
 }
 
 export interface IReviewFactory {
@@ -22,7 +22,5 @@ type ServiceOutput = {
 }
 
 export interface IReviewService {
-    
     createReview(data: i.IReview, author: IStudent): Promise<ServiceOutput>
-
 }
