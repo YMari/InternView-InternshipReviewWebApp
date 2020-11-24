@@ -205,7 +205,9 @@ class ReviewRepository implements re.IReviewRepository {
 
         try {
             const res = await db.review.update({
-                where:{ id: id },
+                where:{ 
+                    id: id
+                },
                 data: {
                     recommendation: re.recommendation,
                     interviewQuestions: {

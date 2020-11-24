@@ -13,6 +13,7 @@ export interface IReviewRepository {
 
 export interface IReviewFactory {
     makeInstance(data: i.IReview): i.IReview // Validates on object creation
+    makeUpdateInstance(data: i.IReview): i.IReview // Validates an updateable objects
 }
 
 type ServiceOutput = {
@@ -23,4 +24,5 @@ type ServiceOutput = {
 
 export interface IReviewService {
     createReview(data: i.IReview, author: IStudent): Promise<ServiceOutput>
+    updateReview(id: number, review: i.IReview, author: IStudent): Promise<ServiceOutput>
 }

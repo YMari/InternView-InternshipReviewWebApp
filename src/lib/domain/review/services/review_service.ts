@@ -6,7 +6,6 @@ import 'reflect-metadata'
 import { IStudent } from '../../student'
 import { ERROR_MESSAGE, OK_MESSAGE } from '../../../application/constants'
 
-
 @injectable()
 class ReviewService implements i.IReviewService {
     
@@ -15,9 +14,9 @@ class ReviewService implements i.IReviewService {
 
     constructor(
         @inject(R_TYPES.IReviewFactory) reviewFactory: i.IReviewFactory,
-        @inject(R_TYPES.IReviewRepository) reviewRepository: i.IReviewRepository
+        @inject(R_TYPES.IReviewRepository) reviewRepository: i.IReviewRepository,
     ) {
-        this._reviewRepo = reviewRepository,
+        this._reviewRepo = reviewRepository
         this._reviewFactory = reviewFactory
     }
 
@@ -48,6 +47,46 @@ class ReviewService implements i.IReviewService {
         }
         
         return {status:OK_MESSAGE, message: "review created successfully", data:output}
+    }
+
+    async updateReview(id: number, review: e.IReview, author: IStudent) {
+        
+        let instance = null
+        
+        try{ 
+            instance = this._reviewFactory.makeUpdateInstance(review)
+        }catch(e) {
+            return {
+                status: ERROR_MESSAGE,
+                message: e.message
+            }
+        }
+
+        const checkIfExists = await this._reviewRepo.getReviewByAuthorEmail(author?.email) 
+
+        // Very inneficient should find another way
+        if (checkIfExists.filter((val) => val.id === id).length === 0) {
+            return {
+                status: ERROR_MESSAGE,
+                message: "invalid author"
+            }
+        }
+
+        const output = await this._reviewRepo.updateReview(id, instance)
+
+        if (output) {
+            return {
+                status: OK_MESSAGE,
+                message: "Updated successfully",
+                data: output
+            }
+        }
+
+        return {
+            status: ERROR_MESSAGE,
+            message: "Unable to update",
+            data:output
+        }
     }
     
 }
