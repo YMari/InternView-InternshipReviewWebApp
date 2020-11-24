@@ -41,7 +41,7 @@ export default class Student implements st.IStudent{
     hasValidEmail() {
 
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return !re.test(this.email?.toLowerCase());
+        return re.test(this.email?.toLowerCase());
         
     };
 

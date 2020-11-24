@@ -9,7 +9,7 @@ export interface IStudent {
     studyProgramId?: number;
     password?:string;
     passwordHash?:string;
-    toPlainObj?: {};
+    toPlainObj?: ()=> any;
     hasValidEmail: () => boolean;
     validatePassword?: () => boolean;
     validatePasswordLength?: () => boolean;

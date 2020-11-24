@@ -33,7 +33,7 @@ export default class AuthenticationService implements i.IAuthenticationService {
         const student = new Student(st)
 
         // Validate email can be moved to IStuden class in future
-        if (student.hasValidEmail()){
+        if (!student.hasValidEmail()){
             return {
                 status:ERROR_MESSAGE,
                 message:"invalid email",
