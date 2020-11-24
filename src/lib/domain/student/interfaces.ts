@@ -35,7 +35,8 @@ export interface IStudentServiceOutput<T> {
 export interface IStudentService {
 
     registerStudent: (st: i.IStudent) => Promise<IStudentServiceOutput<i.IStudent>>;
-    getStudentReviews: (st: i.IStudent) => Promise<IStudentServiceOutput<IReview[]>>
+    getStudentReviews: (st: i.IStudent) => Promise<IStudentServiceOutput<IReview[]>>;
+    studentCanReview(st: i.IStudent, companyName: string): Promise<boolean>;
 
 }
 

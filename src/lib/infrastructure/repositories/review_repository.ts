@@ -6,6 +6,7 @@ import 'reflect-metadata'
 
 @injectable()
 class ReviewRepository implements re.IReviewRepository {
+    
 
     private selectObject = {
         id: true,
@@ -26,6 +27,42 @@ class ReviewRepository implements re.IReviewRepository {
         company: true
     }
 
+    async getReviewByAuthorAndCompany(authorEmail: string, companyName: string): Promise<re.IReview[]> {
+        try{
+            let result = await db.review.findMany({
+
+                where:{ 
+                    authorEmail: authorEmail,
+                    AND: {
+                        company: {
+                            name: companyName
+                        }
+                    }
+                },
+
+                select : this.selectObject,
+                orderBy: 
+                {
+                    dateCreated: 'desc',
+                }
+            })
+    
+            if (result == null) {
+                await db.$disconnect()
+                return null
+            }
+
+            await db.$disconnect()
+            return result
+
+        } catch ( e ){
+
+            await db.$disconnect()
+
+            return null
+
+        }
+    }
 
     async createReview(re: re.IReview): Promise<re.IReview> {
 

@@ -3,21 +3,26 @@ import * as e from '../entities'
 import {inject, injectable} from 'inversify'
 import { R_TYPES } from '../types'
 import 'reflect-metadata'
-import { IStudent } from '../../student'
+import {S_TYPES} from '../../student/types'
+import { IStudent, IStudentService } from '../../student'
 import { ERROR_MESSAGE, OK_MESSAGE } from '../../../application/constants'
+import { IReview } from '..'
 
 @injectable()
 class ReviewService implements i.IReviewService {
     
     private readonly _reviewRepo: i.IReviewRepository
     private readonly _reviewFactory: i.IReviewFactory
+    private readonly _studentService: IStudentService
 
     constructor(
         @inject(R_TYPES.IReviewFactory) reviewFactory: i.IReviewFactory,
         @inject(R_TYPES.IReviewRepository) reviewRepository: i.IReviewRepository,
+        @inject(S_TYPES.IStudentService) studentService: IStudentService 
     ) {
         this._reviewRepo = reviewRepository
         this._reviewFactory = reviewFactory
+        this._studentService = studentService
     }
 
     async createReview(input_data: e.IReview, author: IStudent) {
@@ -31,13 +36,18 @@ class ReviewService implements i.IReviewService {
         input_data.studyProgram = author.studyprogram
         input_data.university = author.university
         
-        let review = null
+        let review: IReview = null
 
         try {
             review = this._reviewFactory.makeInstance(input_data)
         }
         catch(e) {
             return {status: ERROR_MESSAGE, message: e.message}
+        }
+
+        const canReview = await this._studentService.studentCanReview(review.author, review.company.name)
+        if (!canReview){
+            return {status:ERROR_MESSAGE, message:"User has already reviewed in the last 7 months"}
         }
 
         const output = await this._reviewRepo.createReview(review)

@@ -1,4 +1,5 @@
 
+
 import { IStudent } from '../student';
 import * as i from './entities'
 
@@ -9,6 +10,7 @@ export interface IReviewRepository {
     getReviewByCompany: (company: string) => Promise<i.IReview[]>;   // Change to company interface later
     updateReview: (id: number, re: i.IReview) => Promise<i.IReview>;
     deleteReview: (id: number, authorEmail: string) => Promise<boolean>;
+    getReviewByAuthorAndCompany(authorEmail: string, companyName: string): Promise<i.IReview[]>
 }
 
 export interface IReviewFactory {

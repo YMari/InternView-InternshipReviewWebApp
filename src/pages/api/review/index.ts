@@ -23,6 +23,7 @@ async function reviewIndex(req: IRequestWithIssuer, res: NextApiResponse) {
             res.status(200).json(output)
         }
     }
+    
     // Get Auth Users reviews
     else if (req.method === 'GET') {
         const output = await studentService.getStudentReviews(req.user)

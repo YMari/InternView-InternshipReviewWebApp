@@ -11,10 +11,11 @@ import { ERROR_MESSAGE, OK_MESSAGE } from '../../../application/constants'
 @injectable()
 class StudentService implements i.IStudentService {
     
-    
     private readonly _studentRepository: i.IStudentRepository;
     private readonly _emailService: infrastruct.interfaces.IEmailService;
     private readonly _reviewRepository: IReviewRepository
+
+    private readonly TIME_LIMIT: number = 7
 
     constructor(
         @inject(S_TYPES.IStudentRepository) studentRepository: i.IStudentRepository,
@@ -51,6 +52,28 @@ class StudentService implements i.IStudentService {
             message: "No author provided",
             data:null
         }
+
+    }
+
+    async studentCanReview(st: e.IStudent, companyName: string): Promise<boolean> {
+
+        if(!st?.email){
+            return false
+        }
+
+        const output = await this._reviewRepository.getReviewByAuthorAndCompany(st.email, companyName)
+        if(output) {
+            const currentDate:Date = new Date()
+            const latest = output[0]
+            let months;
+            months = (currentDate.getFullYear() - latest.dateCreated.getFullYear() ) * 12;
+            months -= latest.dateCreated.getFullYear();
+            months += currentDate.getMonth();
+            months = months <= 0 ? 0 : months;
+            return months > this.TIME_LIMIT
+        }
+
+        return output === []
 
     }
     
