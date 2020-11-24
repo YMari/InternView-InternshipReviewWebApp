@@ -1,12 +1,20 @@
+import {ICredentials} from '../../application/entities'
 
 export interface IStudent {
     name:string;
     email:string;
-    university?: IUniversity
-    studyprogram?: IStudyProgram
-    universityId?: number
-    studyProgramId?: number
-    passwordHash?:string
+    university?: IUniversity;
+    studyprogram?: IStudyProgram;
+    universityId?: number;
+    studyProgramId?: number;
+    passwordHash?:string;
+    toPlainObj?: {};
+    hasValidEmail: () => boolean;
+    validatePassword?: () => boolean;
+    validatePasswordLength?: () => boolean;
+    hashPassword?: () => Promise<string>;
+    comparePassword?: (cr: ICredentials) => Promise<boolean>;
+    createToken?: () => string
 }
 
 

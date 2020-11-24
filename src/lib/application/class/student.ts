@@ -1,55 +1,68 @@
-import * as i from '../interfaces'
 import * as e from '../entities'
+import {IStudent, IStudyProgram, IUniversity} from '../../domain/student/entities'
 import * as st from '../../domain/student'
-import * as infrastruct from '../../infrastructure';
-import {injectable, inject} from 'inversify'
 import * as bcrypt from 'bcrypt'
 import {sign, verify} from 'jsonwebtoken'
 import 'reflect-metadata'
 
-@injectable()
-export default class Student{
 
-    private readonly _studentService: st.IStudentService
-    private readonly _studentRepository: st.IStudentRepository
+export default class Student implements st.IStudent{
+
     private readonly PASSWORD_LENGTH: number = 6
     private readonly SALT_ROUNDS:number = 10
 
-    constructor(
-        @inject(st.S_TYPES.IStudentService) studentService: st.IStudentService,
-        @inject(st.S_TYPES.IStudentRepository) studentRepository: st.IStudentRepository,
+    name: string
+    email: string
+    passwordHash?: string
+    university?: IUniversity;
+    studyprogram?: IStudyProgram;
 
-    ){
-        this._studentService = studentService
-        this._studentRepository = studentRepository
-    }
-
-    hasValidEmail(st : st.IStudent) {
-        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-        return !re.test(st.email?.toLowerCase());
+    constructor(st: st.IStudent){
+        this.name = st.name;
+        this.email = st.email;
+        this.passwordHash = st.passwordHash;
+        this.university = st.university;
+        this.studyprogram = st.studyprogram;
         
     }
 
-    validatePassword(st : st.IStudent) {
-        return !st.passwordHash!;
+    toPlainObj(){ 
+        return {
+            name: this.name,
+            email: this.email,
+            university: this.university,
+            studyprogram : this.studyprogram
+
+        }
     }
 
-    validatePasswordLength(st : st.IStudent) {
-        return st.passwordHash.length < this.PASSWORD_LENGTH
+    hasValidEmail() {
+
+        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return !re.test(this.email?.toLowerCase());
+        
+    };
+
+    validatePassword() {
+        return !this.passwordHash!;
     }
 
-    async hashPassword(st : st.IStudent) {
-        return await bcrypt.hash(st.passwordHash, this.SALT_ROUNDS)
+    validatePasswordLength() {
+        return this.passwordHash.length < this.PASSWORD_LENGTH
+    }
+
+    hashPassword() {
+        return bcrypt.hash(this.passwordHash, this.SALT_ROUNDS)
        
     }
 
-    async hasCorrectPassword(cr: e.ICredentials, st : st.IStudent) {
-        return await bcrypt.compare(cr.password, st.passwordHash)
+    async comparePassword(cr: e.ICredentials) {
+        return await bcrypt.compare(cr.password, this.passwordHash)
     }
 
-    createToken(st : st.IStudent) {
-        return sign({sub: st.email}, process.env.SECRET_KEY, {expiresIn: '1h'})
+    createToken() {
+        
+        return sign({sub: this.email}, process.env.SECRET_KEY, {expiresIn: '1h'})
     }
 
 }

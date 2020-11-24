@@ -25,14 +25,15 @@ export default class AuthenticationService implements i.IAuthenticationService {
     ){
         this._studentService = studentService
         this._studentRepository = studentRepository
-        this.Student = new Student(this._studentService,this._studentRepository);
     }
     
 
     async register(st: st.IStudent): Promise<i.IAuthenticationServiceOutput<st.IStudent>>{
 
+        this.Student = new Student(st)
+
         // Validate email can be moved to IStuden class in future
-        if (this.Student.hasValidEmail(st)){
+        if (this.Student.hasValidEmail()){
             return {
                 status:ERROR_MESSAGE,
                 message:"invalid email",
@@ -41,7 +42,7 @@ export default class AuthenticationService implements i.IAuthenticationService {
         }
 
         // Validate Password
-        if (this.Student.validatePassword(st)) {
+        if (this.Student.validatePassword()) {
             return {
                 status:ERROR_MESSAGE,
                 message: "no password given",
@@ -50,7 +51,7 @@ export default class AuthenticationService implements i.IAuthenticationService {
         }
 
         // Can be moved to student class instance
-        if (this.Student.validatePasswordLength(st)) {
+        if (this.Student.validatePasswordLength()) {
             return {
                 status:ERROR_MESSAGE,
                 message: "password has too few characters",
@@ -60,9 +61,7 @@ export default class AuthenticationService implements i.IAuthenticationService {
 
         // Use Student Service
         // can be moved to IStudent class instance
-        this.Student.hashPassword(st).then(res=>{
-            st.passwordHash = res;
-        })
+        st.passwordHash = await this.Student.hashPassword()
         return await this._studentService.registerStudent(st);
 
     }
@@ -78,10 +77,11 @@ export default class AuthenticationService implements i.IAuthenticationService {
                 data: null
             }
         }
+        this.Student = new Student(student);
 
         // can be moved to student class instance
-        if(this.Student.hasCorrectPassword(cr, student)){
-            const token = this.Student.createToken(student)
+        if(this.Student.comparePassword(cr)){
+            const token = this.Student.createToken()
             const galleta = cookie.serialize('auth', token, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV !== 'development', 
