@@ -1,4 +1,4 @@
-import { Backdrop, Box, Button, Card, CardHeader, Checkbox, createStyles, Fade, FormControl, Grid, InputLabel, makeStyles, Menu, MenuItem, Modal, OutlinedInput, TextField, Theme, Typography } from '@material-ui/core';
+import { Backdrop, Box, Button, Card, CardHeader, Checkbox, Chip, createStyles, Fade, FormControl, Grid, InputLabel, makeStyles, Menu, MenuItem, Modal, OutlinedInput, TextField, Theme, Typography } from '@material-ui/core';
 import Link from 'next/link';
 import React from 'react';
 import { ArrowDownward, ArrowUpward, AccountCircle, Grade, ArrowDropDown } from '@material-ui/icons';
@@ -26,14 +26,12 @@ export default function Review() {
                 <Grid container direction='column' wrap="nowrap" className={classes.gridMain}>
 
                     <Grid container direction='column' wrap="nowrap">
-                        <Grid container direction='row' alignItems="center" wrap="nowrap">
+                        <Grid container direction='row' alignItems="center" wrap="nowrap" className={classes.accountGrid}>
+                            <Grid item>               
+                                <AccountCircle fontSize="large"/>
+                            </Grid>
                             <Grid item>
-                                <Link href="">    
-                                    <Button>                
-                                        <AccountCircle fontSize="large"/>
-                                        <Typography className={classes.name}>Student Name</Typography>
-                                    </Button>
-                                </Link>
+                                <Typography className={classes.name}>Student Name</Typography>
                             </Grid>
                         </Grid>
                         <Grid item>
@@ -91,6 +89,9 @@ export default function Review() {
                                     <Grid item>
                                         <Typography>Work Type: [text]</Typography>
                                     </Grid>
+                                    <Grid item>
+                                        <Typography>Experience Rating: 5/5</Typography>
+                                    </Grid>
                                 </Grid>
                             </Grid>
 
@@ -102,6 +103,7 @@ export default function Review() {
                                     </Grid>
                                     
                                     <Grid container direction='row' alignItems="center" justify='center' wrap="nowrap">
+
                                         <Button
                                         variant="contained"
                                         color="primary"
@@ -111,16 +113,33 @@ export default function Review() {
                                         >
                                         Interview Questions
                                         </Button>
+
                                         <Menu
                                         anchorEl={anchorEl}
                                         keepMounted
                                         open={Boolean(anchorEl)}
                                         onClose={handleCloseMenu}
+                                        className={classes.menuList}
+                                        PaperProps={{
+                                            style: {
+                                              maxHeight: 300,
+                                              maxWidth: '90%',
+                                            },
+                                        }}
+                                        anchorOrigin={{
+                                            vertical: 'bottom',
+                                            horizontal: 'center',
+                                        }}
+                                        transformOrigin={{
+                                            vertical: 'top',
+                                            horizontal: 'center',
+                                        }}
                                         >
                                             <MenuItem onClick={handleCloseMenu}>Q1</MenuItem>
                                             <MenuItem onClick={handleCloseMenu}>Q2</MenuItem>
                                             <MenuItem onClick={handleCloseMenu}>Q3</MenuItem>
                                         </Menu>
+                                        
                                     </Grid>
                                     
                                     <Grid item className={classes.inner2Item}>
@@ -146,12 +165,7 @@ export default function Review() {
                                     </Grid>
 
                                     <Grid container direction='row' alignItems="center" wrap="nowrap" className={classes.inner2Item}>
-                                        <Typography>Interview Difficulty: </Typography>
-                                        <Grade fontSize="small"/>
-                                        <Grade fontSize="small"/>
-                                        <Grade fontSize="small"/>
-                                        <Grade fontSize="small"/>
-                                        <Grade fontSize="small"/>
+                                        <Typography>Interview Difficulty: 5/5</Typography>
                                     </Grid>
 
                                 </Card>
@@ -250,6 +264,9 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         gridMain: {
             
+        },
+        accountGrid: {
+            paddingLeft: theme.spacing(0.7)
         },
         gridTitleItem: {
             justifyContent: 'center',
@@ -359,6 +376,10 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(1),
             paddingLeft: theme.spacing(2),
             paddingRight: theme.spacing(2),
+        },
+
+        menuList: {
+            marginTop: 45,
         },
         
     }))

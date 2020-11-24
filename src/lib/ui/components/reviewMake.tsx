@@ -1,27 +1,23 @@
-import { Backdrop, Box, Button, Card, CardHeader, Checkbox, Chip, createStyles, Fade, FormControl, Grid, InputAdornment, InputLabel, makeStyles, Menu, MenuItem, Modal, OutlinedInput, Select, TextField, Theme, Typography } from '@material-ui/core';
-import Link from 'next/link';
-import React, { constructor, useEffect, useState } from 'react';
-import { ArrowDownward, ArrowUpward, AccountCircle, Grade, ArrowDropDown } from '@material-ui/icons';
-import theme from '../theme';
+import { Box, Button, Card, Checkbox, createStyles, FormControl, Grid, InputAdornment, InputLabel, makeStyles, MenuItem, OutlinedInput, Select, TextField, Theme, Typography } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { AccountCircle, Grade} from '@material-ui/icons';
 import ChipInput from 'material-ui-chip-input';
 import {useUser} from '../hooks'
 import { useRouter } from 'next/router';
 
 interface ReviewMakeModel {
-    title: string;
+    reviewTitle: string;
     company: string;
-    offer: string;
+    acceptedStatus: string;
     location: string;
     duration: number;
     salary: number;
-    degree: string;
-    work: string;
-    tips: string;
-}
-
-interface ChipData {
-    key: number;
-    label: string;
+    seekingDegree: string;
+    experienceType: string;
+    recommendation: string;
+    experienceRating: number;
+    interviewDifficultyRating: number;
+    anonymous: boolean;
 }
 
 export default function ReviewMake() {
@@ -30,26 +26,19 @@ export default function ReviewMake() {
     const user = useUser();
     const router = useRouter();
 
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-      setAnchorEl(event.currentTarget);
-    };
-  
-    const handleCloseMenu = () => {
-      setAnchorEl(null);
-    };
-
     const [values, setValues] = React.useState<ReviewMakeModel>({
-        title: '',
+        reviewTitle: '',
         company: '',
-        offer: 'No Offer',
+        acceptedStatus: 'No Offer',
         location: '',
         duration: null,
         salary: null,
-        degree: '',
-        work: '',
-        tips: '',
+        seekingDegree: '',
+        experienceType: '',
+        recommendation: '',
+        experienceRating: null,
+        interviewDifficultyRating: null,
+        anonymous: false,
     });
 
     const handleChange = (prop: keyof ReviewMakeModel) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,10 +56,8 @@ export default function ReviewMake() {
         setChipData(chipData.filter((c: string) => c !== chipToDelete))
     };
 
-    const [anonCheck, setAnonCheck] = React.useState(true);
-
     const handleAnonCheck = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setAnonCheck(event.target.checked);
+        setValues({...values, anonymous: event.target.checked});
     };
 
     useEffect(()=>{
@@ -98,8 +85,8 @@ export default function ReviewMake() {
                                 <InputLabel>Title</InputLabel>
                                 <OutlinedInput
                                     label="Title"
-                                    value={values.title}
-                                    onChange={handleChange('title')}
+                                    value={values.reviewTitle}
+                                    onChange={handleChange('reviewTitle')}
                                 />
                             </FormControl>
                         </Grid>
@@ -153,8 +140,8 @@ export default function ReviewMake() {
                         <Grid item>
                             <FormControl variant="outlined" required className={classes.textField1}>
                                 <Select
-                                value={values.offer}
-                                onChange={handleChange('offer')}
+                                value={values.acceptedStatus}
+                                onChange={handleChange('acceptedStatus')}
                                 defaultValue={"No Offer"}
                                 >
                                     <MenuItem value={"No Offer"}>No Offer</MenuItem>
@@ -208,16 +195,6 @@ export default function ReviewMake() {
                                                 startAdornment: <InputAdornment position="start">$</InputAdornment>,
                                                 endAdornment: <InputAdornment position="end">USD</InputAdornment>,
                                             }}
-                                            // {...values.salary === null?
-                                            //     InputProps={{
-                                            //         endAdornment: <InputAdornment position="end">USD</InputAdornment>,
-                                            //     }}
-                                            // :
-                                            //     InputProps={{
-                                            //         startAdornment: <InputAdornment position="start">$</InputAdornment>,
-                                            //         endAdornment: <InputAdornment position="end">USD</InputAdornment>,
-                                            //     }}
-                                            // }
                                             className={classes.textFieldInner}
                                             />
                                         </FormControl>
@@ -233,8 +210,8 @@ export default function ReviewMake() {
                                                 variant="outlined"
                                                 label="Degree"
                                                 required
-                                                value={values.degree}
-                                                onChange={handleChange('degree')}
+                                                value={values.seekingDegree}
+                                                onChange={handleChange('seekingDegree')}
                                                 className={classes.textFieldInner}
                                             />
                                         </FormControl>
@@ -246,10 +223,32 @@ export default function ReviewMake() {
                                                 variant="outlined"
                                                 label="Work Type"
                                                 required
-                                                value={values.work}
-                                                onChange={handleChange('work')}
+                                                value={values.experienceType}
+                                                onChange={handleChange('experienceType')}
                                                 className={classes.textFieldInner}
                                             />
+                                        </FormControl>
+                                    </Grid>
+
+                                    <Grid item>
+                                        <FormControl required className={classes.textField2}>
+
+                                            <Select
+                                                variant="outlined"
+
+                                                required
+                                                value={values.experienceRating}
+                                                onChange={handleChange('experienceRating')}
+                                                className={classes.textFieldInner}
+                                            >
+                                                <MenuItem value={0}> 0 </MenuItem>
+                                                <MenuItem value={1}> 1 </MenuItem>
+                                                <MenuItem value={2}> 2 </MenuItem>
+                                                <MenuItem value={3}> 3 </MenuItem>
+                                                <MenuItem value={4}> 4 </MenuItem>
+                                                <MenuItem value={5}> 5 </MenuItem>
+                                            </Select>
+                                            <InputLabel className={classes.labelPadding1}>Experience Rating</InputLabel>
                                         </FormControl>
                                     </Grid>
                                     
@@ -283,11 +282,32 @@ export default function ReviewMake() {
                                                 label="Recommendations, Tips, Experience, etc..."
                                                 defaultValue={''}
                                                 variant="outlined"
-                                                value={values.tips}
-                                                onChange={handleChange('tips')}
+                                                value={values.recommendation}
+                                                onChange={handleChange('recommendation')}
                                                 multiline
                                                 rows={10}
                                             />
+                                        </FormControl>
+                                    </Grid>
+
+                                    <Grid container direction='row' alignItems="center" justify='center' wrap="nowrap" className={classes.interviewInputs}>
+                                        <FormControl fullWidth>
+                                            <Select
+                                                variant="outlined"
+                                                label="Interview Difficulty Rating"
+                                                required
+                                                value={values.interviewDifficultyRating}
+                                                onChange={handleChange('interviewDifficultyRating')}
+                                                className={classes.textFieldInner}
+                                            >
+                                                <MenuItem value={0}> 0 </MenuItem>
+                                                <MenuItem value={1}> 1 </MenuItem>
+                                                <MenuItem value={2}> 2 </MenuItem>
+                                                <MenuItem value={3}> 3 </MenuItem>
+                                                <MenuItem value={4}> 4 </MenuItem>
+                                                <MenuItem value={5}> 5 </MenuItem>
+                                            </Select>
+                                            <InputLabel className={classes.labelPadding2}>Interview Difficulty Rating</InputLabel>
                                         </FormControl>
                                     </Grid>
 
@@ -298,7 +318,7 @@ export default function ReviewMake() {
                                     <Grid container direction='row' alignItems="center" wrap="nowrap" justify='center'>
                                         <Grid item>
                                             <Checkbox
-                                                checked={anonCheck}
+                                                checked={values.anonymous}
                                                 onChange={handleAnonCheck}
                                                 color='default'
                                             />
@@ -435,4 +455,10 @@ const useStyles = makeStyles((theme: Theme) =>
         cardSubtitle: {
             padding: theme.spacing(1)
         },
+        labelPadding1: {
+            paddingLeft: theme.spacing(3),
+        },
+        labelPadding2: {
+            paddingLeft: theme.spacing(2),
+        }
     }))
