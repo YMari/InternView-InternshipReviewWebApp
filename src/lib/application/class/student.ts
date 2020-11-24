@@ -11,15 +11,17 @@ export default class Student implements st.IStudent{
     private readonly PASSWORD_LENGTH: number = 6
     private readonly SALT_ROUNDS:number = 10
 
-    name: string
-    email: string
+    readonly name: string
+    readonly email: string
+    readonly password?: string
     passwordHash?: string
-    university?: IUniversity;
-    studyprogram?: IStudyProgram;
+    readonly university?: IUniversity;
+    readonly studyprogram?: IStudyProgram;
 
     constructor(st: st.IStudent){
         this.name = st.name;
         this.email = st.email;
+        this.password = st.password;
         this.passwordHash = st.passwordHash;
         this.university = st.university;
         this.studyprogram = st.studyprogram;
@@ -44,15 +46,15 @@ export default class Student implements st.IStudent{
     };
 
     validatePassword() {
-        return !this.passwordHash!;
+        return !this.password!;
     }
 
-    validatePasswordLength() {
-        return this.passwordHash.length < this.PASSWORD_LENGTH
+    validatePasswordLength() { 
+        return this.password.length < this.PASSWORD_LENGTH
     }
 
-    hashPassword() {
-        return bcrypt.hash(this.passwordHash, this.SALT_ROUNDS)
+    async hashPassword() {
+        this.passwordHash = await bcrypt.hash(this.passwordHash, this.SALT_ROUNDS)
        
     }
 

@@ -7,12 +7,13 @@ export interface IStudent {
     studyprogram?: IStudyProgram;
     universityId?: number;
     studyProgramId?: number;
+    password?:string;
     passwordHash?:string;
     toPlainObj?: {};
     hasValidEmail: () => boolean;
     validatePassword?: () => boolean;
     validatePasswordLength?: () => boolean;
-    hashPassword?: () => Promise<string>;
+    hashPassword?: () => Promise<void>;
     comparePassword?: (cr: ICredentials) => Promise<boolean>;
     createToken?: () => string
 }

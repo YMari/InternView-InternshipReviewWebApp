@@ -15,7 +15,7 @@ export default class AuthenticationService implements i.IAuthenticationService {
     private readonly _studentService: st.IStudentService
     private readonly _studentRepository: st.IStudentRepository
     private readonly _emailService: infrastruct.interfaces.IEmailService
-    private Student: Student;
+    
 
     constructor(
         @inject(st.S_TYPES.IStudentService) studentService: st.IStudentService,
@@ -30,10 +30,10 @@ export default class AuthenticationService implements i.IAuthenticationService {
 
     async register(st: st.IStudent): Promise<i.IAuthenticationServiceOutput<st.IStudent>>{
 
-        this.Student = new Student(st)
+        const student = new Student(st)
 
         // Validate email can be moved to IStuden class in future
-        if (this.Student.hasValidEmail()){
+        if (student.hasValidEmail()){
             return {
                 status:ERROR_MESSAGE,
                 message:"invalid email",
@@ -42,7 +42,7 @@ export default class AuthenticationService implements i.IAuthenticationService {
         }
 
         // Validate Password
-        if (this.Student.validatePassword()) {
+        if (student.validatePassword()) {
             return {
                 status:ERROR_MESSAGE,
                 message: "no password given",
@@ -51,7 +51,7 @@ export default class AuthenticationService implements i.IAuthenticationService {
         }
 
         // Can be moved to student class instance
-        if (this.Student.validatePasswordLength()) {
+        if (student.validatePasswordLength()) {
             return {
                 status:ERROR_MESSAGE,
                 message: "password has too few characters",
@@ -61,7 +61,7 @@ export default class AuthenticationService implements i.IAuthenticationService {
 
         // Use Student Service
         // can be moved to IStudent class instance
-        st.passwordHash = await this.Student.hashPassword()
+        student.hashPassword()
         return await this._studentService.registerStudent(st);
 
     }
@@ -77,11 +77,11 @@ export default class AuthenticationService implements i.IAuthenticationService {
                 data: null
             }
         }
-        this.Student = new Student(student);
+        const st = new Student(student);
 
         // can be moved to student class instance
-        if(this.Student.comparePassword(cr)){
-            const token = this.Student.createToken()
+        if(st.comparePassword(cr)){
+            const token = st.createToken()
             const galleta = cookie.serialize('auth', token, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV !== 'development', 
