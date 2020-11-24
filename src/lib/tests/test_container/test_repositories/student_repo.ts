@@ -7,6 +7,7 @@ import 'reflect-metadata'
 @injectable()
 class StudentRepository implements st.IStudentRepository {
     
+    db = {}
     
     async getStudentByEmailWithPassword(st_email: string): Promise<st.IStudent>{
         try{

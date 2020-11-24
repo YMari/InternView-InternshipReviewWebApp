@@ -1,10 +1,12 @@
 import * as st from '../../../domain/student'
-import db from '../../../infrastructure/prisma-cli'
 import { injectable } from 'inversify'
 import 'reflect-metadata'
 
 @injectable()
 class StudyProgramRepository implements st.IStudyProgramRepository {
+
+    db = {};
+
     
     async getStudyProgramById(sp_id: number) : Promise<st.IStudyProgram>{
 
