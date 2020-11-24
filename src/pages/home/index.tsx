@@ -5,13 +5,15 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import GradeIcon from '@material-ui/icons/Grade';
 import TopReview from '../../lib/ui/components/topReview';
 import TopCompany from '../../lib/ui/components/topCompany';
+import NavBar from '../../lib/ui/components/appbar';
+import Search from '../../lib/ui/components/appbar/search';
 
 export default function Home() {
     const classes = useStyles();
     return(
         <>
         <Box width="100%" maxHeight="750" position="absolute" top={0} >
-            <img src="/backgroundImage.png" style={{width:"100%",maxHeight:750, minHeight:600, opacity:0.5, objectFit:'cover', position:"relative", zIndex:-1000}}/>
+            <img src="/backgroundImage.png" className={classes.backImage}/>
         </Box>
 
         <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.gridFull}>
@@ -21,19 +23,19 @@ export default function Home() {
                     InternView
                 </Typography>
             </Grid>
+
             <Grid item className={classes.subtitle} style={{textAlign:"center"}} >
                 <Typography variant="h5" style={{textAlign:"center"}}>
                     The best platform to research companies for students.<br />
                     Made by students for students.
                 </Typography>
             </Grid>
+            
             <Grid item className={classes.buttonSearch}>
-                <Button variant="contained" color="primary">
+                <Button variant="contained" color="primary" onClick={() => document.getElementById("appbar-search").focus()}>
                     Start Searching
                 </Button>
-            </Grid>
-
-            {/* justify="space-around" */}      
+            </Grid>   
             
         </Grid>
         <Grid container direction='row' justify="space-around" alignContent="center" className={classes.gridCards}>
@@ -61,17 +63,6 @@ export default function Home() {
                                         </Grid>
                                         
                                     </Grid>
-
-                                    <Link href="/profile/">
-                                        <Button>
-                                        user profile
-                                        </Button>
-                                    </Link>
-                                    <Link href="/company/Test">
-                                        <Button>
-                                        company profile
-                                        </Button>
-                                    </Link>
 
                                 </Card>
                             </Grid>
@@ -112,6 +103,15 @@ export default function Home() {
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
+        backImage: {
+            width:"100%",
+            maxHeight:750, 
+            minHeight:600, 
+            opacity:0.5,
+            objectFit:'cover', 
+            position:"relative", 
+            zIndex:-1000,
+        },
         gridFull: {
             marginTop: 40
         },
