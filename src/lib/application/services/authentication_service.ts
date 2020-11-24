@@ -3,11 +3,11 @@ import * as e from '../entities'
 import * as st from '../../domain/student'
 import * as infrastruct from '../../infrastructure';
 import {injectable, inject} from 'inversify'
-import * as bcrypt from 'bcrypt'
 import {sign, verify} from 'jsonwebtoken'
 import cookie from 'cookie'
 import { AUTHENTICATION_FAILED, AUTHENTICATION_SUCCESS, ERROR_MESSAGE, OK_MESSAGE } from '../constants'
 import 'reflect-metadata'
+import Student from '../class/student';
 
 @injectable()
 export default class AuthenticationService implements i.IAuthenticationService {
@@ -15,8 +15,7 @@ export default class AuthenticationService implements i.IAuthenticationService {
     private readonly _studentService: st.IStudentService
     private readonly _studentRepository: st.IStudentRepository
     private readonly _emailService: infrastruct.interfaces.IEmailService
-    private readonly PASSWORD_LENGTH: number = 6
-    private readonly SALT_ROUNDS:number = 10
+    private Student: Student;
 
     constructor(
         @inject(st.S_TYPES.IStudentService) studentService: st.IStudentService,
@@ -26,13 +25,14 @@ export default class AuthenticationService implements i.IAuthenticationService {
     ){
         this._studentService = studentService
         this._studentRepository = studentRepository
+        this.Student = new Student(this._studentService,this._studentRepository);
     }
     
+
     async register(st: st.IStudent): Promise<i.IAuthenticationServiceOutput<st.IStudent>>{
 
         // Validate email can be moved to IStuden class in future
-        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if (!re.test(st.email?.toLowerCase())){
+        if (this.Student.hasValidEmail(st)){
             return {
                 status:ERROR_MESSAGE,
                 message:"invalid email",
@@ -41,7 +41,7 @@ export default class AuthenticationService implements i.IAuthenticationService {
         }
 
         // Validate Password
-        if (!st.passwordHash!) {
+        if (this.Student.validatePassword(st)) {
             return {
                 status:ERROR_MESSAGE,
                 message: "no password given",
@@ -50,7 +50,7 @@ export default class AuthenticationService implements i.IAuthenticationService {
         }
 
         // Can be moved to student class instance
-        if (st.passwordHash.length < this.PASSWORD_LENGTH) {
+        if (this.Student.validatePasswordLength(st)) {
             return {
                 status:ERROR_MESSAGE,
                 message: "password has too few characters",
@@ -60,7 +60,9 @@ export default class AuthenticationService implements i.IAuthenticationService {
 
         // Use Student Service
         // can be moved to IStudent class instance
-        st.passwordHash = await bcrypt.hash(st.passwordHash, this.SALT_ROUNDS)
+        this.Student.hashPassword(st).then(res=>{
+            st.passwordHash = res;
+        })
         return await this._studentService.registerStudent(st);
 
     }
@@ -78,9 +80,8 @@ export default class AuthenticationService implements i.IAuthenticationService {
         }
 
         // can be moved to student class instance
-        const passwordIsCorrect = await bcrypt.compare(cr.password, student.passwordHash)
-        if(passwordIsCorrect){
-            const token = sign({sub: student.email}, process.env.SECRET_KEY, {expiresIn: '1h'})
+        if(this.Student.hasCorrectPassword(cr, student)){
+            const token = this.Student.createToken(student)
             const galleta = cookie.serialize('auth', token, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV !== 'development', 
