@@ -10,11 +10,7 @@ export default function TopCompany() {
         <Grid container direction='row' justify='space-between' alignItems='center' wrap="nowrap">
 
             <Grid item className={classes.accountIconItem}>
-                <Link href="/companies/">
-                    <Button className={classes.buttonAccount}>
-                        <AccountCircle className={classes.accountIcon}/>
-                    </Button>
-                </Link>
+                <AccountCircle className={classes.accountIcon}/>
             </Grid>
 
             <Grid item className={classes.companyNameItem}>

@@ -15,22 +15,8 @@ export default function TopReview() {
         <Grid container direction='row' justify='space-between' alignItems='center' wrap="nowrap">
 
             <Grid item className={classes.accountIconItem}>
-                <Link href="/profile/">
-                    <Button className={classes.buttonAccount}>
-                        <AccountCircle className={classes.accountIcon}/>
-                    </Button>
-                </Link>
+                <AccountCircle className={classes.accountIcon}/>
             </Grid>
-
-            {/* <Grid item className={classes.reviewSummaryItem}>
-                <Link href="/reviews/">
-                    <Button className={classes.buttonReview}>
-                        <Card variant='outlined' className={classes.reviewSummary}>
-                            <Typography className={classes.reviewText}>Sample Text</Typography>
-                        </Card>
-                    </Button>
-                </Link>
-            </Grid> */}
 
             <Grid item className={classes.reviewSummaryItem}>
                 <Button onClick={handleOpenModal} className={classes.buttonReview}>

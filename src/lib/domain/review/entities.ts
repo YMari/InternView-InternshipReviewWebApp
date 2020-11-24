@@ -2,10 +2,11 @@ import { ICompany } from "../company";
 import { IStudent, IStudyProgram, IUniversity } from "../student";
 
 export interface IReview {
+    id?: number 
     recommendation: string; 
     interviewQuestions?: string[];
     dateCreated?: Date;
-    anonymous: boolean;
+    anonymous?: boolean;
     experienceType: string;
     seekingDegree: string;
     location: string;
@@ -18,5 +19,5 @@ export interface IReview {
     studyProgram?: IStudyProgram;
     university?: IUniversity;
     company: ICompany;
-    author: IStudent;
+    author?: IStudent;
 }
