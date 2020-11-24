@@ -96,9 +96,10 @@ export default function ReviewMake() {
                         </Grid>
 
                         <Grid item>
-                            <FormControl variant="outlined" required className={classes.textField1}>
+                            <FormControl required className={classes.textField1}>
                                 <TextField
                                     disabled
+                                    variant="outlined"
                                     label="Company"
                                     value={"Company name"}
                                     InputProps={{
