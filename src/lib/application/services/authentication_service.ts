@@ -62,7 +62,7 @@ export default class AuthenticationService implements i.IAuthenticationService {
         // Use Student Service
         // can be moved to IStudent class instance
         student.hashPassword()
-        return await this._studentService.registerStudent(st);
+        return await this._studentService.registerStudent(student);
 
     }
 

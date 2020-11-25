@@ -10,7 +10,7 @@ export interface IStudent {
     password?:string;
     passwordHash?:string;
     toPlainObj?: ()=> any;
-    hasValidEmail: () => boolean;
+    hasValidEmail?: () => boolean;
     validatePassword?: () => boolean;
     validatePasswordLength?: () => boolean;
     hashPassword?: () => Promise<void>;

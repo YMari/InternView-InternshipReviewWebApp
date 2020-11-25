@@ -17,6 +17,8 @@ export default class Student implements st.IStudent{
     passwordHash?: string
     readonly university?: IUniversity;
     readonly studyprogram?: IStudyProgram;
+    readonly universityId?: number
+    readonly studyProgramId?: number
 
     constructor(st: st.IStudent){
         this.name = st.name;
@@ -25,7 +27,8 @@ export default class Student implements st.IStudent{
         this.passwordHash = st.passwordHash;
         this.university = st.university;
         this.studyprogram = st.studyprogram;
-        
+        this.universityId = st.universityId
+        this.studyProgramId = st.studyProgramId
     }
 
     toPlainObj(){ 
@@ -34,7 +37,6 @@ export default class Student implements st.IStudent{
             email: this.email,
             university: this.university,
             studyprogram : this.studyprogram
-
         }
     }
 
@@ -46,7 +48,7 @@ export default class Student implements st.IStudent{
     };
 
     validatePassword() {
-        return !this.password!;
+        return this.password === null || this.password === undefined;
     }
 
     validatePasswordLength() { 
@@ -54,8 +56,8 @@ export default class Student implements st.IStudent{
     }
 
     async hashPassword() {
-        this.passwordHash = await bcrypt.hash(this.passwordHash, this.SALT_ROUNDS)
-       
+        this.passwordHash = await bcrypt.hash(this.password, this.SALT_ROUNDS)
+        console.log(this.passwordHash)
     }
 
     async comparePassword(cr: e.ICredentials) {
@@ -63,7 +65,6 @@ export default class Student implements st.IStudent{
     }
 
     createToken() {
-        
         return sign({sub: this.email}, process.env.SECRET_KEY, {expiresIn: '1h'})
     }
 
