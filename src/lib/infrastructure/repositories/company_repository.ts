@@ -33,6 +33,7 @@ class CompanyRepository implements com.ICompanyRepository {
                 }
             }, 
             select: {
+                id:true,
                 name:true, 
                 imageUrl:true
             }

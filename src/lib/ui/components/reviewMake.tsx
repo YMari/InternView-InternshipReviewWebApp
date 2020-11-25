@@ -1,22 +1,33 @@
-import { Box, Button, Card, Checkbox, createStyles, FormControl, Grid, InputAdornment, InputLabel, makeStyles, MenuItem, OutlinedInput, Select, TextField, Theme, Typography } from '@material-ui/core';
+import { Box, Button, Card, Checkbox, createStyles, FormControl, Grid, InputAdornment, InputLabel, makeStyles, MenuItem, OutlinedInput, Select, TextField, Theme, Typography, CircularProgress } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { AccountCircle } from '@material-ui/icons';
 import ChipInput from 'material-ui-chip-input';
 import {useUser} from '../hooks'
 import { useRouter } from 'next/router';
-import {ReviewMakeModel} from '../viewModels/reviewViewModels';
+import {ReviewMakeModel, ReviewViewModel} from '../viewModels/reviewViewModels';
+import axios from 'axios';
+import { mutate } from 'swr'
 
+interface Props {
+    company: {
+        id: number,
+        name: string,
+        imageUrl: string
+    },
+    close: () => any
+}
 
-export default function ReviewMake() {
+export default function ReviewMake(props:Props) {
 
     const classes = useStyles();
     const user = useUser();
     const router = useRouter();
+    const [loading, setLoading] = useState<boolean>(false)
 
     const [values, setValues] = React.useState<ReviewMakeModel>({
         reviewTitle: '',
         acceptedStatus: 'No Offer',
-        location: '',
+        location: null,
         duration: null,
         salary: null,
         seekingDegree: '',
@@ -46,6 +57,38 @@ export default function ReviewMake() {
         setValues({...values, anonymous: event.target.checked});
     };
 
+    const create = async () => {
+        
+        console.log(props.company)
+        const toCreate: ReviewViewModel = {...values, 
+            interviewQuestions:chipData, 
+            company: props.company,
+        }
+        toCreate.salary = Number(values.salary),
+        toCreate.duration = Number(values.duration),
+        toCreate.anonymous = values.anonymous?true:false
+        console.log(toCreate)
+        setLoading(true)
+        axios.post("/api/review", toCreate)
+        .then((res) => res.data)
+        .then(()=>{mutate(`/api/company/${router.query.name}/reviews`)})
+        .then(()=>{close();setLoading(false);})
+        .catch(err => {
+            if (err.response) {
+                // client received an error response (5xx, 4xx)
+                alert(err.response.data.message)
+                close()
+            } else if (err.request) {
+                // client never received a response, or request never left
+                console.log(err.request)
+            } else {
+                // anything else
+                console.log(err)
+            }
+            setLoading(false)
+        })
+    }
+
     useEffect(()=>{
         if (!user) {
             router.push('/login')
@@ -57,7 +100,7 @@ export default function ReviewMake() {
         <Box className={classes.main}>
             <Card className={classes.cardMain}>
         
-                
+                { !loading? <>
                 <Grid container direction='column' alignItems="center">
                     <Typography className={classes.cardTitle}>Review Creator</Typography>
                 </Grid>
@@ -152,7 +195,14 @@ export default function ReviewMake() {
 
                                     <Grid item>
                                         <FormControl required className={classes.textField2}>
-                                            <TextField variant="outlined" label="Location" required className={classes.textFieldInner}/>
+                                            <TextField 
+                                            variant="outlined" 
+                                            label="Location" 
+                                            required 
+                                            className={classes.textFieldInner}
+                                            value={values.location}
+                                            onChange={handleChange('location')}
+                                            />
                                         </FormControl>
                                     </Grid>
 
@@ -320,7 +370,7 @@ export default function ReviewMake() {
                                     </Grid>         
                                 </Grid>
                                 <Grid item >
-                                    <Button className={classes.buttonSubmit}>
+                                    <Button onClick={create} className={classes.buttonSubmit}>
                                         <Typography>Submit</Typography>
                                     </Button>
                                 </Grid>
@@ -329,7 +379,8 @@ export default function ReviewMake() {
                     </Grid>
 
                 </Grid>
-            
+                </>
+                : <Grid container justify="center" alignItems="center"><CircularProgress /></Grid> }
             </Card>
         </Box>
         </>

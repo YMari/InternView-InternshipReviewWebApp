@@ -62,7 +62,8 @@ class StudentService implements i.IStudentService {
         }
 
         const output = await this._reviewRepository.getReviewByAuthorAndCompany(st.email, companyName)
-        if(output) {
+        if(output?.length > 0) {
+            console.log(output)
             const currentDate:Date = new Date()
             const latest = output[0]
             let months;
@@ -73,7 +74,7 @@ class StudentService implements i.IStudentService {
             return months > this.TIME_LIMIT
         }
 
-        return output === []
+        return true
 
     }
     

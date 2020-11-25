@@ -134,7 +134,9 @@ export default function Company() {
                                                             <ClearRounded fontSize='large' className={classes.closeModalIcon}/>
                                                         </Button>
                                                     </Grid>
-                                                    <ReviewMake/>
+                                                    {
+                                                        data?<ReviewMake close={handleCloseModal} company={data}/>:<>Loading ,,,</>
+                                                    }
                                                 </Grid>
                                             </Fade>
                                         </Modal>
