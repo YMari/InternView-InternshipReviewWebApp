@@ -1,8 +1,7 @@
-import { Backdrop, Box, Button, Card, CardHeader, Checkbox, Chip, createStyles, Fade, FormControl, Grid, InputLabel, makeStyles, Menu, MenuItem, Modal, OutlinedInput, TextField, Theme, Typography } from '@material-ui/core';
+import { Backdrop, Box, Button, Card, Checkbox, createStyles, Fade, FormControl, Grid, makeStyles, Menu, MenuItem, Modal, TextField, Theme, Typography } from '@material-ui/core';
 import Link from 'next/link';
 import React from 'react';
-import { ArrowDownward, ArrowUpward, AccountCircle, Grade, ArrowDropDown } from '@material-ui/icons';
-import theme from '../../lib/ui/theme';
+import { ArrowDownward, ArrowUpward, AccountCircle, ArrowDropDown } from '@material-ui/icons';
 
 export default function Review() {
     const classes = useStyles();

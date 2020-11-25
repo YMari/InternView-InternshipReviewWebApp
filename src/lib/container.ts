@@ -5,7 +5,6 @@ import * as app from './application'
 import * as infrastruct from './infrastructure';
 import * as md from './middleware'
 import * as re from './domain/review'
-import { R_OK } from 'constants';
 
 interface ILibContainer {
 

@@ -1,10 +1,11 @@
 import { Backdrop, Box, Button, Card, createStyles, Fade, fade, Grid, InputBase, makeStyles, Modal, Theme, Typography } from "@material-ui/core";
-import { ArrowDownward, ArrowUpward, AccountCircle, Grade, AddCircle, ClearRounded } from '@material-ui/icons';
+import { ArrowDownward, ArrowUpward, AccountCircle, AddCircle, ClearRounded } from '@material-ui/icons';
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
+import RatingDisplay from "../../lib/ui/components/ratingDisplay";
 import ReviewMake from "../../lib/ui/components/reviewMake";
 import ReviewSummary from "../../lib/ui/components/reviewSummary";
-import {useUser} from '../../lib/ui/hooks'
+import { useUser } from '../../lib/ui/hooks'
 
 export default function Profile() {
     const classes = useStyles();
@@ -54,11 +55,7 @@ export default function Profile() {
 
                             <Grid item>
                                 <Grid container direction='row' alignItems="center" wrap="nowrap" justify='center' className={classes.accRatingPts}>
-                                    <Grade fontSize="large" className={classes.ratingIcon}/>
-                                    <Grade fontSize="large" className={classes.ratingIcon}/>
-                                    <Grade fontSize="large" className={classes.ratingIcon}/>
-                                    <Grade fontSize="large" className={classes.ratingIcon}/>
-                                    <Grade fontSize="large" className={classes.ratingIcon}/>
+                                    <RatingDisplay rating={5} size="large" color="secondary"/>
                                 </Grid>
                             </Grid>
 

@@ -1,11 +1,12 @@
 import { Backdrop, Box, Button, Card, createStyles, Fade, fade, Grid, InputBase, makeStyles, Modal, Theme, Typography} from "@material-ui/core";
-import { ArrowDownward, ArrowUpward, AccountCircle, Grade, AddCircle, ClearRounded } from '@material-ui/icons';
+import { ArrowDownward, ArrowUpward, AccountCircle, AddCircle, ClearRounded } from '@material-ui/icons';
 import React from "react";
 import ReviewMake from "../../lib/ui/components/reviewMake";
 import ReviewSummary from "../../lib/ui/components/reviewSummary";
-import  useSWR from 'swr'
+import useSWR from 'swr'
 import { useRouter } from 'next/router'
 import axios from 'axios'
+import RatingDisplay from "../../lib/ui/components/ratingDisplay";
 
 export default function Company() {
     const classes = useStyles();
@@ -57,11 +58,7 @@ export default function Company() {
 
                             <Grid item>
                                 <Grid container direction='row' alignItems="center" wrap="nowrap" justify='center' className={classes.accRatingPts}>
-                                    <Grade fontSize="large" className={classes.ratingIcon}/>
-                                    <Grade fontSize="large" className={classes.ratingIcon}/>
-                                    <Grade fontSize="large" className={classes.ratingIcon}/>
-                                    <Grade fontSize="large" className={classes.ratingIcon}/>
-                                    <Grade fontSize="large" className={classes.ratingIcon}/>
+                                    <RatingDisplay rating={5} size="large" color="secondary"/>
                                 </Grid>
                             </Grid>
 

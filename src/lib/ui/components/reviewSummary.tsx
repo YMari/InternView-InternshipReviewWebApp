@@ -2,6 +2,7 @@ import { Backdrop, Box, Button, Card, createStyles, Fade, Grid, makeStyles, Moda
 import { ClearRounded, Grade } from "@material-ui/icons";
 import React from "react";
 import Review from "../../../pages/reviews";
+import RatingDisplay from "./ratingDisplay";
 
 export default function ReviewSummary() {
     const classes = useStyles();
@@ -22,11 +23,7 @@ export default function ReviewSummary() {
                                 <Typography className={classes.reviewTitle}>Review Title</Typography>
                             </Grid>
                             <Grid container direction='row' wrap="nowrap" justify='flex-end' className={classes.reviewGradeRow}>
-                                <Grade fontSize="small" className={classes.reviewGrade}/>
-                                <Grade fontSize="small" className={classes.reviewGrade}/>
-                                <Grade fontSize="small" className={classes.reviewGrade}/>
-                                <Grade fontSize="small" className={classes.reviewGrade}/>
-                                <Grade fontSize="small" className={classes.reviewGrade}/>
+                                <RatingDisplay rating={5} size="small" color="secondary"/>
                             </Grid>
                         </Grid>
 
