@@ -193,10 +193,10 @@ export default function Review(props: Props) {
                                     </Grid>
                                 </Grid>
                                 <Grid item >
-                                    <Grid container direction="row" >
+                                <Grid container direction='row' alignItems="center" wrap="nowrap">
                                         {
                                             props.forUpdate?
-                                            <Grid item>
+                                            <Grid item className={classes.buttonUpdateGrid}>
                                                 <Button  className={classes.buttonReport}>
                                                     <Typography>Update</Typography>
                                                 </Button>

@@ -519,5 +519,5 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         labelPadding2: {
             paddingLeft: theme.spacing(2),
-        }
+        },
     }))
