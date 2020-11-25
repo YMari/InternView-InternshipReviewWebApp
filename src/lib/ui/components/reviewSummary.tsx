@@ -3,6 +3,7 @@ import { ClearRounded, Grade } from "@material-ui/icons";
 import React from "react";
 import Review from "../../../pages/reviews";
 import {ReviewViewModel} from '../viewModels/reviewViewModels'
+import RatingDisplay from "./ratingDisplay";
 
 interface Props {
     review: ReviewViewModel
@@ -27,11 +28,7 @@ export default function ReviewSummary(props: Props) {
                                 <Typography className={classes.reviewTitle}>{props.review.reviewTitle}</Typography>
                             </Grid>
                             <Grid container direction='row' wrap="nowrap" justify='flex-end' className={classes.reviewGradeRow}>
-                                <Grade fontSize="small" className={classes.reviewGrade}/>
-                                <Grade fontSize="small" className={classes.reviewGrade}/>
-                                <Grade fontSize="small" className={classes.reviewGrade}/>
-                                <Grade fontSize="small" className={classes.reviewGrade}/>
-                                <Grade fontSize="small" className={classes.reviewGrade}/>
+                                <RatingDisplay rating={5} size="small" color="secondary"/>
                             </Grid>
                         </Grid>
 

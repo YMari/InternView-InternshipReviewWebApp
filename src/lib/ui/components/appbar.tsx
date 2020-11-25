@@ -1,15 +1,14 @@
-import { AppBar, Badge, Box, Button, ButtonGroup, createStyles, fade, Grid, IconButton, InputBase, makeStyles, Menu, MenuItem, Theme, Typography, Icon} from "@material-ui/core";
+import { AppBar, Box, Button, ButtonGroup, createStyles, fade, Grid, IconButton, InputBase, makeStyles, Menu, MenuItem, Theme, Typography } from "@material-ui/core";
 import Link from "next/link";
 import React, { useEffect } from "react";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import {useUser, useRequestService} from '../hooks'
 import {mutate} from 'swr'
-import  Search from './appbar/search'
+import Search from './appbar/search'
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
-import { PanoramaFishEye } from "@material-ui/icons";
-// import {ReactComponent as Logo} from "../../../../logoIcon.svg"
+
 
 export default function NavBar() {
     

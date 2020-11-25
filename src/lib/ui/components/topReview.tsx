@@ -1,6 +1,5 @@
 import { Backdrop, Box, Button, Card, createStyles, Fade, Grid, makeStyles, Modal, Theme, Typography } from "@material-ui/core";
 import { AccountCircle, ClearRounded, Grade } from "@material-ui/icons";
-import Link from "next/link";
 import React from "react";
 import Review from "../../../pages/reviews";
 

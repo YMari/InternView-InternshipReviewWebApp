@@ -1,12 +1,7 @@
-import { Box, Card, createStyles, fade, Grid, makeStyles, Theme, Typography, Button, CardContent, ButtonGroup, Divider, TextField, FormControl } from '@material-ui/core'
-import Link from 'next/link'
+import { Box, Card, createStyles, Grid, makeStyles, Theme, Typography, Button} from '@material-ui/core'
 import React from 'react'
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import GradeIcon from '@material-ui/icons/Grade';
 import TopReview from '../../lib/ui/components/topReview';
 import TopCompany from '../../lib/ui/components/topCompany';
-import NavBar from '../../lib/ui/components/appbar';
-import Search from '../../lib/ui/components/appbar/search';
 
 export default function Home() {
     const classes = useStyles();
