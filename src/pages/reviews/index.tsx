@@ -223,41 +223,40 @@ export default function Review(props: Props) {
                                         <Fade in={open}>
                                             <Card className={classes.modalCard}>
 
-                                                <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.modalGrid}>
-                                                    <Grid item className={classes.gridItem}>
-                                                        <Typography className={classes.modalTitle}>Why would you like to report this review?</Typography>
-                                                    </Grid>
-                                                    <Grid container direction='row' alignItems="center" justify='center' className={classes.gridItem}>
-                                                        <FormControl className={classes.textBox}>
-                                                            <TextField
-                                                                variant="outlined"
-                                                                multiline={true}
-                                                                rows={10}
-                                                            />
-                                                        </FormControl>
-                                                    </Grid>
-                                                    <Grid container direction='row' alignItems="center" wrap="nowrap" justify='flex-end'>
-                                                        <Grid item className={classes.modalButtonPos}>
-                                                            <Button className={classes.modalButton1}>
-                                                                <Typography>Report</Typography>
-                                                            </Button>
+                                                        <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.modalGrid}>
+                                                            <Grid item className={classes.gridItem}>
+                                                                <Typography className={classes.modalTitle}>Why would you like to report this review?</Typography>
+                                                            </Grid>
+                                                            <Grid container direction='row' alignItems="center" justify='center' className={classes.gridItem}>
+                                                                <FormControl className={classes.textBox}>
+                                                                    <TextField
+                                                                        variant="outlined"
+                                                                        multiline={true}
+                                                                        rows={10}
+                                                                    />
+                                                                </FormControl>
+                                                            </Grid>
+                                                            <Grid container direction='row' alignItems="center" wrap="nowrap" justify='flex-end'>
+                                                                <Grid item className={classes.modalButtonPos}>
+                                                                    <Button className={classes.modalButton1}>
+                                                                        <Typography>Report</Typography>
+                                                                    </Button>
+                                                                </Grid>
+                                                                <Grid item className={classes.modalButtonPos}>
+                                                                    <Button className={classes.modalButton2} onClick={handleCloseModal}>
+                                                                        <Typography>Cancel</Typography>
+                                                                    </Button>
+                                                                </Grid>
+                                                            </Grid>
                                                         </Grid>
                                                         
-                                        
-                                                        <Grid item className={classes.modalButtonPos}>
-                                                            <Button className={classes.modalButton2} onClick={handleCloseModal}>
-                                                                <Typography>Cancel</Typography>
-                                                            </Button>
-                                                        </Grid>
-                                                    </Grid>
-                                                </Grid>
-                                                
-                                            </Card>
-                                        </Fade>
+                                                    </Card>
+                                                </Fade>
 
-                                    </Modal>
-                                </Grid>
-                            </Grid>
+                                            </Modal>
+                                        </Grid>
+                                    </Grid>
+                                
                         </Card>
                     </Grid>
 
@@ -332,6 +331,14 @@ const useStyles = makeStyles((theme: Theme) =>
         ratingRow: {
             paddingLeft: theme.spacing(2),
             paddingRight: theme.spacing(2),
+        },
+        buttonUpdateGrid: {
+            paddingRight: theme.spacing(1)
+        },
+        buttonUpdate: {
+            backgroundColor: theme.palette.background.default,
+            color: theme.palette.primary.contrastText,
+            padding: theme.spacing(1),
         },
         buttonReport: {
             backgroundColor: theme.palette.primary.main,
