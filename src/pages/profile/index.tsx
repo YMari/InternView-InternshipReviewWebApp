@@ -143,7 +143,7 @@ export default function Profile() {
                             {/* v Reviews Here v */}
                             {data?.map((val, index) => (
                                 <Grid item className={classes.cardItem}> <ReviewSummary
-                                    review={val} key={index*8900} 
+                                    review={val} key={index*8900} forUpdate={true}
                                 /></Grid>
                             ))}
                             {/* ^ Reviews Here ^ */}

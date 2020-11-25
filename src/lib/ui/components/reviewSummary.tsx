@@ -6,15 +6,29 @@ import {ReviewViewModel} from '../viewModels/reviewViewModels'
 import RatingDisplay from "./ratingDisplay";
 
 interface Props {
-    review: ReviewViewModel
+    review: ReviewViewModel,
+    forUpdate?: boolean 
 }
 
 export default function ReviewSummary(props: Props) {
     const classes = useStyles();
-
     const [open, setOpen] = React.useState(false)
     const handleOpenModal = () => {setOpen(true)}
     const handleCloseModal = () => {setOpen(false)}
+
+    const text_truncate = function(str, length, ending=null) {
+        if (length == null) {
+          length = 100;
+        }
+        if (ending == null) {
+          ending = '...';
+        }
+        if (str.length > length) {
+          return str.substring(0, length - ending.length) + ending;
+        } else {
+          return str;
+        }
+    };
 
     return(
         <Grid item className={classes.cardItem}>
@@ -25,7 +39,7 @@ export default function ReviewSummary(props: Props) {
 
                         <Grid container direction='row' alignItems="center" wrap="nowrap">
                             <Grid container direction='row' alignItems="center" wrap="nowrap">
-                                <Typography className={classes.reviewTitle}>{props.review.reviewTitle}</Typography>
+                                <Typography className={classes.reviewTitle}>{text_truncate(props.review.reviewTitle, 15)}</Typography>
                             </Grid>
                             <Grid container direction='row' wrap="nowrap" justify='flex-end' className={classes.reviewGradeRow}>
                                 <RatingDisplay rating={5} size="small" color="secondary"/>
@@ -39,7 +53,7 @@ export default function ReviewSummary(props: Props) {
                             <Typography className={classes.reviewDate}>Posted on: {props.review.dateCreated}</Typography>
                         </Grid>
                         <Grid container direction='row' alignItems="center" wrap="nowrap" zeroMinWidth>
-                            <Typography noWrap className={classes.reviewSummary}>{props.review.recommendation}</Typography>
+                            <Typography noWrap className={classes.reviewSummary}>{text_truncate(props.review.recommendation, 15)}</Typography>
                         </Grid>
 
                     </Grid>
@@ -62,7 +76,7 @@ export default function ReviewSummary(props: Props) {
                                 <ClearRounded fontSize='large' className={classes.closeModalIcon}/>
                             </Button>
                         </Box>
-                            <Review review={props.review} />
+                            <Review forUpdate={props.forUpdate} review={props.review} />
                         </>
                     </Fade>
                 </Modal>

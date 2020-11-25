@@ -6,7 +6,8 @@ import { ReviewViewModel } from '../../lib/ui/viewModels/reviewViewModels';
 import { ArrowDownward, ArrowUpward, AccountCircle, ArrowDropDown } from '@material-ui/icons';
 
 interface Props {
-    review: ReviewViewModel
+    review: ReviewViewModel,
+    forUpdate?: boolean
 }
 
 export default function Review(props: Props) {
@@ -192,9 +193,23 @@ export default function Review(props: Props) {
                                     </Grid>
                                 </Grid>
                                 <Grid item >
-                                    <Button  className={classes.buttonReport} onClick={handleOpenModal}>
-                                        <Typography>Report</Typography>
-                                    </Button>
+                                    <Grid container direction="row" >
+                                        {
+                                            props.forUpdate?
+                                            <Grid item>
+                                                <Button  className={classes.buttonReport}>
+                                                    <Typography>Update</Typography>
+                                                </Button>
+                                            </Grid>
+                                            :
+                                            <></>
+                                        }
+                                        <Grid item>
+                                            <Button  className={classes.buttonReport} onClick={handleOpenModal}>
+                                                <Typography>Report</Typography>
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
                                     <Modal
                                     open={open}
                                     onClose={handleCloseModal}
@@ -227,6 +242,8 @@ export default function Review(props: Props) {
                                                                 <Typography>Report</Typography>
                                                             </Button>
                                                         </Grid>
+                                                        
+                                        
                                                         <Grid item className={classes.modalButtonPos}>
                                                             <Button className={classes.modalButton2} onClick={handleCloseModal}>
                                                                 <Typography>Cancel</Typography>

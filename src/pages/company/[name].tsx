@@ -135,7 +135,8 @@ export default function Company() {
                                                         </Button>
                                                     </Grid>
                                                     {
-                                                        data?<ReviewMake close={handleCloseModal} company={data}/>:<>Loading ,,,</>
+                                                        data?<ReviewMake 
+                                                        close={handleCloseModal} company={data}/>:<>Loading ,,,</>
                                                     }
                                                 </Grid>
                                             </Fade>

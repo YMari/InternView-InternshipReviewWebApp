@@ -1,5 +1,6 @@
 
 interface ReviewMakeModel {
+    id?:number,
     reviewTitle: string;
     acceptedStatus: string;
     location: string;

@@ -14,7 +14,10 @@ interface Props {
         name: string,
         imageUrl: string
     },
-    close: () => any
+    forUpdate?: boolean,
+    close: () => any,
+    default?: ReviewViewModel,
+    id?: number
 }
 
 export default function ReviewMake(props:Props) {
@@ -25,17 +28,17 @@ export default function ReviewMake(props:Props) {
     const [loading, setLoading] = useState<boolean>(false)
 
     const [values, setValues] = React.useState<ReviewMakeModel>({
-        reviewTitle: '',
-        acceptedStatus: 'No Offer',
-        location: null,
-        duration: null,
-        salary: null,
-        seekingDegree: '',
-        experienceType: '',
-        recommendation: '',
-        experienceRating: null,
-        interviewDifficultyRating: null,
-        anonymous: false,
+        reviewTitle: props.default?props.default.reviewTitle:'',
+        acceptedStatus: props.default?props.default.acceptedStatus:'',
+        location: props.default?props.default.location:'',
+        duration: props.default?props.default.duration:0,
+        salary: props.default?props.default.salary:0,
+        seekingDegree: props.default?props.default.seekingDegree:'',
+        experienceType: props.default?props.default.experienceType:'',
+        recommendation: props.default?props.default.recommendation:'',
+        experienceRating: props.default?props.default.experienceRating:0,
+        interviewDifficultyRating: props.default?props.default.interviewDifficultyRating:0,
+        anonymous: props.default?props.default.anonymous:true,
     });
 
     const handleChange = (prop: keyof ReviewMakeModel) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,9 +60,7 @@ export default function ReviewMake(props:Props) {
         setValues({...values, anonymous: event.target.checked});
     };
 
-    const create = async () => {
-        
-        console.log(props.company)
+    const makeModel = () => {
         const toCreate: ReviewViewModel = {...values, 
             interviewQuestions:chipData, 
             company: props.company,
@@ -67,6 +68,14 @@ export default function ReviewMake(props:Props) {
         toCreate.salary = Number(values.salary),
         toCreate.duration = Number(values.duration),
         toCreate.anonymous = values.anonymous?true:false
+        return toCreate
+    }
+
+    const create = async () => {
+        
+        console.log(props.company)
+        const toCreate = makeModel()
+
         console.log(toCreate)
         setLoading(true)
         axios.post("/api/review", toCreate)
@@ -88,6 +97,13 @@ export default function ReviewMake(props:Props) {
             setLoading(false)
         })
     }
+
+    const update = async () => {
+        const toCreate = makeModel()
+        setLoading(true)
+        
+        //axios.put()
+    } 
 
     useEffect(()=>{
         if (!user) {
