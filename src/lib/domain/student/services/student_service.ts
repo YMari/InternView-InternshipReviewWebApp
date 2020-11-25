@@ -107,12 +107,7 @@ class StudentService implements i.IStudentService {
             output =  {
                 status: status,
                 message: message,
-                data:{
-                    email:result.email,
-                    name:result.name,
-                    university:result.university,
-                    studyprogram:result.studyprogram
-                    }
+                data:st.toPlainObj()
                 };
              }
              

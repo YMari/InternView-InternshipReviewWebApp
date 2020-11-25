@@ -6,10 +6,12 @@ import ReviewSummary from "../../lib/ui/components/reviewSummary";
 import  useSWR from 'swr'
 import { useRouter } from 'next/router'
 import axios from 'axios'
+import { ReviewViewModel } from "../../lib/ui/viewModels/reviewViewModels";
 
 export default function Company() {
     const classes = useStyles();
     const router = useRouter()
+
     const { data } = useSWR(`/api/company?search=${router.query.name}`, async (url:string) => {
 
         const result = await axios.get(url)
@@ -20,6 +22,19 @@ export default function Company() {
         router.push("/")
 
     })
+
+    const { data: reviewData } = useSWR(`/api/company/${router.query.name}/reviews`, async (url)=>{
+        const res = await axios.get(url)
+       
+        if (res.data) {
+            console.log(res.data.data)
+            return res.data.data as ReviewViewModel[]
+        }else{
+            alert("Error ocurred loading")
+            router.push('/')
+        }
+    })
+    
 
     const [open, setOpen] = React.useState(false);
     
@@ -131,13 +146,14 @@ export default function Company() {
                                 </Grid>
                             </Grid>
 
-                            {/* v Reviews Here v */}
 
-                            {/*<Grid item className={classes.cardItem}> <ReviewSummary/></Grid>
-                            <Grid item className={classes.cardItem}> <ReviewSummary/></Grid>
-                            <Grid item className={classes.cardItem}> <ReviewSummary/></Grid> */}
-
-                            {/* ^ Reviews Here ^ */}
+                            {
+                                reviewData?.map((val, index) => (
+                                    <Grid key={index} item className={classes.cardItem}> 
+                                        <ReviewSummary review={val} />
+                                    </Grid>
+                                ))
+                            }
                             
                         </Grid>
                     </Card>

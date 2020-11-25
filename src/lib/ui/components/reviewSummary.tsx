@@ -36,7 +36,7 @@ export default function ReviewSummary(props: Props) {
                         </Grid>
 
                         <Grid container direction='row' alignItems="center" wrap="nowrap">
-                            <Typography className={classes.reviewCompany}>Company: {props.review.company.imageUrl} {props.review.company.name}</Typography>
+                            <Typography className={classes.reviewCompany}>Company:{props.review.company.name}</Typography>
                         </Grid>
                         <Grid container direction='row' alignItems="center" wrap="nowrap">
                             <Typography className={classes.reviewDate}>Posted on: {props.review.dateCreated}</Typography>
@@ -65,7 +65,7 @@ export default function ReviewSummary(props: Props) {
                                 <ClearRounded fontSize='large' className={classes.closeModalIcon}/>
                             </Button>
                         </Box>
-                        <Review/>
+                            <Review review={props.review} />
                         </>
                     </Fade>
                 </Modal>

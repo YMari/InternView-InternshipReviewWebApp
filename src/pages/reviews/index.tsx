@@ -3,8 +3,13 @@ import Link from 'next/link';
 import React from 'react';
 import { ArrowDownward, ArrowUpward, AccountCircle, Grade, ArrowDropDown } from '@material-ui/icons';
 import theme from '../../lib/ui/theme';
+import { ReviewViewModel } from '../../lib/ui/viewModels/reviewViewModels';
 
-export default function Review() {
+interface Props {
+    review: ReviewViewModel
+}
+
+export default function Review(props: Props) {
     const classes = useStyles();
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
@@ -15,52 +20,47 @@ export default function Review() {
     const handleOpenModal = () => {setOpen(true)}
     const handleCloseModal = () => {setOpen(false)}
 
+    
+
     return (
         <Box className={classes.main}>
             <Card className={classes.cardMain}>
                 
                 <Grid container direction='column' alignItems="center">
-                    <Typography className={classes.cardTitle}>Review Title</Typography>
+                    <Typography className={classes.cardTitle}>{props.review.reviewTitle}</Typography>
                 </Grid>
 
                 <Grid container direction='column' wrap="nowrap" className={classes.gridMain}>
 
                     <Grid container direction='column' wrap="nowrap">
-                        <Grid container direction='row' alignItems="center" wrap="nowrap" className={classes.accountGrid}>
-                            <Grid item>               
-                                <AccountCircle fontSize="large"/>
-                            </Grid>
-                            <Grid item>
-                                <Typography className={classes.name}>Student Name</Typography>
-                            </Grid>
-                        </Grid>
+                        
                         <Grid item>
                             <Link href="">
                                 <Button>   
-                                    <Typography>Company X</Typography>   
+                                    <Typography>Company: {props.review.company.name}</Typography>   
                                 </Button>
                             </Link>
                         </Grid>
 
                         <Grid container direction='row' alignItems="center" wrap="nowrap" justify='space-between' className={classes.checklist}>
                             <Grid item>
-                                <Typography>Date</Typography>
+                                <Typography>Date Posted: {props.review.dateCreated}</Typography>
                             </Grid>
                             <Grid item>
                                 <Grid container direction='row' alignItems="center" wrap="nowrap">
-                                    <Checkbox disabled/>
+                                    <Checkbox disabled checked={props.review.acceptedStatus === 'No offer'}/>
                                     <Typography>No offer</Typography>  
                                 </Grid>
                             </Grid>
                             <Grid item>
                                 <Grid container direction='row' alignItems="center" wrap="nowrap">
-                                    <Checkbox disabled/>
+                                    <Checkbox disabled checked={props.review.acceptedStatus === 'Accepted but declined'}/>
                                     <Typography>Accepted but declined</Typography>
                                 </Grid>
                             </Grid>
                             <Grid item> 
                                 <Grid container direction='row' alignItems="center" wrap="nowrap">
-                                    <Checkbox disabled checked/>
+                                    <Checkbox disabled checked={props.review.acceptedStatus === 'Worked'}/>
                                     <Typography>Worked</Typography> 
                                 </Grid>
                             </Grid>
@@ -73,24 +73,24 @@ export default function Review() {
                             <Grid container direction='row' alignItems="center" wrap="nowrap" className={classes.inner1Info}>
                                 <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.inner1InfoCol1}>
                                     <Grid item>
-                                        <Typography>Location: [text]</Typography>
+                                        <Typography>Location: {props.review.location}</Typography>
                                     </Grid>
                                     <Grid item>
-                                        <Typography>Duration: [text]</Typography>
+                                        <Typography>Duration: {props.review.duration} in weeks</Typography>
                                     </Grid>
                                     <Grid item>
-                                        <Typography>Salary: [text]</Typography>
+                                        <Typography>Salary: {props.review.salary}</Typography>
                                     </Grid>
                                 </Grid>
                                 <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.inner1InfoCol2}>
                                     <Grid item>
-                                        <Typography>Degree: [text]</Typography>
+                                        <Typography>Degree: {props.review.seekingDegree}</Typography>
                                     </Grid>
                                     <Grid item>
-                                        <Typography>Work Type: [text]</Typography>
+                                        <Typography>Work Type: {props.review.experienceType}</Typography>
                                     </Grid>
                                     <Grid item>
-                                        <Typography>Experience Rating: 5/5</Typography>
+                                        <Typography>Experience Rating: {props.review.experienceRating}</Typography>
                                     </Grid>
                                 </Grid>
                             </Grid>
@@ -134,23 +134,25 @@ export default function Review() {
                                             vertical: 'top',
                                             horizontal: 'center',
                                         }}
-                                        >
-                                            <MenuItem onClick={handleCloseMenu}>Q1</MenuItem>
-                                            <MenuItem onClick={handleCloseMenu}>Q2</MenuItem>
-                                            <MenuItem onClick={handleCloseMenu}>Q3</MenuItem>
+                                        >       
+                                            {
+                                                props.review.interviewQuestions.map((val, index) => (
+                                                    <MenuItem key={index} onClick={handleCloseMenu}>{val}</MenuItem>
+                                                ))
+                                            }
                                         </Menu>
                                         
                                     </Grid>
                                     
                                     <Grid item className={classes.inner2Item}>
-                                        <Typography>Recommendations and Tips</Typography>
+                                        <Typography>Recommendations</Typography>
                                     </Grid>
 
                                     <Grid container direction='row' alignItems="center" justify='center' wrap="nowrap">
                                         <FormControl className={classes.textBox}>
                                             <TextField
                                                 disabled
-                                                defaultValue={'text text text'}
+                                                defaultValue={props.review.recommendation}
                                                 variant="outlined"
                                                 multiline={true}
                                                 rows={10}
@@ -165,7 +167,7 @@ export default function Review() {
                                     </Grid>
 
                                     <Grid container direction='row' alignItems="center" wrap="nowrap" className={classes.inner2Item}>
-                                        <Typography>Interview Difficulty: 5/5</Typography>
+                                            <Typography>Interview Difficulty: {props.review.interviewDifficultyRating}</Typography>
                                     </Grid>
 
                                 </Card>

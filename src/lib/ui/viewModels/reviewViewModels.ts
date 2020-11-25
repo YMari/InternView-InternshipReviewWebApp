@@ -15,6 +15,7 @@ interface ReviewMakeModel {
 
 interface ReviewViewModel extends ReviewMakeModel {
     dateCreated: Date
+    interviewQuestions: String[]
     company:{
         id:number,
         name:string,
