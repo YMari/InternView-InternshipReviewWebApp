@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import container from '../../../lib/container'
 import {ERROR_MESSAGE} from '../../../lib/application/constants';
 import { IRegister } from '../../../lib/ui/entities'
+import { IStudent } from '../../../lib/domain/student';
 
 interface RegisterRequest extends NextApiRequest {
   body: IRegister
@@ -16,13 +17,7 @@ export default async function register(
 
   if (req.method === 'POST') {
     const output = await ser.register(
-      {
-          name: req.body.name,
-          email: req.body.email,
-          universityId: req.body.universityId,
-          studyProgramId: req.body.studyProgramId,
-          passwordHash: req.body.password
-      }
+      req.body as IStudent
     )
 
     if ( output.status === ERROR_MESSAGE ) {
