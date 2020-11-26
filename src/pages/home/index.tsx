@@ -43,7 +43,7 @@ export default function Home() {
 
                                         <Grid item>
                                             <Typography variant='h4'>
-                                                Most Helpful Reviews
+                                                Most Recent Reviews
                                             </Typography>
                                         </Grid>
 
@@ -71,7 +71,7 @@ export default function Home() {
 
                                         <Grid item>
                                             <Typography variant='h4'>
-                                                Top Rated Companies
+                                                Most Popular Companies
                                             </Typography>
                                         </Grid>
 
