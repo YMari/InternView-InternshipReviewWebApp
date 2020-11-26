@@ -1,10 +1,12 @@
-import { Backdrop, Box, Button, Card, Checkbox, createStyles, Fade, FormControl, Grid, makeStyles, Menu, MenuItem, Modal, TextField, Theme, Typography } from '@material-ui/core';
+import { Backdrop, Box, Button, Card, Checkbox, CircularProgress, createStyles, Fade, FormControl, Grid, makeStyles, Menu, MenuItem, Modal, TextField, Theme, Typography } from '@material-ui/core';
 import Link from 'next/link';
 import React from 'react';
 import theme from '../../lib/ui/theme';
 import { ReviewViewModel } from '../../lib/ui/viewModels/reviewViewModels';
 import { ArrowDownward, ArrowUpward, AccountCircle, ArrowDropDown, ClearRounded } from '@material-ui/icons';
 import ReviewMake from '../../lib/ui/components/reviewMake';
+import axios from 'axios'
+import {mutate} from 'swr'
 
 interface Props {
     review: ReviewViewModel,
@@ -17,6 +19,8 @@ export default function Review(props: Props) {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {setAnchorEl(event.currentTarget)}
     const handleCloseMenu = () => {setAnchorEl(null)}
+    
+    const [loading, setLoading] = React.useState(false)
 
     const [open, setOpen] = React.useState(false)
     const handleOpenModal = () => {setOpen(true)}
@@ -26,12 +30,40 @@ export default function Review(props: Props) {
     const handleOpenMaker = () => {setOpenMaker(true)}
     const handleCloseMaker = () => {setOpenMaker(false)}
     
+    const deleteReq = () => {
+        const confirmation = confirm("Are you sure you want to delete?")
+        if (confirmation && props.forUpdate) {
+            setLoading(true)
+            axios.delete(`/api/review/${props.review?.id}`)
+            .then((res) => res.data)
+            .then(async ()=>{
+                await mutate(`/api/review`)
+                handleCloseModal()
+            })
+            .then(()=>setLoading(false))
+            .catch(err => {
+                if (err.response) {
+                    // client received an error response (5xx, 4xx)
+                    alert(err.response.data.message)
+                    close()
+                } else if (err.request) {
+                    // client never received a response, or request never left
+                    console.log(err.request)
+                } else {
+                    // anything else
+                    console.log(err)
+                }
+                
+            })
+        }
+    }
 
     return (
         <Box className={classes.main}>
             <Card className={classes.cardMain}>
-                
-                <Grid container direction='column' alignItems="center">
+                {!loading?
+                    <>
+                        <Grid container direction='column' alignItems="center">
                     <Typography className={classes.cardTitle}>{props.review.reviewTitle}</Typography>
                 </Grid>
 
@@ -202,13 +234,18 @@ export default function Review(props: Props) {
                                             props.forUpdate?
                                             <>
                                                 <Grid item className={classes.buttonUpdateGrid}>
+                                                    <Button onClick={deleteReq}className={classes.buttonReport}>
+                                                        <Typography>Delete</Typography>
+                                                    </Button>
+                                                </Grid>
+                                                <Grid item className={classes.buttonUpdateGrid}>
                                                     <Button onClick={handleOpenMaker} className={classes.buttonReport}>
                                                         <Typography>Update</Typography>
                                                     </Button>
                                                 </Grid>
                                                 <Modal
                                                     open={openMaker}
-                                                    onClose={handleCloseModal}
+                                                    onClose={handleCloseMaker}
                                                     closeAfterTransition
                                                     BackdropComponent={Backdrop}
                                                     BackdropProps={{
@@ -250,7 +287,7 @@ export default function Review(props: Props) {
                                     BackdropProps={{
                                         timeout: 500,
                                     }}
-                                    className={classes.modal}
+                                    className={classes.reportModal}
                                     >
                                         <Fade in={open}>
                                             <Card className={classes.modalCard}>
@@ -293,6 +330,9 @@ export default function Review(props: Props) {
                     </Grid>
 
                 </Grid>
+                    </>: <Grid container justify="center" alignItems="center"><CircularProgress /></Grid>
+                }
+                
             </Card>
         </Box>
     )  
@@ -388,6 +428,11 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         name: {
             paddingLeft: theme.spacing(1)
+        },
+        reportModal: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
         },
         modal:{
             // display: 'flex',

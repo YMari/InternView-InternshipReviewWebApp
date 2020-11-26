@@ -39,7 +39,7 @@ export default function ReviewSummary(props: Props) {
 
                         <Grid container direction='row' alignItems="center" wrap="nowrap">
                             <Grid container direction='row' alignItems="center" wrap="nowrap">
-                                <Typography className={classes.reviewTitle}>{text_truncate(props.review.reviewTitle, 15)}</Typography>
+                                <Typography className={classes.reviewTitle}>{text_truncate(props.review.reviewTitle, 25)}</Typography>
                             </Grid>
                             <Grid container direction='row' wrap="nowrap" justify='flex-end' className={classes.reviewGradeRow}>
                                 <RatingDisplay rating={5} size="small" color="secondary"/>
@@ -53,7 +53,7 @@ export default function ReviewSummary(props: Props) {
                             <Typography className={classes.reviewDate}>Posted on: {props.review.dateCreated}</Typography>
                         </Grid>
                         <Grid container direction='row' alignItems="center" wrap="nowrap" zeroMinWidth>
-                            <Typography noWrap className={classes.reviewSummary}>{text_truncate(props.review.recommendation, 15)}</Typography>
+                            <Typography noWrap className={classes.reviewSummary}>{text_truncate(props.review.recommendation, 25)}</Typography>
                         </Grid>
 
                     </Grid>
