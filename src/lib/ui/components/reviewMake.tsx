@@ -9,7 +9,7 @@ import axios from 'axios';
 import { mutate } from 'swr'
 
 interface Props {
-    company: {
+    company?: {
         id: number,
         name: string,
         imageUrl: string
@@ -17,7 +17,6 @@ interface Props {
     forUpdate?: boolean,
     close: () => any,
     default?: ReviewViewModel,
-    id?: number
 }
 
 export default function ReviewMake(props:Props) {
@@ -45,7 +44,7 @@ export default function ReviewMake(props:Props) {
         setValues({ ...values, [prop]: event.target.value });  
     };
 
-    const [chipData, setChipData] = useState<string[]>([])
+    const [chipData, setChipData] = useState<String[]>(props.default?props.default.interviewQuestions:[])
 
     const handleAddChip = (chip: string) => {
         console.log(chip)

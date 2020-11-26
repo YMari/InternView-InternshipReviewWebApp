@@ -3,7 +3,8 @@ import Link from 'next/link';
 import React from 'react';
 import theme from '../../lib/ui/theme';
 import { ReviewViewModel } from '../../lib/ui/viewModels/reviewViewModels';
-import { ArrowDownward, ArrowUpward, AccountCircle, ArrowDropDown } from '@material-ui/icons';
+import { ArrowDownward, ArrowUpward, AccountCircle, ArrowDropDown, ClearRounded } from '@material-ui/icons';
+import ReviewMake from '../../lib/ui/components/reviewMake';
 
 interface Props {
     review: ReviewViewModel,
@@ -21,6 +22,9 @@ export default function Review(props: Props) {
     const handleOpenModal = () => {setOpen(true)}
     const handleCloseModal = () => {setOpen(false)}
 
+    const [openMaker, setOpenMaker] = React.useState(false)
+    const handleOpenMaker = () => {setOpenMaker(true)}
+    const handleCloseMaker = () => {setOpenMaker(false)}
     
 
     return (
@@ -49,13 +53,13 @@ export default function Review(props: Props) {
                             </Grid>
                             <Grid item>
                                 <Grid container direction='row' alignItems="center" wrap="nowrap">
-                                    <Checkbox disabled checked={props.review.acceptedStatus === 'No offer'}/>
+                                    <Checkbox disabled checked={props.review.acceptedStatus === 'No Offer'}/>
                                     <Typography>No offer</Typography>  
                                 </Grid>
                             </Grid>
                             <Grid item>
                                 <Grid container direction='row' alignItems="center" wrap="nowrap">
-                                    <Checkbox disabled checked={props.review.acceptedStatus === 'Accepted but declined'}/>
+                                    <Checkbox disabled checked={props.review.acceptedStatus === 'Declined Offer'}/>
                                     <Typography>Accepted but declined</Typography>
                                 </Grid>
                             </Grid>
@@ -196,11 +200,39 @@ export default function Review(props: Props) {
                                 <Grid container direction='row' alignItems="center" wrap="nowrap">
                                         {
                                             props.forUpdate?
-                                            <Grid item className={classes.buttonUpdateGrid}>
-                                                <Button  className={classes.buttonReport}>
-                                                    <Typography>Update</Typography>
-                                                </Button>
-                                            </Grid>
+                                            <>
+                                                <Grid item className={classes.buttonUpdateGrid}>
+                                                    <Button onClick={handleOpenMaker} className={classes.buttonReport}>
+                                                        <Typography>Update</Typography>
+                                                    </Button>
+                                                </Grid>
+                                                <Modal
+                                                    open={openMaker}
+                                                    onClose={handleCloseModal}
+                                                    closeAfterTransition
+                                                    BackdropComponent={Backdrop}
+                                                    BackdropProps={{
+                                                        timeout: 500,
+                                                    }}
+                                                    className={classes.modal}
+                                                    >
+                                                        
+                                                            <Grid container direction='column' alignItems="center" justify='center' >
+                                                                <Grid container direction='row' justify='flex-end' className={classes.closeModalBox}>
+                                                                    <Button onClick={handleCloseMaker} size="small" className={classes.closeModalButton}>
+                                                                        <ClearRounded fontSize='large' className={classes.closeModalIcon}/>
+                                                                    </Button>
+                                                                </Grid>
+                                                                
+                                                                <ReviewMake close={handleCloseMaker} 
+                                                                    default={props.review}
+                                                                    forUpdate
+                                                                    company={props.review.company}
+                                                                />
+                                                            </Grid>
+                                                        
+                                                </Modal>
+                                            </>
                                             :
                                             <></>
                                         }
@@ -358,9 +390,12 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingLeft: theme.spacing(1)
         },
         modal:{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            // display: 'flex',
+            // alignItems: 'center',
+            // justifyContent: 'center',
+            overflow:'scroll',
+            width:'100%',
+            hieght: '100%'
         },
         modalCard: {
             width: 700,
@@ -407,5 +442,14 @@ const useStyles = makeStyles((theme: Theme) =>
         menuList: {
             marginTop: 45,
         },
-        
+        closeModalBox: {
+            paddingTop: theme.spacing(2),
+            paddingRight: theme.spacing(2),
+        },
+        closeModalButton: {
+            backgroundColor: theme.palette.secondary.main,
+        },
+        closeModalIcon: {
+            color: theme.palette.primary.contrastText,
+        },
     }))
