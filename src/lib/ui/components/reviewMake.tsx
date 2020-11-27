@@ -84,7 +84,7 @@ export default function ReviewMake(props:Props) {
             close()
         }
         )
-        .then(()=>{setLoading(false);})
+        .then(()=>{setLoading(false);alert('Finished creating!');})
         .catch(err => {
             if (err.response) {
                 // client received an error response (5xx, 4xx)
@@ -111,7 +111,7 @@ export default function ReviewMake(props:Props) {
             await mutate(`/api/review`)
             close()
         })
-        .then(()=>{setLoading(false);})
+        .then(()=>{setLoading(false);alert('Finished Updating!');})
         .catch(err => {
             if (err.response) {
                 // client received an error response (5xx, 4xx)

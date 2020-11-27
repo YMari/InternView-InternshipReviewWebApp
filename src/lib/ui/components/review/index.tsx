@@ -1,10 +1,10 @@
 import { Backdrop, Box, Button, Card, Checkbox, CircularProgress, createStyles, Fade, FormControl, Grid, makeStyles, Menu, MenuItem, Modal, TextField, Theme, Typography } from '@material-ui/core';
 import Link from 'next/link';
 import React from 'react';
-import theme from '../../lib/ui/theme';
-import { ReviewViewModel } from '../../lib/ui/viewModels/reviewViewModels';
+import theme from '../../theme';
+import { ReviewViewModel } from '../../viewModels/reviewViewModels';
 import { ArrowDownward, ArrowUpward, AccountCircle, ArrowDropDown, ClearRounded } from '@material-ui/icons';
-import ReviewMake from '../../lib/ui/components/reviewMake';
+import ReviewMake from '../reviewMake';
 import axios from 'axios'
 import {mutate} from 'swr'
 

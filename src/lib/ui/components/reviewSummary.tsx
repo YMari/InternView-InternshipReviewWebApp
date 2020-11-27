@@ -1,7 +1,7 @@
 import { Backdrop, Box, Button, Card, createStyles, Fade, Grid, makeStyles, Modal, Theme, Typography } from "@material-ui/core";
 import { ClearRounded, Grade } from "@material-ui/icons";
 import React from "react";
-import Review from "../../../pages/reviews";
+import Review from "./review";
 import {ReviewViewModel} from '../viewModels/reviewViewModels'
 import RatingDisplay from "./ratingDisplay";
 
@@ -42,7 +42,7 @@ export default function ReviewSummary(props: Props) {
                                 <Typography className={classes.reviewTitle}>{text_truncate(props.review.reviewTitle, 25)}</Typography>
                             </Grid>
                             <Grid container direction='row' wrap="nowrap" justify='flex-end' className={classes.reviewGradeRow}>
-                                <RatingDisplay rating={5} size="small" color="secondary"/>
+                                <RatingDisplay rating={props.review?.experienceRating} size="small" color="secondary"/>
                             </Grid>
                         </Grid>
 

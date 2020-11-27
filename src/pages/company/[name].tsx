@@ -47,6 +47,12 @@ export default function Company() {
         setOpen(false);
     };
 
+    const average = (reviewData: ReviewViewModel[]) => {
+        let addition = 0
+        reviewData.forEach((val)=>{addition+=val.salary})
+        return addition/reviewData.length
+    }
+
     return(
         <Box className={classes.main}>
             <Grid container direction='row' alignItems="center" justify='center' wrap="nowrap" className={classes.mainGrid}>
@@ -87,13 +93,13 @@ export default function Company() {
                         </Grid>
 
                         <Grid container direction='row' alignItems="center" wrap="nowrap" justify='center' className={classes.accAvgSalaryContainer}>
-                            <Typography className={classes.avgSalaryText}>Avg. Salary: $69,420</Typography>
+    <Typography className={classes.avgSalaryText}>Avg. Salary: {reviewData?average(reviewData):'No Data'}</Typography>
                         </Grid>
 
                     </Grid>
 
                     <Grid container direction='row' alignItems="center" wrap="nowrap" className={classes.spacer}>
-                        <Typography className={classes.textWhite}>Reviews: #Reviews</Typography>
+                        <Typography className={classes.textWhite}>Reviews: {reviewData?reviewData.length:0}</Typography>
                     </Grid>
                     
                     <Card className={classes.cardMain}>
@@ -148,11 +154,11 @@ export default function Company() {
 
 
                             {
-                                reviewData?.map((val, index) => (
+                                reviewData?reviewData.map((val, index) => (
                                     <Grid key={index} item className={classes.cardItem}> 
                                         <ReviewSummary review={val} />
                                     </Grid>
-                                ))
+                                )):<>Loading</>
                             }
                             
                         </Grid>
