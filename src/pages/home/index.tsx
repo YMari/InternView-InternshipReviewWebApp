@@ -2,9 +2,27 @@ import { Box, Card, createStyles, Grid, makeStyles, Theme, Typography, Button} f
 import React from 'react'
 import TopReview from '../../lib/ui/components/topReview';
 import TopCompany from '../../lib/ui/components/topCompany';
+import useSWR from 'swr'
+import axios from 'axios'
+import {CompanyViewModel} from '../../lib/ui/viewModels/companyViewModels'
 
 export default function Home() {
     const classes = useStyles();
+
+    const {data:popularCompanies} = useSWR('/api/company/popular',async (url) => {
+        try {
+            const result = await axios.get(url)
+            if (result.data){
+                return result.data.data as CompanyViewModel[]
+            }
+            throw "Unable to create"
+        }catch(err) {
+            alert("Unable to Load popular companies")
+        }   
+    })
+
+    // const {data:recentReviews} = useSWR('/api/review')
+
     return(
         <>
         <Box width="100%" maxHeight="750" position="absolute" top={0} >
@@ -76,11 +94,10 @@ export default function Home() {
                                         </Grid>
 
                                         <Grid item className={classes.cardItem}>
-                                            {/* v Top Companies Here v */}
-
-                                            <TopCompany/>
-                                            <TopCompany/>
-                                            <TopCompany/>
+                                            
+                                            {popularCompanies?popularCompanies.map((val, index)=>(
+                                                <TopCompany company={val} key={index*345} />
+                                            )):<></>}
 
                                             {/* ^ Top Companies Here ^ */}
                                         </Grid>

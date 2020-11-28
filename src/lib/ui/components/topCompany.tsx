@@ -2,8 +2,13 @@ import { Button, Card, createStyles, Grid, makeStyles, Theme, Typography } from 
 import { AccountCircle, Grade } from "@material-ui/icons";
 import Link from "next/link";
 import React from "react";
+import { CompanyViewModel } from "../viewModels/companyViewModels";
 
-export default function TopCompany() {
+interface TopCompanyProps {
+    company: CompanyViewModel
+}
+
+export default function TopCompany(props: TopCompanyProps) {
     const classes = useStyles();
 
     return (
@@ -17,7 +22,7 @@ export default function TopCompany() {
                 <Link href="/companies/">
                     <Button className={classes.buttonCompany}>
                         <Card variant='outlined' className={classes.companyName}>
-                            <Typography className={classes.companyText}>Sample Company</Typography>
+                            <Typography className={classes.companyText}>{props.company.name}</Typography>
                         </Card>
                     </Button>
                 </Link>
