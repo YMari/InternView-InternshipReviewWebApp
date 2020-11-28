@@ -273,36 +273,41 @@ export default function ReviewMake(props:Props) {
 
                                     <Grid item>
                                         <FormControl required className={classes.textField2}>
-                                            <TextField
+                                            <Select
                                                 variant="outlined"
-                                                label="Degree"
                                                 required
                                                 value={values.seekingDegree}
                                                 onChange={handleChange('seekingDegree')}
                                                 className={classes.textFieldInner}
-                                            />
+                                            >
+                                                <MenuItem value={"Bachelors"}> Bachelors </MenuItem>
+                                                <MenuItem value={"Masters"}> Masters </MenuItem>
+                                                <MenuItem value={"PhD"}> PhD </MenuItem>
+                                            </Select>
+                                            <InputLabel className={classes.labelPadding1}>Seeking Degree</InputLabel>
                                         </FormControl>
                                     </Grid>
 
                                     <Grid item>
                                         <FormControl required className={classes.textField2}>
-                                            <TextField
+                                            <Select
                                                 variant="outlined"
-                                                label="Work Type"
                                                 required
                                                 value={values.experienceType}
                                                 onChange={handleChange('experienceType')}
                                                 className={classes.textFieldInner}
-                                            />
+                                            >
+                                                <MenuItem value={"Internship"}> Internship </MenuItem>
+                                                <MenuItem value={"COOP"}> COOP </MenuItem>
+                                            </Select>
+                                            <InputLabel className={classes.labelPadding1}>Experience Type</InputLabel>
                                         </FormControl>
                                     </Grid>
 
                                     <Grid item>
                                         <FormControl required className={classes.textField2}>
-
                                             <Select
                                                 variant="outlined"
-
                                                 required
                                                 value={values.experienceRating}
                                                 onChange={handleChange('experienceRating')}
@@ -385,6 +390,7 @@ export default function ReviewMake(props:Props) {
                                     <Grid container direction='row' alignItems="center" wrap="nowrap" justify='center'>
                                         <Grid item>
                                             <Checkbox
+                                                value={values.anonymous}
                                                 checked={values.anonymous}
                                                 onChange={handleAnonCheck}
                                                 color='default'
