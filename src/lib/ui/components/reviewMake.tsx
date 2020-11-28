@@ -9,7 +9,7 @@ import axios from 'axios';
 import { mutate } from 'swr'
 
 interface Props {
-    company: {
+    company?: {
         id: number,
         name: string,
         imageUrl: string
@@ -17,7 +17,6 @@ interface Props {
     forUpdate?: boolean,
     close: () => any,
     default?: ReviewViewModel,
-    id?: number
 }
 
 export default function ReviewMake(props:Props) {
@@ -38,14 +37,14 @@ export default function ReviewMake(props:Props) {
         recommendation: props.default?props.default.recommendation:'',
         experienceRating: props.default?props.default.experienceRating:0,
         interviewDifficultyRating: props.default?props.default.interviewDifficultyRating:0,
-        anonymous: props.default?props.default.anonymous:true,
+        anonymous: props.default?.anonymous?props.default.anonymous:true,
     });
 
     const handleChange = (prop: keyof ReviewMakeModel) => (event: React.ChangeEvent<HTMLInputElement>) => {
         setValues({ ...values, [prop]: event.target.value });  
     };
 
-    const [chipData, setChipData] = useState<string[]>([])
+    const [chipData, setChipData] = useState<String[]>(props.default?props.default.interviewQuestions:[])
 
     const handleAddChip = (chip: string) => {
         console.log(chip)
@@ -80,8 +79,12 @@ export default function ReviewMake(props:Props) {
         setLoading(true)
         axios.post("/api/review", toCreate)
         .then((res) => res.data)
-        .then(()=>{mutate(`/api/company/${router.query.name}/reviews`)})
-        .then(()=>{close();setLoading(false);})
+        .then(async ()=>{
+            await mutate(`/api/company/${router.query.name}/reviews`)
+            close()
+        }
+        )
+        .then(()=>{setLoading(false);alert('Finished creating!');})
         .catch(err => {
             if (err.response) {
                 // client received an error response (5xx, 4xx)
@@ -99,10 +102,31 @@ export default function ReviewMake(props:Props) {
     }
 
     const update = async () => {
-        const toCreate = makeModel()
+        const toModify = makeModel()
         setLoading(true)
         
-        //axios.put()
+        axios.put(`/api/review/${props.default?.id}`, toModify)
+        .then((res) => res.data)
+        .then(async ()=>{
+            await mutate(`/api/review`)
+            close()
+        })
+        .then(()=>{setLoading(false);alert('Finished Updating!');})
+        .catch(err => {
+            if (err.response) {
+                // client received an error response (5xx, 4xx)
+                alert(err.response.data.message)
+                close()
+            } else if (err.request) {
+                // client never received a response, or request never left
+                console.log(err.request)
+            } else {
+                // anything else
+                console.log(err)
+            }
+            setLoading(false)
+        })
+
     } 
 
     useEffect(()=>{
@@ -118,7 +142,7 @@ export default function ReviewMake(props:Props) {
         
                 { !loading? <>
                 <Grid container direction='column' alignItems="center">
-                    <Typography className={classes.cardTitle}>Review Creator</Typography>
+                <Typography className={classes.cardTitle}>{props.forUpdate?'Update':'Review Creator'}</Typography>
                 </Grid>
 
                 <Grid container direction='column' wrap="nowrap" className={classes.gridMain}>
@@ -155,11 +179,12 @@ export default function ReviewMake(props:Props) {
                         </Grid>
 
                         <Grid item>
-                            <FormControl variant="outlined" required className={classes.textField1}>
+                            <FormControl required className={classes.textField1}>
                                 <TextField
                                     disabled
+                                    variant="outlined"
                                     label="Company"
-                                    value={"Company name"}
+                                    value={props.company.name}
                                     InputProps={{
                                         classes: {
                                             root: classes.inputRoot,
@@ -170,22 +195,7 @@ export default function ReviewMake(props:Props) {
                             </FormControl>
                         </Grid>    
 
-                        <Grid item>
-                            <FormControl className={classes.textField1}>
-                                <TextField
-                                    disabled
-                                    label="Date"
-                                    value={'Date'}
-                                    variant="outlined"
-                                    InputProps={{
-                                        classes: {
-                                            root: classes.inputRoot,
-                                            disabled: classes.disabled
-                                        },
-                                    }}
-                                />
-                            </FormControl>
-                        </Grid>
+                        
 
                         <Grid item>
                             <FormControl variant="outlined" required className={classes.textField1}>
@@ -386,7 +396,7 @@ export default function ReviewMake(props:Props) {
                                     </Grid>         
                                 </Grid>
                                 <Grid item >
-                                    <Button onClick={create} className={classes.buttonSubmit}>
+                                    <Button onClick={props.forUpdate?update:create} className={classes.buttonSubmit}>
                                         <Typography>Submit</Typography>
                                     </Button>
                                 </Grid>
@@ -518,5 +528,5 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         labelPadding2: {
             paddingLeft: theme.spacing(2),
-        }
+        },
     }))

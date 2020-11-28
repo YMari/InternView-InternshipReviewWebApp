@@ -8,7 +8,7 @@ export default async function getReviewByEmail(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const ser = container.get<re.IReviewRepository>(re.R_TYPES.IReviewRepository);
+  const ser = container.getReviewRepo()
 
   if (req.method === 'GET') {
     let output = await ser.getReviewByAuthorEmail(req.query.email as string)

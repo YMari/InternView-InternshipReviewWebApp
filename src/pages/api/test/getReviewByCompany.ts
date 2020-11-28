@@ -8,7 +8,7 @@ export default async function getReviewById(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const ser = container.get<re.IReviewRepository>(re.R_TYPES.IReviewRepository);
+  const ser = container.getReviewRepo()
 
   if (req.method === 'GET') {
     let output = await ser.getReviewByCompany(req.query.company as string)
