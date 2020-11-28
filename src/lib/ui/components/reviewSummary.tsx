@@ -1,15 +1,34 @@
 import { Backdrop, Box, Button, Card, createStyles, Fade, Grid, makeStyles, Modal, Theme, Typography } from "@material-ui/core";
 import { ClearRounded, Grade } from "@material-ui/icons";
 import React from "react";
-import Review from "../../../pages/reviews";
+import Review from "./review";
+import {ReviewViewModel} from '../viewModels/reviewViewModels'
 import RatingDisplay from "./ratingDisplay";
 
-export default function ReviewSummary() {
-    const classes = useStyles();
+interface Props {
+    review: ReviewViewModel,
+    forUpdate?: boolean 
+}
 
+export default function ReviewSummary(props: Props) {
+    const classes = useStyles();
     const [open, setOpen] = React.useState(false)
     const handleOpenModal = () => {setOpen(true)}
     const handleCloseModal = () => {setOpen(false)}
+
+    const text_truncate = function(str, length, ending=null) {
+        if (length == null) {
+          length = 100;
+        }
+        if (ending == null) {
+          ending = '...';
+        }
+        if (str.length > length) {
+          return str.substring(0, length - ending.length) + ending;
+        } else {
+          return str;
+        }
+    };
 
     return(
         <Grid item className={classes.cardItem}>
@@ -20,21 +39,21 @@ export default function ReviewSummary() {
 
                         <Grid container direction='row' alignItems="center" wrap="nowrap">
                             <Grid container direction='row' alignItems="center" wrap="nowrap">
-                                <Typography className={classes.reviewTitle}>Review Title</Typography>
+                                <Typography className={classes.reviewTitle}>{text_truncate(props.review.reviewTitle, 25)}</Typography>
                             </Grid>
                             <Grid container direction='row' wrap="nowrap" justify='flex-end' className={classes.reviewGradeRow}>
-                                <RatingDisplay rating={5} size="small" color="secondary"/>
+                                <RatingDisplay rating={props.review?.experienceRating} size="small" color="secondary"/>
                             </Grid>
                         </Grid>
 
                         <Grid container direction='row' alignItems="center" wrap="nowrap">
-                            <Typography className={classes.reviewCompany}>Company X</Typography>
+                            <Typography className={classes.reviewCompany}>Company:{props.review.company.name}</Typography>
                         </Grid>
                         <Grid container direction='row' alignItems="center" wrap="nowrap">
-                            <Typography className={classes.reviewDate}>Posted on: Date</Typography>
+                            <Typography className={classes.reviewDate}>Posted on: {props.review.dateCreated}</Typography>
                         </Grid>
                         <Grid container direction='row' alignItems="center" wrap="nowrap" zeroMinWidth>
-                            <Typography noWrap className={classes.reviewSummary}>Review Summary (limit characters i.e. 150)</Typography>
+                            <Typography noWrap className={classes.reviewSummary}>{text_truncate(props.review.recommendation, 25)}</Typography>
                         </Grid>
 
                     </Grid>
@@ -57,7 +76,7 @@ export default function ReviewSummary() {
                                 <ClearRounded fontSize='large' className={classes.closeModalIcon}/>
                             </Button>
                         </Box>
-                        <Review/>
+                            <Review forUpdate={props.forUpdate} review={props.review} />
                         </>
                     </Fade>
                 </Modal>

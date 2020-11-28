@@ -8,7 +8,7 @@ export default async function updateReview(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const ser = container.get<re.IReviewRepository>(re.R_TYPES.IReviewRepository);
+  const ser = container.getReviewRepo();
 
   if (req.method === 'PUT') {
     let output = await ser.updateReview(Number(req.query.id), req.body as re.IReview)

@@ -1,7 +1,7 @@
 import { Backdrop, Box, Button, Card, createStyles, Fade, Grid, makeStyles, Modal, Theme, Typography } from "@material-ui/core";
 import { AccountCircle, ClearRounded, Grade } from "@material-ui/icons";
 import React from "react";
-import Review from "../../../pages/reviews";
+import Review from "./review";
 
 export default function TopReview() {
     const classes = useStyles();
@@ -40,7 +40,7 @@ export default function TopReview() {
                                 <ClearRounded fontSize='large' className={classes.closeModalIcon}/>
                             </Button>
                         </Box>
-                        <Review/>
+                        {/* <Review/> */}
                         </>
                     </Fade>
                 </Modal>

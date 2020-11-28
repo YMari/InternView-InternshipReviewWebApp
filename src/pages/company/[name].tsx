@@ -6,11 +6,13 @@ import ReviewSummary from "../../lib/ui/components/reviewSummary";
 import useSWR from 'swr'
 import { useRouter } from 'next/router'
 import axios from 'axios'
+import { ReviewViewModel } from "../../lib/ui/viewModels/reviewViewModels";
 import RatingDisplay from "../../lib/ui/components/ratingDisplay";
 
 export default function Company() {
     const classes = useStyles();
     const router = useRouter()
+
     const { data } = useSWR(`/api/company?search=${router.query.name}`, async (url:string) => {
 
         const result = await axios.get(url)
@@ -22,6 +24,19 @@ export default function Company() {
 
     })
 
+    const { data: reviewData } = useSWR(`/api/company/${router.query.name}/reviews`, async (url)=>{
+        const res = await axios.get(url)
+       
+        if (res.data) {
+            console.log(res.data.data)
+            return res.data.data as ReviewViewModel[]
+        }else{
+            alert("Error ocurred loading")
+            router.push('/')
+        }
+    })
+    
+
     const [open, setOpen] = React.useState(false);
     
     const handleOpenModal = () => {
@@ -31,6 +46,12 @@ export default function Company() {
     const handleCloseModal = () => {
         setOpen(false);
     };
+
+    const average = (reviewData: ReviewViewModel[]) => {
+        let addition = 0
+        reviewData.forEach((val)=>{addition+=val.salary})
+        return addition/reviewData.length
+    }
 
     return(
         <Box className={classes.main}>
@@ -72,13 +93,13 @@ export default function Company() {
                         </Grid>
 
                         <Grid container direction='row' alignItems="center" wrap="nowrap" justify='center' className={classes.accAvgSalaryContainer}>
-                            <Typography className={classes.avgSalaryText}>Avg. Salary: $69,420</Typography>
+    <Typography className={classes.avgSalaryText}>Avg. Salary: {reviewData?average(reviewData):'No Data'}</Typography>
                         </Grid>
 
                     </Grid>
 
                     <Grid container direction='row' alignItems="center" wrap="nowrap" className={classes.spacer}>
-                        <Typography className={classes.textWhite}>Reviews: #Reviews</Typography>
+                        <Typography className={classes.textWhite}>Reviews: {reviewData?reviewData.length:0}</Typography>
                     </Grid>
                     
                     <Card className={classes.cardMain}>
@@ -119,7 +140,10 @@ export default function Company() {
                                                             <ClearRounded fontSize='large' className={classes.closeModalIcon}/>
                                                         </Button>
                                                     </Grid>
-                                                    <ReviewMake/>
+                                                    {
+                                                        data?<ReviewMake 
+                                                        close={handleCloseModal} company={data}/>:<>Loading ,,,</>
+                                                    }
                                                 </Grid>
                                             </Fade>
                                         </Modal>
@@ -128,13 +152,14 @@ export default function Company() {
                                 </Grid>
                             </Grid>
 
-                            {/* v Reviews Here v */}
 
-                            <Grid item className={classes.cardItem}> <ReviewSummary/></Grid>
-                            <Grid item className={classes.cardItem}> <ReviewSummary/></Grid>
-                            <Grid item className={classes.cardItem}> <ReviewSummary/></Grid>
-
-                            {/* ^ Reviews Here ^ */}
+                            {
+                                reviewData?reviewData.map((val, index) => (
+                                    <Grid key={index} item className={classes.cardItem}> 
+                                        <ReviewSummary review={val} />
+                                    </Grid>
+                                )):<>Loading</>
+                            }
                             
                         </Grid>
                     </Card>

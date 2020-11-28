@@ -3,6 +3,7 @@ import {IStudent, IStudyProgram, IUniversity} from '../../domain/student/entitie
 import * as st from '../../domain/student'
 import * as bcrypt from 'bcrypt'
 import {sign, verify} from 'jsonwebtoken'
+import cookie from 'cookie'
 import 'reflect-metadata'
 
 
@@ -57,7 +58,6 @@ export default class Student implements st.IStudent{
 
     async hashPassword() {
         this.passwordHash = await bcrypt.hash(this.password, this.SALT_ROUNDS)
-        console.log(this.passwordHash)
     }
 
     async comparePassword(cr: e.ICredentials) {
@@ -65,7 +65,15 @@ export default class Student implements st.IStudent{
     }
 
     createToken() {
-        return sign({sub: this.email}, process.env.SECRET_KEY, {expiresIn: '1h'})
+        const token = sign({sub: this.email}, process.env.SECRET_KEY, {expiresIn: '1h'})
+        const galleta = cookie.serialize('auth', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV !== 'development', 
+            sameSite: 'strict',
+            maxAge: 3600,
+            path: '/'
+        })
+        return galleta
     }
 
 }

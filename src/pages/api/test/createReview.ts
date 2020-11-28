@@ -8,7 +8,7 @@ export default async function createReview(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const ser = container.get<re.IReviewRepository>(re.R_TYPES.IReviewRepository);
+  const ser = container.getReviewRepo();
 
   if (req.method === 'POST') {
     let output = await ser.createReview(req.body as re.IReview)

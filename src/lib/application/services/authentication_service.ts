@@ -1,10 +1,8 @@
 import * as i from '../interfaces'
 import * as e from '../entities'
 import * as st from '../../domain/student'
-import * as infrastruct from '../../infrastructure';
 import {injectable, inject} from 'inversify'
-import {sign, verify} from 'jsonwebtoken'
-import cookie from 'cookie'
+import {verify} from 'jsonwebtoken'
 import { AUTHENTICATION_FAILED, AUTHENTICATION_SUCCESS, ERROR_MESSAGE, OK_MESSAGE } from '../constants'
 import 'reflect-metadata'
 import Student from '../class/student';
@@ -14,19 +12,14 @@ export default class AuthenticationService implements i.IAuthenticationService {
     
     private readonly _studentService: st.IStudentService
     private readonly _studentRepository: st.IStudentRepository
-    private readonly _emailService: infrastruct.interfaces.IEmailService
     
-
     constructor(
         @inject(st.S_TYPES.IStudentService) studentService: st.IStudentService,
         @inject(st.S_TYPES.IStudentRepository) studentRepository: st.IStudentRepository,
-        @inject(infrastruct.I_TYPES.IEmailService) emailService: infrastruct.interfaces.IEmailService
-
     ){
         this._studentService = studentService
         this._studentRepository = studentRepository
     }
-    
 
     async register(st: st.IStudent): Promise<i.IAuthenticationServiceOutput<st.IStudent>>{
 
@@ -50,7 +43,6 @@ export default class AuthenticationService implements i.IAuthenticationService {
             }
         }
 
-        // Can be moved to student class instance
         if (student.validatePasswordLength()) {
             return {
                 status:ERROR_MESSAGE,
@@ -59,8 +51,6 @@ export default class AuthenticationService implements i.IAuthenticationService {
             } 
         }
 
-        // Use Student Service
-        // can be moved to IStudent class instance
         student.hashPassword()
         return await this._studentService.registerStudent(student);
 
@@ -77,22 +67,15 @@ export default class AuthenticationService implements i.IAuthenticationService {
                 data: null
             }
         }
+
         const st = new Student(student);
 
-        // can be moved to student class instance
         if(st.comparePassword(cr)){
             const token = st.createToken()
-            const galleta = cookie.serialize('auth', token, {
-                httpOnly: true,
-                secure: process.env.NODE_ENV !== 'development', 
-                sameSite: 'strict',
-                maxAge: 3600,
-                path: '/'
-            })
             return {
                 status:'Ok',
                 message: AUTHENTICATION_SUCCESS,
-                data: galleta
+                data: token
             }
         }
         return {
@@ -100,6 +83,7 @@ export default class AuthenticationService implements i.IAuthenticationService {
             message: AUTHENTICATION_FAILED,
             data:null
         }
+
     }
     
 
