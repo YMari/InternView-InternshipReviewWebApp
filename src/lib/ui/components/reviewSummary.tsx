@@ -16,6 +16,8 @@ export default function ReviewSummary(props: Props) {
     const handleOpenModal = () => {setOpen(true)}
     const handleCloseModal = () => {setOpen(false)}
 
+    const ReviewDateCreated = new Date(props.review.dateCreated).toString().split(" ").slice(1, 4).join(" ")
+
     const text_truncate = function(str, length, ending=null) {
         if (length == null) {
           length = 100;
@@ -47,13 +49,13 @@ export default function ReviewSummary(props: Props) {
                         </Grid>
 
                         <Grid container direction='row' alignItems="center" wrap="nowrap">
-                            <Typography className={classes.reviewCompany}>Company:{props.review.company.name}</Typography>
+                            <Typography className={classes.reviewCompany}>Company: {props.review.company.name}</Typography>
                         </Grid>
                         <Grid container direction='row' alignItems="center" wrap="nowrap">
-                            <Typography className={classes.reviewDate}>Posted on: {props.review.dateCreated}</Typography>
+                            <Typography className={classes.reviewDate}>Posted on: {ReviewDateCreated}</Typography>
                         </Grid>
                         <Grid container direction='row' alignItems="center" wrap="nowrap" zeroMinWidth>
-                            <Typography noWrap className={classes.reviewSummary}>{text_truncate(props.review.recommendation, 25)}</Typography>
+                            <Typography noWrap className={classes.reviewSummary}>{text_truncate(props.review.recommendation, 30)}</Typography>
                         </Grid>
 
                     </Grid>
