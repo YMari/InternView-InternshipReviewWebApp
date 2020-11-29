@@ -1,9 +1,15 @@
 import { Backdrop, Box, Button, Card, createStyles, Fade, Grid, makeStyles, Modal, Theme, Typography } from "@material-ui/core";
 import { AccountCircle, ClearRounded, Grade } from "@material-ui/icons";
 import React from "react";
+import { ReviewViewModel } from "../viewModels/reviewViewModels";
 import Review from "./review";
 
-export default function TopReview() {
+
+interface TopReviewProps {
+    review: ReviewViewModel
+}
+
+export default function TopReview(props: TopReviewProps) {
     const classes = useStyles();
 
     const [open, setOpen] = React.useState(false)
@@ -20,7 +26,11 @@ export default function TopReview() {
             <Grid item className={classes.reviewSummaryItem}>
                 <Button onClick={handleOpenModal} className={classes.buttonReview}>
                     <Card variant='outlined' className={classes.reviewSummary}>
-                        <Typography className={classes.reviewText}>Sample Text</Typography>
+                        <Typography className={classes.reviewText}>{props.review.reviewTitle}</Typography>
+                        <Typography className={classes.reviewText}>
+                            <strong>Company:</strong>
+                            {props.review.company.name}
+                        </Typography>
                     </Card>
                 </Button>
                 <Modal
@@ -40,7 +50,9 @@ export default function TopReview() {
                                 <ClearRounded fontSize='large' className={classes.closeModalIcon}/>
                             </Button>
                         </Box>
-                        {/* <Review/> */}
+
+
+                        <Review forUpdate={false} review={props.review} />
                         </>
                     </Fade>
                 </Modal>
@@ -52,7 +64,7 @@ export default function TopReview() {
                         <Grade fontSize="large"/>
                     </Grid>
                     <Grid item>
-                        <Typography className={classes.ratingText}>5/5</Typography>
+                        <Typography className={classes.ratingText}>{props.review.experienceRating}/5</Typography>
                     </Grid>
                 </Grid>
             </Grid>

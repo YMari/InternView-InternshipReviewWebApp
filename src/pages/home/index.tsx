@@ -5,6 +5,7 @@ import TopCompany from '../../lib/ui/components/topCompany';
 import useSWR from 'swr'
 import axios from 'axios'
 import {CompanyViewModel} from '../../lib/ui/viewModels/companyViewModels'
+import { ReviewViewModel } from '../../lib/ui/viewModels/reviewViewModels';
 
 export default function Home() {
     const classes = useStyles();
@@ -21,7 +22,17 @@ export default function Home() {
         }   
     })
 
-    // const {data:recentReviews} = useSWR('/api/review')
+    const {data:recentReviews} = useSWR('/api/review/recent', async (url) => {
+        try {
+            const result = await axios.get(url)
+            if (result.data){
+                return result.data.data as ReviewViewModel[]
+            }
+            throw "Unable to create"
+        }catch(err) {
+            alert("Unable to Load recent reviews")
+        }   
+    })
 
     return(
         <>
@@ -66,13 +77,11 @@ export default function Home() {
                                         </Grid>
 
                                         <Grid item className={classes.cardItem}>
-                                            {/* v Top Reviews Here v */}
-                                            
-                                            <TopReview/>
-                                            <TopReview/>
-                                            <TopReview/>
+                                           
+                                            {recentReviews?recentReviews.map((val, index)=>(
+                                                <TopReview key={index*321} review={val} />
+                                            )):<>Loading ...</>}
 
-                                            {/* ^ Top Reviews Here ^ */}
                                         </Grid>
                                         
                                     </Grid>

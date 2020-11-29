@@ -19,7 +19,7 @@ export default function TopCompany(props: TopCompanyProps) {
             </Grid>
 
             <Grid item className={classes.companyNameItem}>
-                <Link href="/companies/">
+                <Link href={`/company/${props.company.name}`}>
                     <Button className={classes.buttonCompany}>
                         <Card variant='outlined' className={classes.companyName}>
                             <Typography className={classes.companyText}>{props.company.name}</Typography>
