@@ -194,31 +194,7 @@ class ReviewRepository implements re.IReviewRepository {
     }
 
     async getReviewBySortedByScore (): Promise<re.IReview[]> {
-        // try{
-        //     let result = await db.review.findMany({
-        //         orderBy: 
-        //             {
-        //                 Rating: 'asc',
-        //             },
-
-        //     })
-    
-        //     if (result == null) {
-        //         await db.$disconnect()
-        //         return null
-        //     }
-
-        //     await db.$disconnect()
-        //     return result
-
-        // } catch ( e ){
-
-        //     await db.$disconnect()
-
-        //     return null
-
-        // }
-        return null
+        throw Error("Not implemented")
     }  
     
     async deleteReview(id: number, authorEmail: string): Promise<boolean> {
@@ -272,6 +248,27 @@ class ReviewRepository implements re.IReviewRepository {
 
         } 
     }
+
+
+    async getRecentReviews(): Promise<re.IReview[]> {
+        try {
+            const res = await db.review.findMany({
+                orderBy:{
+                    dateCreated:'desc'
+                },
+                select:this.selectObject,
+                take:5
+            })
+            await db.$disconnect()
+            return res
+
+        } catch ( e ) {
+            await db.$disconnect()
+            return null
+
+        } 
+    }
+
 }
 
 export default ReviewRepository

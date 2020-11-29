@@ -11,6 +11,7 @@ export interface IReviewRepository {
     updateReview: (id: number, re: i.IReview) => Promise<i.IReview>;
     deleteReview: (id: number, authorEmail: string) => Promise<boolean>;
     getReviewByAuthorAndCompany(authorEmail: string, companyName: string): Promise<i.IReview[]>
+    getRecentReviews(): Promise<i.IReview[]>
 }
 
 export interface IReviewFactory {

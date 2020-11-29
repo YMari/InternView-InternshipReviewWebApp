@@ -97,9 +97,8 @@ export default function Home() {
                                             
                                             {popularCompanies?popularCompanies.map((val, index)=>(
                                                 <TopCompany company={val} key={index*345} />
-                                            )):<></>}
-
-                                            {/* ^ Top Companies Here ^ */}
+                                            )):<>Loading ...</>}
+                                            
                                         </Grid>
                                         
                                     </Grid>

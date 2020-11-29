@@ -54,7 +54,7 @@ class CompanyRepository implements com.ICompanyRepository {
                     GROUP BY com.id
                 ) as re on c.id = re.companyId
                 ORDER BY re.reviewCount DESC
-                LIMIT 3;
+                LIMIT 5;
             `) as com.ICompany[]    
             await db.$disconnect()
             return companies
