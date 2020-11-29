@@ -1,9 +1,8 @@
-import { Backdrop, Box, Button, Card, createStyles, Fade, fade, Grid, InputBase, makeStyles, Modal, Theme, Typography } from "@material-ui/core";
-import { ArrowDownward, ArrowUpward, AccountCircle, AddCircle, ClearRounded } from '@material-ui/icons';
+import { Box, Card, createStyles, fade, Grid, InputBase, makeStyles, Theme, Typography } from "@material-ui/core";
+import { ArrowDownward, ArrowUpward, AccountCircle } from '@material-ui/icons';
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import RatingDisplay from "../../lib/ui/components/ratingDisplay";
-import ReviewMake from "../../lib/ui/components/reviewMake";
 import ReviewSummary from "../../lib/ui/components/reviewSummary";
 import useSWR from 'swr'
 import axios from 'axios'
@@ -16,18 +15,8 @@ export default function Profile() {
     const router = useRouter();
     const user = useUser();
 
-    const [open, setOpen] = React.useState(false);
-
-    const handleOpenModal = () => {
-        setOpen(true);
-    };
-
-    const handleCloseModal = () => {
-        setOpen(false);
-    };
-
     // Fetch user reviews
-    const {data} = useSWR('/api/review', async (url)=>{
+    const { data } = useSWR('/api/review', async (url)=>{
         const res = await axios.get(url)
         if (res.data) {
             return res.data.data as ReviewViewModel[]
@@ -84,13 +73,13 @@ export default function Profile() {
                     </Grid>
 
                     <Grid container direction='row' alignItems="center" wrap="nowrap">
-                        <Typography className={classes.textWhite}>Joined on: Date</Typography>
+                        <Typography className={classes.textWhite}>University: {user.university.name}</Typography>
                     </Grid>
                     <Grid container direction='row' alignItems="center" wrap="nowrap">
-                        <Typography className={classes.textWhite}>Study Program: X</Typography>
+                        <Typography className={classes.textWhite}>Study Program: {user.studyprogram.name}</Typography>
                     </Grid>
                     <Grid container direction='row' alignItems="center" wrap="nowrap" className={classes.spacer}>
-                        <Typography className={classes.textWhite}>Reviews: #Reviews</Typography>
+                        <Typography className={classes.textWhite}>Reviews: {data?data.length:0}</Typography>
                     </Grid>
                     
                     <Card className={classes.cardMain}>

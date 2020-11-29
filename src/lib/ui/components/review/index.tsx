@@ -29,6 +29,8 @@ export default function Review(props: Props) {
     const [openMaker, setOpenMaker] = React.useState(false)
     const handleOpenMaker = () => {setOpenMaker(true)}
     const handleCloseMaker = () => {setOpenMaker(false)}
+
+    const ReviewDateCreated = new Date(props.review.dateCreated).toString().split(" ").slice(1, 4).join(" ")
     
     const deleteReq = () => {
         const confirmation = confirm("Are you sure you want to delete?")
@@ -63,274 +65,278 @@ export default function Review(props: Props) {
             <Card className={classes.cardMain}>
                 {!loading?
                     <>
-                        <Grid container direction='column' alignItems="center">
-                    <Typography className={classes.cardTitle}>{props.review.reviewTitle}</Typography>
-                </Grid>
-
-                <Grid container direction='column' wrap="nowrap" className={classes.gridMain}>
-
-                    <Grid container direction='column' wrap="nowrap">
-                        
-                        <Grid item>
-                            <Link href="">
-                                <Button>   
-                                    <Typography>Company: {props.review.company.name}</Typography>   
-                                </Button>
-                            </Link>
-                        </Grid>
-
-                        <Grid container direction='row' alignItems="center" wrap="nowrap" justify='space-between' className={classes.checklist}>
-                            <Grid item>
-                                <Typography>Date Posted: {props.review.dateCreated}</Typography>
-                            </Grid>
-                            <Grid item>
-                                <Grid container direction='row' alignItems="center" wrap="nowrap">
-                                    <Checkbox disabled checked={props.review.acceptedStatus === 'No Offer'}/>
-                                    <Typography>No offer</Typography>  
-                                </Grid>
-                            </Grid>
-                            <Grid item>
-                                <Grid container direction='row' alignItems="center" wrap="nowrap">
-                                    <Checkbox disabled checked={props.review.acceptedStatus === 'Declined Offer'}/>
-                                    <Typography>Accepted but declined</Typography>
-                                </Grid>
-                            </Grid>
-                            <Grid item> 
-                                <Grid container direction='row' alignItems="center" wrap="nowrap">
-                                    <Checkbox disabled checked={props.review.acceptedStatus === 'Worked'}/>
-                                    <Typography>Worked</Typography> 
-                                </Grid>
-                            </Grid>
-                        </Grid>
+                    <Grid container direction='column' alignItems="center">
+                        <Typography className={classes.cardTitle}>{props.review.reviewTitle}</Typography>
                     </Grid>
 
-                    <Grid item>
-                        <Card className={classes.cardInner1}>
+                    <Grid container direction='column' wrap="nowrap" className={classes.gridMain}>
+
+                        <Grid container direction='column' wrap="nowrap">
                             
-                            <Grid container direction='row' alignItems="center" wrap="nowrap" className={classes.inner1Info}>
-                                <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.inner1InfoCol1}>
-                                    <Grid item>
-                                        <Typography>Location: {props.review.location}</Typography>
-                                    </Grid>
-                                    <Grid item>
-                                        <Typography>Duration: {props.review.duration} in weeks</Typography>
-                                    </Grid>
-                                    <Grid item>
-                                        <Typography>Salary: {props.review.salary}</Typography>
+                            <Grid item>
+                                <Link href="">
+                                    <Button>   
+                                        <Typography>Company: {props.review.company.name}</Typography>   
+                                    </Button>
+                                </Link>
+                            </Grid>
+
+                            <Grid container direction='row' alignItems="center" wrap="nowrap" justify='space-between' className={classes.checklist}>
+                                <Grid item>
+                                    <Typography>Date Posted: {ReviewDateCreated}</Typography>
+                                </Grid>
+                                <Grid item>
+                                    <Grid container direction='row' alignItems="center" wrap="nowrap">
+                                        <Checkbox disabled checked={props.review.acceptedStatus === 'No Offer'}/>
+                                        <Typography>No offer</Typography>  
                                     </Grid>
                                 </Grid>
-                                <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.inner1InfoCol2}>
-                                    <Grid item>
-                                        <Typography>Degree: {props.review.seekingDegree}</Typography>
+                                <Grid item>
+                                    <Grid container direction='row' alignItems="center" wrap="nowrap">
+                                        <Checkbox disabled checked={props.review.acceptedStatus === 'Declined Offer'}/>
+                                        <Typography>Accepted but declined</Typography>
                                     </Grid>
-                                    <Grid item>
-                                        <Typography>Work Type: {props.review.experienceType}</Typography>
-                                    </Grid>
-                                    <Grid item>
-                                        <Typography>Experience Rating: {props.review.experienceRating}</Typography>
+                                </Grid>
+                                <Grid item> 
+                                    <Grid container direction='row' alignItems="center" wrap="nowrap">
+                                        <Checkbox disabled checked={props.review.acceptedStatus === 'Worked'}/>
+                                        <Typography>Worked</Typography> 
                                     </Grid>
                                 </Grid>
                             </Grid>
+                        </Grid>
 
-                            <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.gridItem}>
-                                <Card className={classes.cardInner2}>
-
-                                    <Grid item className={classes.inner2Item}>
-                                        <Typography>Interview</Typography>
-                                    </Grid>
-                                    
-                                    <Grid container direction='row' alignItems="center" justify='center' wrap="nowrap">
-
-                                        <Button
-                                        variant="contained"
-                                        color="primary"
-                                        endIcon={<ArrowDropDown/>}
-                                        onClick={handleClick}
-                                        className={classes.buttonQuestions}
-                                        >
-                                        Interview Questions
-                                        </Button>
-
-                                        <Menu
-                                        anchorEl={anchorEl}
-                                        keepMounted
-                                        open={Boolean(anchorEl)}
-                                        onClose={handleCloseMenu}
-                                        className={classes.menuList}
-                                        PaperProps={{
-                                            style: {
-                                              maxHeight: 300,
-                                              maxWidth: '90%',
-                                            },
-                                        }}
-                                        anchorOrigin={{
-                                            vertical: 'bottom',
-                                            horizontal: 'center',
-                                        }}
-                                        transformOrigin={{
-                                            vertical: 'top',
-                                            horizontal: 'center',
-                                        }}
-                                        >       
-                                            {
-                                                props.review.interviewQuestions.map((val, index) => (
-                                                    <MenuItem key={index} onClick={handleCloseMenu}>{val}</MenuItem>
-                                                ))
-                                            }
-                                        </Menu>
-                                        
-                                    </Grid>
-                                    
-                                    <Grid item className={classes.inner2Item}>
-                                        <Typography>Recommendations</Typography>
-                                    </Grid>
-
-                                    <Grid container direction='row' alignItems="center" justify='center' wrap="nowrap">
-                                        <FormControl className={classes.textBox}>
-                                            <TextField
-                                                disabled
-                                                defaultValue={props.review.recommendation}
-                                                variant="outlined"
-                                                multiline={true}
-                                                rows={10}
-                                                InputProps={{
-                                                    classes: {
-                                                        root: classes.inputRoot,
-                                                        disabled: classes.disabled
-                                                    }   
-                                                }}
-                                            />
-                                        </FormControl>
-                                    </Grid>
-
-                                    <Grid container direction='row' alignItems="center" wrap="nowrap" className={classes.inner2Item}>
-                                            <Typography>Interview Difficulty: {props.review.interviewDifficultyRating}</Typography>
-                                    </Grid>
-
-                                </Card>
-                            </Grid>
-                            <Grid container direction='row' alignItems="center" wrap="nowrap" className={classes.ratingRow}>
-                                <Grid container direction='row' alignItems="center">
-                                    <Grid item>
-                                        <Grid container direction='row' alignItems="center">
-                                            <Button>
-                                                <ArrowDownward fontSize="large"/>
-                                            </Button>
-                                            <Typography className={classes.ratingNum}># Downvotes</Typography>
-                                        </Grid>
-                                    </Grid>
-                                    <Grid item>
-                                        <Grid container direction='row' alignItems="center">
-                                            <Button>
-                                                <ArrowUpward fontSize="large"/>
-                                            </Button>
-                                            <Typography className={classes.ratingNum}># Upvotes</Typography>
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                                <Grid item >
-                                <Grid container direction='row' alignItems="center" wrap="nowrap">
-                                        {
-                                            props.forUpdate?
-                                            <>
-                                                <Grid item className={classes.buttonUpdateGrid}>
-                                                    <Button onClick={deleteReq}className={classes.buttonReport}>
-                                                        <Typography>Delete</Typography>
-                                                    </Button>
-                                                </Grid>
-                                                <Grid item className={classes.buttonUpdateGrid}>
-                                                    <Button onClick={handleOpenMaker} className={classes.buttonReport}>
-                                                        <Typography>Update</Typography>
-                                                    </Button>
-                                                </Grid>
-                                                <Modal
-                                                    open={openMaker}
-                                                    onClose={handleCloseMaker}
-                                                    closeAfterTransition
-                                                    BackdropComponent={Backdrop}
-                                                    BackdropProps={{
-                                                        timeout: 500,
-                                                    }}
-                                                    className={classes.modal}
-                                                    >
-                                                        
-                                                            <Grid container direction='column' alignItems="center" justify='center' >
-                                                                <Grid container direction='row' justify='flex-end' className={classes.closeModalBox}>
-                                                                    <Button onClick={handleCloseMaker} size="small" className={classes.closeModalButton}>
-                                                                        <ClearRounded fontSize='large' className={classes.closeModalIcon}/>
-                                                                    </Button>
-                                                                </Grid>
-                                                                
-                                                                <ReviewMake close={handleCloseMaker} 
-                                                                    default={props.review}
-                                                                    forUpdate
-                                                                    company={props.review.company}
-                                                                />
-                                                            </Grid>
-                                                        
-                                                </Modal>
-                                            </>
-                                            :
-                                            <></>
-                                        }
-                                        <Grid item>
-                                            <Button  className={classes.buttonReport} onClick={handleOpenModal}>
-                                                <Typography>Report</Typography>
-                                            </Button>
-                                        </Grid>
-                                    </Grid>
-                                    <Modal
-                                    open={open}
-                                    onClose={handleCloseModal}
-                                    closeAfterTransition
-                                    BackdropComponent={Backdrop}
-                                    BackdropProps={{
-                                        timeout: 500,
-                                    }}
-                                    className={classes.reportModal}
-                                    >
-                                        <Fade in={open}>
-                                            <Card className={classes.modalCard}>
-
-                                                        <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.modalGrid}>
-                                                            <Grid item className={classes.gridItem}>
-                                                                <Typography className={classes.modalTitle}>Why would you like to report this review?</Typography>
-                                                            </Grid>
-                                                            <Grid container direction='row' alignItems="center" justify='center' className={classes.gridItem}>
-                                                                <FormControl className={classes.textBox}>
-                                                                    <TextField
-                                                                        variant="outlined"
-                                                                        multiline={true}
-                                                                        rows={10}
-                                                                    />
-                                                                </FormControl>
-                                                            </Grid>
-                                                            <Grid container direction='row' alignItems="center" wrap="nowrap" justify='flex-end'>
-                                                                <Grid item className={classes.modalButtonPos}>
-                                                                    <Button className={classes.modalButton1}>
-                                                                        <Typography>Report</Typography>
-                                                                    </Button>
-                                                                </Grid>
-                                                                <Grid item className={classes.modalButtonPos}>
-                                                                    <Button className={classes.modalButton2} onClick={handleCloseModal}>
-                                                                        <Typography>Cancel</Typography>
-                                                                    </Button>
-                                                                </Grid>
-                                                            </Grid>
-                                                        </Grid>
-                                                        
-                                                    </Card>
-                                                </Fade>
-
-                                            </Modal>
-                                        </Grid>
-                                    </Grid>
+                        <Grid item>
+                            <Card className={classes.cardInner1}>
                                 
-                        </Card>
-                    </Grid>
+                                <Grid container direction='row' alignItems="center" wrap="nowrap" className={classes.inner1Info}>
+                                    <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.inner1InfoCol1}>
+                                        <Grid item>
+                                            <Typography>Location: {props.review.location}</Typography>
+                                        </Grid>
+                                        <Grid item>
+                                            <Typography>Duration: {props.review.duration} in weeks</Typography>
+                                        </Grid>
+                                        <Grid item>
+                                            <Typography>Salary: {props.review.salary}</Typography>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.inner1InfoCol2}>
+                                        <Grid item>
+                                            <Typography>Degree: {props.review.seekingDegree}</Typography>
+                                        </Grid>
+                                        <Grid item>
+                                            <Typography>Work Type: {props.review.experienceType}</Typography>
+                                        </Grid>
+                                        <Grid item>
+                                            <Typography>Experience Rating: {props.review.experienceRating}</Typography>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
 
-                </Grid>
-                    </>: <Grid container justify="center" alignItems="center"><CircularProgress /></Grid>
+                                <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.gridItem}>
+                                    <Card className={classes.cardInner2}>
+
+                                        <Grid item className={classes.inner2Item}>
+                                            <Typography>Interview</Typography>
+                                        </Grid>
+                                        
+                                        <Grid container direction='row' alignItems="center" justify='center' wrap="nowrap">
+
+                                            <Button
+                                            variant="contained"
+                                            color="primary"
+                                            endIcon={<ArrowDropDown/>}
+                                            onClick={handleClick}
+                                            className={classes.buttonQuestions}
+                                            >
+                                            Interview Questions
+                                            </Button>
+
+                                            <Menu
+                                            anchorEl={anchorEl}
+                                            keepMounted
+                                            open={Boolean(anchorEl)}
+                                            onClose={handleCloseMenu}
+                                            className={classes.menuList}
+                                            PaperProps={{
+                                                style: {
+                                                maxHeight: 300,
+                                                maxWidth: '90%',
+                                                },
+                                            }}
+                                            anchorOrigin={{
+                                                vertical: 'bottom',
+                                                horizontal: 'center',
+                                            }}
+                                            transformOrigin={{
+                                                vertical: 'top',
+                                                horizontal: 'center',
+                                            }}
+                                            >       
+                                                {
+                                                    props.review.interviewQuestions.map((val, index) => (
+                                                        <MenuItem key={index} onClick={handleCloseMenu}>{val}</MenuItem>
+                                                    ))
+                                                }
+                                            </Menu>
+                                            
+                                        </Grid>
+                                        
+                                        <Grid item className={classes.inner2Item}>
+                                            <Typography>Recommendations</Typography>
+                                        </Grid>
+
+                                        <Grid container direction='row' alignItems="center" justify='center' wrap="nowrap">
+                                            <FormControl className={classes.textBox}>
+                                                <TextField
+                                                    disabled
+                                                    defaultValue={props.review.recommendation}
+                                                    variant="outlined"
+                                                    multiline={true}
+                                                    rows={10}
+                                                    InputProps={{
+                                                        classes: {
+                                                            root: classes.inputRoot,
+                                                            disabled: classes.disabled
+                                                        }   
+                                                    }}
+                                                />
+                                            </FormControl>
+                                        </Grid>
+
+                                        <Grid container direction='row' alignItems="center" wrap="nowrap" className={classes.inner2Item}>
+                                                <Typography>Interview Difficulty: {props.review.interviewDifficultyRating}</Typography>
+                                        </Grid>
+
+                                    </Card>
+                                </Grid>
+                                <Grid container direction='row' alignItems="center" wrap="nowrap" className={classes.ratingRow}>
+                                    <Grid container direction='row' alignItems="center">
+                                        <Grid item>
+                                            <Grid container direction='row' alignItems="center">
+                                                <Button>
+                                                    <ArrowDownward fontSize="large"/>
+                                                </Button>
+                                                <Typography className={classes.ratingNum}># Downvotes</Typography>
+                                            </Grid>
+                                        </Grid>
+                                        <Grid item>
+                                            <Grid container direction='row' alignItems="center">
+                                                <Button>
+                                                    <ArrowUpward fontSize="large"/>
+                                                </Button>
+                                                <Typography className={classes.ratingNum}># Upvotes</Typography>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid item >
+                                    <Grid container direction='row' alignItems="center" wrap="nowrap">
+                                            {
+                                                props.forUpdate?
+                                                <>
+                                                    <Grid item className={classes.buttonUpdateGrid}>
+                                                        <Button onClick={deleteReq}className={classes.buttonReport}>
+                                                            <Typography>Delete</Typography>
+                                                        </Button>
+                                                    </Grid>
+                                                    <Grid item className={classes.buttonUpdateGrid}>
+                                                        <Button onClick={handleOpenMaker} className={classes.buttonReport}>
+                                                            <Typography>Update</Typography>
+                                                        </Button>
+                                                    </Grid>
+                                                    <Modal
+                                                        open={openMaker}
+                                                        onClose={handleCloseMaker}
+                                                        closeAfterTransition
+                                                        BackdropComponent={Backdrop}
+                                                        BackdropProps={{
+                                                            timeout: 500,
+                                                        }}
+                                                        className={classes.modal}
+                                                        >
+                                                            
+                                                                <Grid container direction='column' alignItems="center" justify='center' >
+                                                                    <Grid container direction='row' justify='flex-end' className={classes.closeModalBox}>
+                                                                        <Button onClick={handleCloseMaker} size="small" className={classes.closeModalButton}>
+                                                                            <ClearRounded fontSize='large' className={classes.closeModalIcon}/>
+                                                                        </Button>
+                                                                    </Grid>
+                                                                    
+                                                                    <ReviewMake close={handleCloseMaker} 
+                                                                        default={props.review}
+                                                                        forUpdate
+                                                                        company={props.review.company}
+                                                                    />
+                                                                </Grid>
+                                                            
+                                                    </Modal>
+                                                </>
+                                                :
+                                                <></>
+                                            }
+                                            <Grid item>
+                                                <Button  className={classes.buttonReport} onClick={handleOpenModal}>
+                                                    <Typography>Report</Typography>
+                                                </Button>
+                                            </Grid>
+                                        </Grid>
+                                        <Modal
+                                        open={open}
+                                        onClose={handleCloseModal}
+                                        closeAfterTransition
+                                        BackdropComponent={Backdrop}
+                                        BackdropProps={{
+                                            timeout: 500,
+                                        }}
+                                        className={classes.reportModal}
+                                        >
+                                            <Fade in={open}>
+                                                <Card className={classes.modalCard}>
+
+                                                            <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.modalGrid}>
+                                                                <Grid item className={classes.gridItem}>
+                                                                    <Typography className={classes.modalTitle}>Why would you like to report this review?</Typography>
+                                                                </Grid>
+                                                                <Grid container direction='row' alignItems="center" justify='center' className={classes.gridItem}>
+                                                                    <FormControl className={classes.textBox}>
+                                                                        <TextField
+                                                                            variant="outlined"
+                                                                            multiline={true}
+                                                                            rows={10}
+                                                                        />
+                                                                    </FormControl>
+                                                                </Grid>
+                                                                <Grid container direction='row' alignItems="center" wrap="nowrap" justify='flex-end'>
+                                                                    <Grid item className={classes.modalButtonPos}>
+                                                                        <Button className={classes.modalButton1}>
+                                                                            <Typography>Report</Typography>
+                                                                        </Button>
+                                                                    </Grid>
+                                                                    <Grid item className={classes.modalButtonPos}>
+                                                                        <Button className={classes.modalButton2} onClick={handleCloseModal}>
+                                                                            <Typography>Cancel</Typography>
+                                                                        </Button>
+                                                                    </Grid>
+                                                                </Grid>
+                                                            </Grid>
+                                                            
+                                                        </Card>
+                                                    </Fade>
+
+                                                </Modal>
+                                            </Grid>
+                                        </Grid>
+                                    
+                            </Card>
+                        </Grid>
+
+                    </Grid>
+                    </>
+
+                    :
+                    
+                    <Grid container justify="center" alignItems="center"><CircularProgress /></Grid>
                 }
                 
             </Card>
