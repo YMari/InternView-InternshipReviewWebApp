@@ -1,8 +1,12 @@
 import { Button, Card, createStyles, Grid, makeStyles, Theme, Typography } from "@material-ui/core";
 import { AccountCircle, Grade } from "@material-ui/icons";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
+import useSWR from "swr";
+import axios from 'axios'
 import { CompanyViewModel } from "../viewModels/companyViewModels";
+import { ReviewViewModel } from "../viewModels/reviewViewModels";
 
 interface TopCompanyProps {
     company: CompanyViewModel
@@ -10,6 +14,17 @@ interface TopCompanyProps {
 
 export default function TopCompany(props: TopCompanyProps) {
     const classes = useStyles();
+
+    const { data } = useSWR(`/api/company/${props.company.name}/reviews`, async (url)=>{
+        const res = await axios.get(url)
+       
+        if (res.data) {
+            console.log(res.data.data)
+            return res.data.data as ReviewViewModel[]
+        }else{
+            alert("Error ocurred loading")
+        }
+    })
 
     return (
         <Grid container direction='row' justify='space-between' alignItems='center' wrap="nowrap">
@@ -29,12 +44,12 @@ export default function TopCompany(props: TopCompanyProps) {
             </Grid>
 
             <Grid item className={classes.ratingItem}>
-                <Grid container direction='row' alignItems="center" wrap="nowrap">
+                <Grid container direction='column' alignItems="center" wrap="nowrap">
                     <Grid item>
-                        <Grade fontSize="large"/>
+                        <Typography className={classes.ratingText}>Reviews: </Typography>
                     </Grid>
                     <Grid item>
-                        <Typography className={classes.ratingText}>5/5</Typography>
+                        <Typography className={classes.ratingText}>{data?data.length:"Loading..."}</Typography>
                     </Grid>
                 </Grid>
             </Grid>
