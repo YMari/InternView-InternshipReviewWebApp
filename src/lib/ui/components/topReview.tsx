@@ -16,6 +16,20 @@ export default function TopReview(props: TopReviewProps) {
     const handleOpenModal = () => {setOpen(true)}
     const handleCloseModal = () => {setOpen(false)}
 
+    const text_truncate = function(str, length, ending=null) {
+        if (length == null) {
+          length = 100;
+        }
+        if (ending == null) {
+          ending = '...';
+        }
+        if (str.length > length) {
+          return str.substring(0, length - ending.length) + ending;
+        } else {
+          return str;
+        }
+    }
+
     return (
         <Grid container direction='row' justify='space-between' alignItems='center' wrap="nowrap">
 
@@ -28,9 +42,10 @@ export default function TopReview(props: TopReviewProps) {
                     <Card variant='outlined' className={classes.reviewSummary}>
                         <Typography className={classes.reviewText}>{props.review.reviewTitle}</Typography>
                         <Typography className={classes.reviewText}>
-                            <strong>Company:</strong>
+                            <strong>Company: </strong>
                             {props.review.company.name}
                         </Typography>
+                        <Typography className={classes.reviewText}>{text_truncate(props.review.recommendation, 19)}</Typography>
                     </Card>
                 </Button>
                 <Modal
