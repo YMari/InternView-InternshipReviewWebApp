@@ -2,6 +2,7 @@ import * as com from '../../domain/company'
 import db from '../prisma-cli'
 import { injectable } from 'inversify'
 import 'reflect-metadata'
+import { prismaVersion } from '@prisma/client'
 
 @injectable()
 class CompanyRepository implements com.ICompanyRepository {
@@ -40,6 +41,27 @@ class CompanyRepository implements com.ICompanyRepository {
         })
 
         return search_result
+    }
+
+    async popularCompanies(): Promise<com.ICompany[]> {
+        try {
+            const companies = await db.$queryRaw(`
+                SELECT c.id, c.name, c."imageUrl"
+                FROM "Company" as c INNER JOIN
+                (SELECT com.id as companyId, count(*) as reviewCount
+                    FROM "Company" as com INNER JOIN
+                    "Review" as r on com.id = r."companyId"
+                    GROUP BY com.id
+                ) as re on c.id = re.companyId
+                ORDER BY re.reviewCount DESC
+                LIMIT 5;
+            `) as com.ICompany[]    
+            await db.$disconnect()
+            return companies
+        } catch(e) {
+            await db.$disconnect()
+            return null
+        }
     }
  
 }

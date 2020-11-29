@@ -73,10 +73,10 @@ export default function Profile() {
                     </Grid>
 
                     <Grid container direction='row' alignItems="center" wrap="nowrap">
-                        <Typography className={classes.textWhite}>University: {user.university.name}</Typography>
+                        <Typography className={classes.textWhite}>University: {user?.university?.name}</Typography>
                     </Grid>
                     <Grid container direction='row' alignItems="center" wrap="nowrap">
-                        <Typography className={classes.textWhite}>Study Program: {user.studyprogram.name}</Typography>
+                        <Typography className={classes.textWhite}>Study Program: {user?.studyprogram?.name}</Typography>
                     </Grid>
                     <Grid container direction='row' alignItems="center" wrap="nowrap" className={classes.spacer}>
                         <Typography className={classes.textWhite}>Reviews: {data?data.length:0}</Typography>

@@ -50,7 +50,7 @@ export default function Company() {
     const average = (reviewData: ReviewViewModel[]) => {
         let addition = 0
         reviewData.forEach((val)=>{addition+=val.salary})
-        return addition/reviewData.length
+        return (addition/reviewData.length).toFixed(2)
     }
 
     return(

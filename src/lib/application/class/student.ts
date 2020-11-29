@@ -65,12 +65,12 @@ export default class Student implements st.IStudent{
     }
 
     createToken() {
-        const token = sign({sub: this.email}, process.env.SECRET_KEY, {expiresIn: '1h'})
+        const token = sign({sub: this.email}, process.env.SECRET_KEY, {expiresIn: '10h'})
         const galleta = cookie.serialize('auth', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV !== 'development', 
             sameSite: 'strict',
-            maxAge: 3600,
+            maxAge: 3600*10,
             path: '/'
         })
         return galleta
