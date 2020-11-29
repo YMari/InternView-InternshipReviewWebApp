@@ -19,7 +19,7 @@ docker-compose build
 docker-compose up nextjs 
 ```
 
-* If you want to exit just press cntl C twice to kill container
+* If you want to exit just press ctrl + C twice to kill container
 
 * To cleanup system and remove all docker containers and volumes run:
 ```
