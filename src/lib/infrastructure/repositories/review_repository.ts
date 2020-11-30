@@ -209,7 +209,7 @@ class ReviewRepository implements re.IReviewRepository {
                 }
             }
         })
-
+        await db.$disconnect()
         return res.count > 0
         
     }
