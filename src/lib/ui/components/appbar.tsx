@@ -98,12 +98,12 @@ export default function NavBar() {
                     <ButtonGroup variant="text">
                         <Button className={classes.buttons}>
                             <Link href="/login">        
-                                <Typography variant="h6" style={{color:"white"}} noWrap>
+                                <Typography variant="h6" noWrap>
                                     Log in
                                 </Typography>
                             </Link>
                         </Button>
-                        <Button className={classes.buttons} style={{color:"white"}}>
+                        <Button className={classes.buttons}>
                             <Link href="/register">            
                                 <Typography variant="h6" noWrap>
                                     Register

@@ -215,7 +215,7 @@ interface IServerSideProps {
     props: RegisterProps
 } 
 
-export async function getStaticProps(ctx:NextPageContext): Promise<IServerSideProps> {
+export async function getServerSideProps(ctx:NextPageContext): Promise<IServerSideProps> {
     
     const uniRepo = backend_container.getUniversityRepo()
     const spRepo = backend_container.getStudyProgramRepo()

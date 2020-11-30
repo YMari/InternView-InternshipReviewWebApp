@@ -9,4 +9,4 @@ export const UI_TYPES = {
     IRequestService: Symbol("IRequestService")
 }
 
-container.bind<IRequestService>(UI_TYPES.IRequestService).to(RequestService).inSingletonScope()
+container.bind<IRequestService>(UI_TYPES.IRequestService).to(RequestService)
