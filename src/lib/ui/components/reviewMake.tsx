@@ -35,8 +35,8 @@ export default function ReviewMake(props:Props) {
         seekingDegree: props.default?props.default.seekingDegree:'',
         experienceType: props.default?props.default.experienceType:'',
         recommendation: props.default?props.default.recommendation:'',
-        experienceRating: props.default?props.default.experienceRating:0,
-        interviewDifficultyRating: props.default?props.default.interviewDifficultyRating:0,
+        experienceRating: props.default?props.default.experienceRating:1,
+        interviewDifficultyRating: props.default?props.default.interviewDifficultyRating:1,
         anonymous: props.default?.anonymous?props.default.anonymous:true,
     });
 
@@ -313,7 +313,6 @@ export default function ReviewMake(props:Props) {
                                                 onChange={handleChange('experienceRating')}
                                                 className={classes.textFieldInner}
                                             >
-                                                <MenuItem value={0}> 0 </MenuItem>
                                                 <MenuItem value={1}> 1 </MenuItem>
                                                 <MenuItem value={2}> 2 </MenuItem>
                                                 <MenuItem value={3}> 3 </MenuItem>
@@ -339,7 +338,7 @@ export default function ReviewMake(props:Props) {
                                         <FormControl fullWidth>
                                             <ChipInput
                                                 variant="outlined"
-                                                placeholder="Add Interview Questions... (WIP)"
+                                                placeholder="Add Interview Questions..."
                                                 value={chipData}
                                                 onAdd={handleAddChip}
                                                 onDelete={(chip, _) => {handleDeleteChip(chip)}}
@@ -372,7 +371,6 @@ export default function ReviewMake(props:Props) {
                                                 onChange={handleChange('interviewDifficultyRating')}
                                                 className={classes.textFieldInner}
                                             >
-                                                <MenuItem value={0}> 0 </MenuItem>
                                                 <MenuItem value={1}> 1 </MenuItem>
                                                 <MenuItem value={2}> 2 </MenuItem>
                                                 <MenuItem value={3}> 3 </MenuItem>
@@ -391,7 +389,6 @@ export default function ReviewMake(props:Props) {
                                         <Grid item>
                                             <Checkbox
                                                 value={values.anonymous}
-                                                checked={values.anonymous}
                                                 onChange={handleAnonCheck}
                                                 color='default'
                                             />
