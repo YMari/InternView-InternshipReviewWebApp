@@ -14,14 +14,14 @@ class CompanyRepository implements com.ICompanyRepository {
                 id: c_id
             }
         })
-
+        await db.$disconnect()
         return company
     }
 
     async getAllCompany() : Promise<com.ICompany[]> {
 
         const com = await db.company.findMany({})
-
+        await db.$disconnect()
         return com
     }
 
@@ -39,6 +39,7 @@ class CompanyRepository implements com.ICompanyRepository {
                 imageUrl:true
             }
         })
+        await db.$disconnect()
 
         return search_result
     }

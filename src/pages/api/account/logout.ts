@@ -9,7 +9,8 @@ export default async function logout(req:NextApiRequest, res:NextApiResponse) {
         secure: process.env.NODE_ENV !== 'development', 
         sameSite: 'strict',
         maxAge: 0,
-        path: '/'
+        path: '/',
+        expires: new Date(0)
     })
 
     res.setHeader(

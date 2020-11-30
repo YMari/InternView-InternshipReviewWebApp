@@ -53,7 +53,7 @@ export default function LoginPage() {
             router.push('/')
 
         } else {
-
+            mutate("/api/account/user")
             if(result.message){
                 alert(result.message)
             }
