@@ -43,7 +43,7 @@ export default function Home() {
         <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.gridFull}>
 
             <Grid item>
-                <Typography className={classes.title} variant="h1">
+                <Typography className={classes.title}>
                     InternView
                 </Typography>
             </Grid>
