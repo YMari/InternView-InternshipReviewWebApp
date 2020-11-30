@@ -3,6 +3,9 @@
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## [Click here for Application Video Demo](https://drive.google.com/file/d/1pzwdYL_0J0sjSFdgbQvfAPFxlte0eac2/view)
+
+
 ## Getting Started
 
 * Dev environment setup:
