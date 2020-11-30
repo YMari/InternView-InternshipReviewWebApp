@@ -115,10 +115,10 @@ export default function Review(props: Props) {
                                             <Typography>Location: {props.review.location}</Typography>
                                         </Grid>
                                         <Grid item>
-                                            <Typography>Duration: {props.review.duration} in weeks</Typography>
+                                            <Typography>Duration: {props.review.duration} Weeks</Typography>
                                         </Grid>
                                         <Grid item>
-                                            <Typography>Salary: {props.review.salary}</Typography>
+                                            <Typography>Salary: ${props.review.salary} USD</Typography>
                                         </Grid>
                                     </Grid>
                                     <Grid container direction='column' alignItems="center" wrap="nowrap" className={classes.inner1InfoCol2}>

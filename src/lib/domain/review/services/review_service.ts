@@ -28,7 +28,7 @@ class ReviewService implements i.IReviewService {
     async createReview(input_data: e.IReview, author: IStudent) {
         
         if (!author) {
-            return {status:ERROR_MESSAGE, message:"No author"}
+            return {status:ERROR_MESSAGE, message:"No author."}
         }
 
         // Fill data with auth users info, can bemoved to review instance
@@ -47,16 +47,16 @@ class ReviewService implements i.IReviewService {
 
         const canReview = await this._studentService.studentCanReview(review.author, review.company.name)
         if (!canReview){
-            return {status:ERROR_MESSAGE, message:"User has already reviewed in the last 7 months"}
+            return {status:ERROR_MESSAGE, message:"User has already reviewed in the last 7 months."}
         }
 
         const output = await this._reviewRepo.createReview(review)
 
         if (!output) {
-            return {status:ERROR_MESSAGE, message:"Unable to create"}
+            return {status:ERROR_MESSAGE, message:"Unable to create."}
         }
         
-        return {status:OK_MESSAGE, message: "review created successfully", data:output}
+        return {status:OK_MESSAGE, message: "Review created successfully.", data:output}
     }
 
     async updateReview(id: number, review: e.IReview, author: IStudent) {
@@ -78,7 +78,7 @@ class ReviewService implements i.IReviewService {
         if (checkIfExists.filter((val) => val.id === id).length === 0) {
             return {
                 status: ERROR_MESSAGE,
-                message: "invalid author"
+                message: "Invalid author."
             }
         }
 
@@ -87,14 +87,14 @@ class ReviewService implements i.IReviewService {
         if (output) {
             return {
                 status: OK_MESSAGE,
-                message: "Updated successfully",
+                message: "Updated successfully.",
                 data: output
             }
         }
 
         return {
             status: ERROR_MESSAGE,
-            message: "Unable to update",
+            message: "Unable to update.",
             data:output
         }
     }

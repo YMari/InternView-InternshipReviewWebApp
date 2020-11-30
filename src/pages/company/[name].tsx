@@ -93,7 +93,7 @@ export default function Company() {
                         </Grid>
 
                         <Grid container direction='row' alignItems="center" wrap="nowrap" justify='center' className={classes.accAvgSalaryContainer}>
-                            <Typography className={classes.avgSalaryText}>Avg. Salary: {reviewData?average(reviewData):'No Data'}</Typography>
+                            <Typography className={classes.avgSalaryText}>Avg. Salary: {reviewData?"$"+average(reviewData):'No Data'}</Typography>
                         </Grid>
 
                     </Grid>
