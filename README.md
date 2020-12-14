@@ -1,10 +1,13 @@
-# INSO4116 - Team B (InternView)
+# InternView Application - Internship Review Web Application
 ### Team Members: [Isabel A. Muñiz](https://github.com/isaandrea12), [Kathiana Díaz](https://github.com/kathianadiaz), [Kenneth Rosario](https://github.com/kenneth-rosario), [Jose Maldonado](https://github.com/jose-maldonado), [Jose Rivera](https://github.com/jvserivera), [Jose Vera](https://github.com/josevera7), [Yavier Mari](https://github.com/YMari)
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## [Click here for Application Video Demo](https://youtu.be/iJP8dUgEm0E)
 
+## Worked while taking INSO4116 (Software Design) course at UPRM, Fall 2020.
+
+InternView's goal was to make a site that provided an opportunity for student from Puerto Rico to share their experiences with internships/interviews so that other students could learn from them. The users would be able to create reviews on companies that they had worked/interviewed with and let other's know of their experiences.
 
 ## Getting Started
 
