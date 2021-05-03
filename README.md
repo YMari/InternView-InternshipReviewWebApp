@@ -3,9 +3,11 @@
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## [Click here for Application Video Demo](https://youtu.be/iJP8dUgEm0E)
+## [Click Here for the Application Documentation](https://drive.google.com/file/d/1MSre7504lu_Xm-fdM41fR13kfM-gr5Sm/view?usp=sharing)
 
-## [Click here for the current application deployment](https://intern-view-internship-review-web-app.vercel.app/)
+## [Click Here for the Application Video Demo](https://youtu.be/iJP8dUgEm0E)
+
+## [Click Here for the Current Application Deployment](https://intern-view-internship-review-web-app.vercel.app/)
 
 ### Worked while taking INSO4116 (Software Design) course at UPRM, Fall 2020.
 
