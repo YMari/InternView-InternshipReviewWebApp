@@ -5,7 +5,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## [Click here for Application Video Demo](https://youtu.be/iJP8dUgEm0E)
 
-## Project link: https://intern-view-internship-review-web-app.vercel.app/
+## [Click here for the current application deployment](https://intern-view-internship-review-web-app.vercel.app/)
 
 ### Worked while taking INSO4116 (Software Design) course at UPRM, Fall 2020.
 
