@@ -5,6 +5,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## [Click here for Application Video Demo](https://youtu.be/iJP8dUgEm0E)
 
+## Project link: https://intern-view-internship-review-web-app.vercel.app/
+
 ### Worked while taking INSO4116 (Software Design) course at UPRM, Fall 2020.
 
 InternView's goal was to make a site that provided an opportunity for student from Puerto Rico to share their experiences with internships/interviews so that other students could learn from them. The users would be able to create reviews on companies that they had worked/interviewed with and let other's know of their experiences.
